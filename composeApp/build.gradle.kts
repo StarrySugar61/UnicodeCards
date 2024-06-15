@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.cashapp.sqldelight)
 }
 
 kotlin {
@@ -36,6 +37,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.cashapp.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,9 +46,15 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.lifecycle.viewmodel.compose)
+            implementation(libs.compose.navigation.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.cashapp.sqldelight.native.driver)
+        }
+        iosMain.dependencies {
+            implementation(libs.cashapp.sqldelight.native.driver)
         }
     }
 }
@@ -85,6 +93,14 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("starrysugar.unicodecards")
+        }
     }
 }
 
