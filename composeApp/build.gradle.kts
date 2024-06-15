@@ -51,7 +51,7 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.cashapp.sqldelight.native.driver)
+            implementation(libs.cashapp.sqldelight.sqlite.driver)
         }
         iosMain.dependencies {
             implementation(libs.cashapp.sqldelight.native.driver)
@@ -71,8 +71,8 @@ android {
         applicationId = "starrysugar.unicodecards"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = libs.versions.appVersionCode.get().toInt()
+        versionName = libs.versions.appVersion.get()
     }
     packaging {
         resources {
@@ -109,9 +109,14 @@ compose.desktop {
         mainClass = "MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(
+                TargetFormat.Dmg,
+                TargetFormat.Msi,
+                TargetFormat.Exe,
+                TargetFormat.Deb,
+            )
             packageName = "starrysugar.unicodecards"
-            packageVersion = "1.0.0"
+            packageVersion = libs.versions.appVersionApple.get()
         }
     }
 }
