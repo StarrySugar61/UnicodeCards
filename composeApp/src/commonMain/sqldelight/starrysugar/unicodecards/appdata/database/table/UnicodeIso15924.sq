@@ -3,3 +3,10 @@ CREATE TABLE `uc_unicode_iso15924` (
 `code` TEXT NOT NULL,
 `name` TEXT NOT NULL
 );
+
+insertData:
+INSERT OR REPLACE INTO `uc_unicode_iso15924`(
+    `id`,
+    `code`,
+    `name`
+) VALUES (?, ?, ?);

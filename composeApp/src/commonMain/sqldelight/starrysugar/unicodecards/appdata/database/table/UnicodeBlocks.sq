@@ -6,3 +6,21 @@ CREATE TABLE `uc_unicode_blocks` (
 );
 
 CREATE INDEX `uc_unicode_blocks_code_point_end` ON `uc_unicode_blocks`(`code_point_end`);
+
+insertBlock:
+INSERT OR REPLACE INTO `uc_unicode_blocks`(
+    `code_point_start`,
+    `code_point_end`,
+    `block_name`,
+    `char_count`
+) VALUES(?,?,?,?);
+
+queryAllBlocks:
+SELECT *
+FROM `uc_unicode_blocks`
+WHERE 1;
+
+queryBlockForCodePoint:
+SELECT *
+FROM `uc_unicode_blocks`
+WHERE ? BETWEEN `code_point_start` AND `code_point_end`;

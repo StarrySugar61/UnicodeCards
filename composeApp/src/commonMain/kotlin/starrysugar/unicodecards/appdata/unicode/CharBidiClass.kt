@@ -113,4 +113,25 @@ enum class CharBidiClass {
      * Other Neutrals
      */
     ON,
+
+    /**
+     * Left-to-Right Isolate
+     */
+    LRI,
+
+    /**
+     * Right-to-Left Isolate
+     */
+    RLI,
+
+    /**
+     * First-Strong Isolate
+     */
+    FSI,
+
+    /**
+     * Pop Directional Isolate
+     */
+    PDI,
+
 }

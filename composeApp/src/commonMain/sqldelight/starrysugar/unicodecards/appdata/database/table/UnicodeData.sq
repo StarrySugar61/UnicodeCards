@@ -11,3 +11,33 @@ CREATE TABLE `uc_unicode_data` (
 
 CREATE INDEX `uc_unicode_data_category` ON `uc_unicode_data`(`category`);
 CREATE INDEX `uc_unicode_data_bidi_class` ON `uc_unicode_data`(`bidi_class`);
+
+insertData:
+INSERT OR REPLACE INTO `uc_unicode_data`(
+    `code_point`,
+    `name`,
+    `category`,
+    `combining`,
+    `bidi_class`
+) VALUES (?,?,?,?,?);
+
+queryDataByCode:
+SELECT *
+FROM `uc_unicode_data`
+WHERE `code_point`=?;
+
+queryDataByBlock:
+SELECT *
+FROM `uc_unicode_data`
+WHERE `code_point` BETWEEN ? AND ?;
+
+queryDataByBlockWithUserData:
+SELECT *
+FROM `uc_unicode_data`
+JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
+WHERE `uc_unicode_data`.`code_point` BETWEEN ? AND ?;
+
+queryBlockDataCount:
+SELECT COUNT(1)
+FROM `uc_unicode_data`
+WHERE `code_point` BETWEEN ? AND ?;

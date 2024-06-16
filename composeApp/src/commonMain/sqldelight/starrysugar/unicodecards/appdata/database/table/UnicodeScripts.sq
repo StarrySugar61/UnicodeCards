@@ -6,3 +6,10 @@ CREATE TABLE `uc_unicode_scripts` (
 
 CREATE INDEX `uc_unicode_scripts_code_point_end` ON `uc_unicode_scripts`(`code_point_end`);
 CREATE INDEX `uc_unicode_scripts_id` ON `uc_unicode_scripts`(`id`);
+
+insertScript:
+INSERT OR REPLACE INTO `uc_unicode_scripts`(
+    `code_point_start`,
+    `code_point_end`,
+    `id`
+) VALUES (?, ?, ?);

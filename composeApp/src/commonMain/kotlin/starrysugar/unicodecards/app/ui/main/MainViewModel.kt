@@ -14,10 +14,28 @@
  */
 package starrysugar.unicodecards.app.ui.main
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.database.createDatabase
+import starrysugar.unicodecards.appdata.unicode.UnicodeInitializer
 
 /**
  * @author StarrySugar61
  * @create 2024/6/15
  */
-class MainViewModel : BaseViewModel()
+class MainViewModel : BaseViewModel() {
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            // Test
+            val database = createDatabase()
+            database.userCardsQueries.setCardFontFor(0, emptySet())
+            // Initialize unicode data
+            UnicodeInitializer.importUnicodeDataTo(database)
+        }
+    }
+
+}

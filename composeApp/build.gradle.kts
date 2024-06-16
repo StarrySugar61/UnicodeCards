@@ -53,7 +53,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.cashapp.sqldelight.sqlite.driver)
         }
-        iosMain.dependencies {
+        nativeMain.dependencies {
             implementation(libs.cashapp.sqldelight.native.driver)
         }
     }
