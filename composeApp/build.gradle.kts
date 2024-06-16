@@ -104,6 +104,12 @@ sqldelight {
     }
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "starrysugar.unicodecards"
+    generateResClass = always
+}
+
 compose.desktop {
     application {
         mainClass = "MainKt"
