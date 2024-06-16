@@ -1,0 +1,7 @@
+CREATE TABLE `uc_card_fonts` (
+`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+`code_point_start` INTEGER NOT NULL,
+`font_name` TEXT NOT NULL,
+`font_path` TEXT NOT NULL,
+`price` INTEGER NOT NULL DEFAULT 0
+);

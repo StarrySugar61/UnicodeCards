@@ -1,0 +1,13 @@
+import starrysugar.unicodecards.appdata.unicode.CharBidiClass;
+import starrysugar.unicodecards.appdata.unicode.CharCategory;
+
+CREATE TABLE `uc_unicode_data` (
+`code_point` INTEGER PRIMARY KEY NOT NULL,
+`name` TEXT NOT NULL,
+`category` TEXT AS CharCategory NOT NULL,
+`combining` INTEGER NOT NULL,
+`bidi_class` TEXT AS CharBidiClass NOT NULL
+);
+
+CREATE INDEX `uc_unicode_data_category` ON `uc_unicode_data`(`category`);
+CREATE INDEX `uc_unicode_data_bidi_class` ON `uc_unicode_data`(`bidi_class`);

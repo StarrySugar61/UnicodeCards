@@ -1,0 +1,8 @@
+CREATE TABLE `uc_unicode_blocks` (
+`code_point_start` INTEGER PRIMARY KEY NOT NULL,
+`code_point_end` INTEGER NOT NULL,
+`block_name` TEXT NOT NULL,
+`char_count` INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX `uc_unicode_blocks_code_point_end` ON `uc_unicode_blocks`(`code_point_end`);

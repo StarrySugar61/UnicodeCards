@@ -1,0 +1,5 @@
+CREATE TABLE `uc_user_cards` (
+`code_point` INTEGER PRIMARY KEY NOT NULL,
+`card_count` INTEGER NOT NULL DEFAULT 0,
+`font_id` INTEGER NOT NULL DEFAULT 0
+);

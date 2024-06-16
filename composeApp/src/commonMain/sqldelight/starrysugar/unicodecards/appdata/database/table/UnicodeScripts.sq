@@ -1,0 +1,8 @@
+CREATE TABLE `uc_unicode_scripts` (
+`code_point_start` INTEGER PRIMARY KEY NOT NULL,
+`code_point_end` INTEGER NOT NULL,
+`id` INTEGER NOT NULL
+);
+
+CREATE INDEX `uc_unicode_scripts_code_point_end` ON `uc_unicode_scripts`(`code_point_end`);
+CREATE INDEX `uc_unicode_scripts_id` ON `uc_unicode_scripts`(`id`);

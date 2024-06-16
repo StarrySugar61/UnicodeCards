@@ -99,7 +99,7 @@ android {
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("starrysugar.unicodecards")
+            packageName.set("starrysugar.unicodecards.appdata.database")
         }
     }
 }

@@ -1,0 +1,5 @@
+CREATE TABLE `uc_unicode_iso15924` (
+`id` INTEGER PRIMARY KEY NOT NULL,
+`code` TEXT NOT NULL,
+`name` TEXT NOT NULL
+);
