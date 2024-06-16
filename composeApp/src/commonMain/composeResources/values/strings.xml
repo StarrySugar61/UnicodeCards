@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_name">Unicode Cards</string>
+
+    <string name="main_tab_home">Home</string>
+    <string name="main_tab_cards">Cards</string>
+    <string name="main_tab_market">Market</string>
+    <string name="main_tab_settings">Settings</string>
 </resources>

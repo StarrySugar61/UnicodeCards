@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_name">Unicode Cards</string>
+
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_cards">卡牌</string>
+    <string name="main_tab_market">集市</string>
+    <string name="main_tab_settings">设置</string>
 </resources>

@@ -14,34 +14,40 @@
  */
 package starrysugar.unicodecards.app.ui.main
 
-import Greeting
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.AppScaffold
 import starrysugar.unicodecards.app_name
-import starrysugar.unicodecards.compose_multiplatform
+import starrysugar.unicodecards.ic_baseline_home_24
+import starrysugar.unicodecards.ic_baseline_settings_24
+import starrysugar.unicodecards.ic_baseline_store_mall_directory_24
+import starrysugar.unicodecards.ic_baseline_style_24
+import starrysugar.unicodecards.main_tab_cards
+import starrysugar.unicodecards.main_tab_home
+import starrysugar.unicodecards.main_tab_market
+import starrysugar.unicodecards.main_tab_settings
 
 /**
  * The main screen!
@@ -55,6 +61,7 @@ fun MainScreen(
     navController: NavHostController,
     viewModel: MainViewModel = viewModel(),
 ) {
+    val homeBottomNavController = rememberNavController()
     AppScaffold(
         viewModel = viewModel,
         topBar = {
@@ -67,38 +74,135 @@ fun MainScreen(
                     )
                 }
             )
-        }
+        },
+        bottomBar = {
+            HomeBottomBar(
+                navController = homeBottomNavController
+            )
+        },
     ) { paddingValues ->
-        var showContent by remember { mutableStateOf(false) }
-        val scope = rememberCoroutineScope()
-        Column(
-            modifier = Modifier
-                .padding(paddingValues = paddingValues)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(
+        HomeNavHost(
+            modifier = Modifier.padding(paddingValues = paddingValues),
+            navController = homeBottomNavController,
+        )
+    }
+}
+
+@Composable
+private fun HomeBottomBar(
+    navController: NavHostController,
+) {
+    var selectedIndex by remember { mutableStateOf(0) }
+    NavigationBar {
+        mainBottomAppBarItems.forEachIndexed { index, item ->
+            NavigationBarItem(
+                selected = selectedIndex == index,
+                label = {
+                    Text(
+                        text = stringResource(
+                            resource = item.labelRes,
+                        ),
+                    )
+                },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            resource = item.iconRes,
+                        ),
+                        contentDescription = null,
+                    )
+                },
                 onClick = {
-                    scope.launch {
-                        viewModel.isLoading = true
-                        delay(2000)
-                        viewModel.isLoading = false
-                        showContent = !showContent
+                    selectedIndex = index
+                    navController.navigate(item.route) {
+                        navController.graph.findStartDestination().route?.let {
+                            popUpTo(it) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 }
-            ) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
+            )
         }
     }
 }
+
+@Composable
+private fun HomeNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = mainBottomAppBarItems[0].route,
+    ) {
+        composable(
+            route = mainBottomAppBarItems[0].route,
+        ) {
+            Text(
+                text = stringResource(
+                    resource = mainBottomAppBarItems[0].labelRes,
+                ),
+            )
+        }
+        composable(
+            route = mainBottomAppBarItems[1].route,
+        ) {
+            Text(
+                text = stringResource(
+                    resource = mainBottomAppBarItems[1].labelRes,
+                ),
+            )
+        }
+        composable(
+            route = mainBottomAppBarItems[2].route,
+        ) {
+            Text(
+                text = stringResource(
+                    resource = mainBottomAppBarItems[2].labelRes,
+                ),
+            )
+        }
+        composable(
+            route = mainBottomAppBarItems[3].route,
+        ) {
+            Text(
+                text = stringResource(
+                    resource = mainBottomAppBarItems[3].labelRes,
+                ),
+            )
+        }
+    }
+}
+
+private val mainBottomAppBarItems = listOf(
+    MainBottomAppBarItem(
+        labelRes = Res.string.main_tab_home,
+        iconRes = Res.drawable.ic_baseline_home_24,
+        route = "uc_main_home",
+    ),
+    MainBottomAppBarItem(
+        labelRes = Res.string.main_tab_cards,
+        iconRes = Res.drawable.ic_baseline_style_24,
+        route = "uc_main_cards",
+    ),
+    MainBottomAppBarItem(
+        labelRes = Res.string.main_tab_market,
+        iconRes = Res.drawable.ic_baseline_store_mall_directory_24,
+        route = "uc_main_market",
+    ),
+    MainBottomAppBarItem(
+        labelRes = Res.string.main_tab_settings,
+        iconRes = Res.drawable.ic_baseline_settings_24,
+        route = "uc_main_settings",
+    ),
+)
+
+private class MainBottomAppBarItem(
+    val labelRes: StringResource,
+    val iconRes: DrawableResource,
+    val route: String,
+)
