@@ -38,6 +38,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.cashapp.sqldelight.android.driver)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -48,6 +49,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.compose.lifecycle.viewmodel.compose)
             implementation(libs.compose.navigation.compose)
+            implementation(libs.androidx.datastore.preferences.core)
+            implementation(libs.koin.core)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
