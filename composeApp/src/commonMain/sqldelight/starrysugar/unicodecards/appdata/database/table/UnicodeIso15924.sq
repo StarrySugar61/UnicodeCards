@@ -10,3 +10,6 @@ INSERT OR REPLACE INTO `uc_unicode_iso15924`(
     `code`,
     `name`
 ) VALUES (?, ?, ?);
+
+clear:
+DELETE FROM `uc_unicode_iso15924` WHERE 1;

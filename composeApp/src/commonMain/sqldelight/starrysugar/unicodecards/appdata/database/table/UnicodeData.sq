@@ -41,3 +41,6 @@ queryBlockDataCount:
 SELECT COUNT(1)
 FROM `uc_unicode_data`
 WHERE `code_point` BETWEEN ? AND ?;
+
+clear:
+DELETE FROM `uc_unicode_data` WHERE 1;

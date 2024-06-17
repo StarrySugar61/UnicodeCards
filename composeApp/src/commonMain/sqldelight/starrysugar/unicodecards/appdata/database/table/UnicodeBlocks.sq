@@ -24,3 +24,6 @@ queryBlockForCodePoint:
 SELECT *
 FROM `uc_unicode_blocks`
 WHERE ? BETWEEN `code_point_start` AND `code_point_end`;
+
+clear:
+DELETE FROM `uc_unicode_blocks` WHERE 1;
