@@ -18,8 +18,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
-import starrysugar.unicodecards.appdata.database.createDatabase
+import starrysugar.unicodecards.appdata.database.Database
 import starrysugar.unicodecards.appdata.unicode.UnicodeInitializer
 
 /**
@@ -28,10 +29,11 @@ import starrysugar.unicodecards.appdata.unicode.UnicodeInitializer
  */
 class MainViewModel : BaseViewModel() {
 
+    private val database: Database by inject()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             // Test
-            val database = createDatabase()
             database.userCardsQueries.setCardFontFor(0, emptySet())
             // Initialize unicode data
             UnicodeInitializer.importUnicodeDataTo(database)

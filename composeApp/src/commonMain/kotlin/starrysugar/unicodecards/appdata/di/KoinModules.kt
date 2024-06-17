@@ -15,6 +15,8 @@
 package starrysugar.unicodecards.appdata.di
 
 import org.koin.dsl.module
+import starrysugar.unicodecards.appdata.database.AppDriverFactory
+import starrysugar.unicodecards.appdata.database.createDatabase
 import starrysugar.unicodecards.appdata.datastore.AppDataStore
 
 /**
@@ -22,6 +24,12 @@ import starrysugar.unicodecards.appdata.datastore.AppDataStore
  * @create 2024/6/17
  */
 val koinModules = module {
+    // Database!
+    single { AppDriverFactory() }
+    single { get<AppDriverFactory>().createDriver() }
+    single { createDatabase(get()) }
+
+    // DataStore!
     single { AppDataStore() }
     single { get<AppDataStore>().dataStore }
 }

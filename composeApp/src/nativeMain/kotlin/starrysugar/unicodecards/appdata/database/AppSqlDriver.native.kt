@@ -7,11 +7,9 @@ import app.cash.sqldelight.driver.native.NativeSqliteDriver
  * @author StarrySugar61
  * @create 2024/6/16
  */
-actual class DriverFactory {
+actual class AppDriverFactory {
     actual fun createDriver(): SqlDriver = NativeSqliteDriver(
         schema = Database.Schema,
         name = "unicode_cards.db",
     )
 }
-
-internal actual val driverFactory = DriverFactory()

@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import org.koin.core.component.KoinComponent
 
 /**
  * APP base ViewModel!
@@ -25,7 +26,7 @@ import androidx.lifecycle.ViewModel
  * @author StarrySugar61
  * @create 2024/6/15
  */
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     /**
      * Is showing loading indicator on screen!

@@ -22,14 +22,11 @@ import starrysugar.unicodecards.appdata.database.table.Uc_unicode_data
  * @author StarrySugar61
  * @create 2024/6/16
  */
-expect class DriverFactory {
+expect class AppDriverFactory() {
     fun createDriver(): SqlDriver
 }
 
-internal expect val driverFactory: DriverFactory
-
-fun createDatabase(): Database {
-    val driver = driverFactory.createDriver()
+fun createDatabase(driver: SqlDriver): Database {
     val database = Database(
         driver = driver,
         uc_unicode_dataAdapter = Uc_unicode_data.Adapter(

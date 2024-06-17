@@ -7,12 +7,10 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
  * @author StarrySugar61
  * @create 2024/6/16
  */
-actual class DriverFactory {
+actual class AppDriverFactory {
     actual fun createDriver(): SqlDriver = JdbcSqliteDriver(
         url = "jdbc:sqlite:unicode_cards.db",
     ).apply {
         Database.Schema.create(this)
     }
 }
-
-internal actual val driverFactory = DriverFactory()
