@@ -14,18 +14,28 @@
  */
 package starrysugar.unicodecards.app.ui.common.game
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import starrysugar.unicodecards.arch.utils.UnicodeUtils
@@ -86,6 +96,90 @@ fun UnicodeCardPlaceholder(
                 text = codePoint.toString(radix = 16).uppercase(),
                 fontSize = 32.sp,
             )
+        }
+    }
+}
+
+@Composable
+fun UnicodeCardPack(
+    modifier: Modifier = Modifier,
+    sampleCodePoint: Int,
+    packName: String,
+    cardCount: Int,
+) {
+    OutlinedCard(
+        modifier = modifier.size(
+            width = 180.dp,
+            height = 270.dp,
+        ),
+        shape = cardPackShape,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(20) {
+                VerticalDivider()
+            }
+        }
+        HorizontalDivider()
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(8F)
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp,
+                ),
+        ) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.TopStart),
+                text = "UNICODE CARDS",
+                fontSize = 12.sp,
+            )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(bottom = 32.dp),
+                text = UnicodeUtils.charToString(sampleCodePoint),
+                fontSize = 80.sp,
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 48.dp),
+                text = packName,
+                textAlign = TextAlign.Center,
+                fontSize = 14.sp,
+            )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(bottom = 11.dp),
+                text = "$cardCount Cards",
+                fontSize = 11.sp,
+            )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.BottomStart),
+                text = "Per Pack",
+                fontSize = 11.sp,
+            )
+        }
+        HorizontalDivider()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(20) {
+                VerticalDivider()
+            }
         }
     }
 }
@@ -152,4 +246,36 @@ private fun CardBackContent() {
             )
         }
     }
+}
+
+private val cardPackShape = GenericShape { size, layoutDirection ->
+    val sideHeight = size.height / 10
+    val curve = size.width / 20
+    moveTo(0F, 0F)
+    lineTo(size.width, 0F)
+    lineTo(size.width, sideHeight)
+    lineTo(size.width - curve, sideHeight + curve)
+    lineTo(size.width - curve, size.height - sideHeight - curve)
+    lineTo(size.width, size.height - sideHeight)
+    lineTo(size.width, size.height)
+    lineTo(0F, size.height)
+    lineTo(0F, size.height - sideHeight)
+    lineTo(curve, size.height - sideHeight - curve)
+    lineTo(curve, sideHeight + curve)
+    lineTo(0F, sideHeight)
+    close()
+    op(
+        this,
+        Path().apply {
+            addOval(
+                Rect(
+                    size.width / 2 - sideHeight / 4,
+                    sideHeight / 4,
+                    size.width / 2 + sideHeight / 4,
+                    sideHeight * 3 / 4,
+                )
+            )
+        },
+        PathOperation.Xor,
+    )
 }

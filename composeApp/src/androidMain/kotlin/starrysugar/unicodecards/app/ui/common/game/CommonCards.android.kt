@@ -67,3 +67,33 @@ private fun UnicodeCardPlaceholderExample2() {
         codePoint = 0x1f600,
     )
 }
+
+@Composable
+@Preview
+private fun UnicodeCardPackExample1() {
+    UnicodeCardPack(
+        sampleCodePoint = 0x41,
+        packName = "ASCII Pack",
+        cardCount = 10,
+    )
+}
+
+@Composable
+@Preview
+private fun UnicodeCardPackExample2() {
+    UnicodeCardPack(
+        sampleCodePoint = 0x10000,
+        packName = "Linear B Syllabary Pack",
+        cardCount = 10,
+    )
+}
+
+@Composable
+@Preview
+private fun UnicodeCardPackExample3() {
+    UnicodeCardPack(
+        sampleCodePoint = 0x1f604,
+        packName = "Emoji Pack",
+        cardCount = 10,
+    )
+}
