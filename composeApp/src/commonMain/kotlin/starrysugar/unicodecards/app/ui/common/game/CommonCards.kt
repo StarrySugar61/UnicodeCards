@@ -100,6 +100,9 @@ fun UnicodeCardPlaceholder(
     }
 }
 
+/**
+ * Card pack!
+ */
 @Composable
 fun UnicodeCardPack(
     modifier: Modifier = Modifier,
@@ -181,6 +184,38 @@ fun UnicodeCardPack(
                 VerticalDivider()
             }
         }
+    }
+}
+
+/**
+ * Card deck!
+ */
+@Composable
+fun UnicodeCardDeck(
+    modifier: Modifier = Modifier,
+    codePoint: Int,
+) {
+    Box(
+        modifier = modifier,
+    ) {
+        CardBorder(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .rotate(25F),
+            content = {}
+        )
+        CardBorder(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .rotate(10F),
+            content = {}
+        )
+        UnicodeCard(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .rotate(-5F),
+            codePoint = codePoint,
+        )
     }
 }
 

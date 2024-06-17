@@ -14,10 +14,12 @@
  */
 package starrysugar.unicodecards.app.ui.common.game
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 /**
  * Examples for Unicode cards!
@@ -95,5 +97,17 @@ private fun UnicodeCardPackExample3() {
         sampleCodePoint = 0x1f604,
         packName = "Emoji Pack",
         cardCount = 10,
+    )
+}
+
+@Composable
+@Preview
+private fun UnicodeCardDeckExample1() {
+    UnicodeCardDeck(
+        modifier = Modifier.padding(
+            horizontal = 32.dp,
+            vertical = 20.dp,
+        ),
+        codePoint = 0x21,
     )
 }
