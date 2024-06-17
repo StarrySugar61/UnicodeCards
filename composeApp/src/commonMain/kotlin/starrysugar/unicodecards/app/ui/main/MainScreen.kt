@@ -39,6 +39,10 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.AppScaffold
+import starrysugar.unicodecards.app.ui.main.cards.CardsPage
+import starrysugar.unicodecards.app.ui.main.home.HomePage
+import starrysugar.unicodecards.app.ui.main.market.MarketPage
+import starrysugar.unicodecards.app.ui.main.settings.SettingsPage
 import starrysugar.unicodecards.app_name
 import starrysugar.unicodecards.ic_baseline_home_24
 import starrysugar.unicodecards.ic_baseline_settings_24
@@ -84,6 +88,7 @@ fun MainScreen(
         HomeNavHost(
             modifier = Modifier.padding(paddingValues = paddingValues),
             navController = homeBottomNavController,
+            mainNavController = navController,
         )
     }
 }
@@ -133,6 +138,7 @@ private fun HomeBottomBar(
 private fun HomeNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    mainNavController: NavHostController,
 ) {
     NavHost(
         modifier = modifier,
@@ -142,37 +148,29 @@ private fun HomeNavHost(
         composable(
             route = mainBottomAppBarItems[0].route,
         ) {
-            Text(
-                text = stringResource(
-                    resource = mainBottomAppBarItems[0].labelRes,
-                ),
+            HomePage(
+                navController = mainNavController,
             )
         }
         composable(
             route = mainBottomAppBarItems[1].route,
         ) {
-            Text(
-                text = stringResource(
-                    resource = mainBottomAppBarItems[1].labelRes,
-                ),
+            CardsPage(
+                navController = mainNavController,
             )
         }
         composable(
             route = mainBottomAppBarItems[2].route,
         ) {
-            Text(
-                text = stringResource(
-                    resource = mainBottomAppBarItems[2].labelRes,
-                ),
+            MarketPage(
+                navController = mainNavController,
             )
         }
         composable(
             route = mainBottomAppBarItems[3].route,
         ) {
-            Text(
-                text = stringResource(
-                    resource = mainBottomAppBarItems[3].labelRes,
-                ),
+            SettingsPage(
+                navController = mainNavController,
             )
         }
     }

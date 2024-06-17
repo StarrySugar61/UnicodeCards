@@ -6,4 +6,6 @@
     <string name="main_tab_cards">Cards</string>
     <string name="main_tab_market">Market</string>
     <string name="main_tab_settings">Settings</string>
+
+    <string name="coming_soon">Coming soon</string>
 </resources>
