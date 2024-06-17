@@ -72,5 +72,6 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 cashapp-sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "cashapp-sqldelight" }
 cashapp-sqldelight-native-driver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "cashapp-sqldelight" }
 cashapp-sqldelight-sqlite-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "cashapp-sqldelight" }
+cashapp-sqldelight-paging3-extensions = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "cashapp-sqldelight" }
 compose-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose-lifecycle-viewmodel-compose" }
 compose-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation-compose" }

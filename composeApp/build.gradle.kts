@@ -51,6 +51,7 @@ kotlin {
             implementation(libs.compose.navigation.compose)
             implementation(libs.androidx.datastore.preferences.core)
             implementation(libs.koin.core)
+            implementation(libs.cashapp.sqldelight.paging3.extensions)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
