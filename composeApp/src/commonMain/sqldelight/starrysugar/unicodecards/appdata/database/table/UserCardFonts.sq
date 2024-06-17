@@ -1,0 +1,13 @@
+CREATE TABLE `uc_user_card_fonts` (
+    `id` INTEGER PRIMARY KEY NOT NULL
+);
+
+obtainedFont:
+INSERT OR IGNORE INTO `uc_user_card_fonts`(
+    `id`
+) VALUES (:fontId);
+
+isFontPurchased:
+SELECT COUNT(1)
+FROM `uc_user_card_fonts`
+WHERE `id`=:fontId;
