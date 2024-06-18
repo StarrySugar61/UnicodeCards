@@ -37,6 +37,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.paging.runtime)
             implementation(libs.cashapp.sqldelight.android.driver)
             implementation(libs.koin.android)
         }
@@ -50,6 +51,8 @@ kotlin {
             implementation(libs.compose.lifecycle.viewmodel.compose)
             implementation(libs.compose.navigation.compose)
             implementation(libs.androidx.datastore.preferences.core)
+            implementation(libs.androidx.paging)
+            implementation(libs.androidx.paging.compose)
             implementation(libs.koin.core)
             implementation(libs.cashapp.sqldelight.paging3.extensions)
         }
@@ -98,6 +101,9 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.paging.compose.android)
 }
 
 sqldelight {
