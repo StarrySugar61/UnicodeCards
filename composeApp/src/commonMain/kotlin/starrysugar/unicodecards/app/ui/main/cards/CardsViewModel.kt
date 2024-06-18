@@ -14,10 +14,36 @@
  */
 package starrysugar.unicodecards.app.ui.main.cards
 
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.database.table.UnicodeBlocksQueries
 
 /**
  * @author StarrySugar61
  * @create 2024/6/17
  */
-class CardsViewModel : BaseViewModel()
+class CardsViewModel : BaseViewModel() {
+
+    private val _unicodeBlocksQueries: UnicodeBlocksQueries by inject()
+
+    val deckPagerFlow = Pager(
+        config = PagingConfig(
+            pageSize = 30,
+        )
+    ) {
+        QueryPagingSource(
+            countQuery = _unicodeBlocksQueries.count(),
+            transacter = _unicodeBlocksQueries,
+            context = Dispatchers.IO,
+            queryProvider = _unicodeBlocksQueries::queryBlockPagingWithCollected,
+        )
+    }.flow.cachedIn(viewModelScope)
+
+}

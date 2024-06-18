@@ -7,6 +7,10 @@ CREATE TABLE `uc_unicode_blocks` (
 
 CREATE INDEX `uc_unicode_blocks_code_point_end` ON `uc_unicode_blocks`(`code_point_end`);
 
+count:
+SELECT COUNT(1)
+FROM `uc_unicode_blocks`;
+
 insertBlock:
 INSERT OR REPLACE INTO `uc_unicode_blocks`(
     `code_point_start`,
@@ -24,6 +28,14 @@ queryBlockForCodePoint:
 SELECT *
 FROM `uc_unicode_blocks`
 WHERE ? BETWEEN `code_point_start` AND `code_point_end`;
+
+queryBlockPagingWithCollected:
+SELECT b.code_point_start, b.code_point_end, b.block_name, b.char_count, COUNT(c.code_point) AS `collected`
+FROM `uc_unicode_blocks` AS b
+LEFT JOIN `uc_user_cards` AS c ON (c.code_point BETWEEN b.code_point_start AND b.code_point_end)
+AND c.card_count
+GROUP BY b.code_point_start
+LIMIT :limit OFFSET :offset;
 
 clear:
 DELETE FROM `uc_unicode_blocks` WHERE 1;
