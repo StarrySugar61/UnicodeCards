@@ -35,7 +35,7 @@ class CardsViewModel : BaseViewModel() {
 
     val deckPagerFlow = Pager(
         config = PagingConfig(
-            pageSize = 30,
+            pageSize = 12,
         )
     ) {
         QueryPagingSource(
