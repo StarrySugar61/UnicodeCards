@@ -7,5 +7,10 @@
     <string name="main_tab_market">集市</string>
     <string name="main_tab_settings">设置</string>
 
+    <string name="cards_hint_unlock">至少收集一张此卡册的卡牌才可以查看哦！</string>
+
+    <string name="info">提示</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
     <string name="coming_soon">敬请期待</string>
 </resources>

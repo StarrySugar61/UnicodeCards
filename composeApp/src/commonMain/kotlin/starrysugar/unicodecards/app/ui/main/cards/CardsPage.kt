@@ -14,15 +14,41 @@
  */
 package starrysugar.unicodecards.app.ui.main.cards
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.app.ui.common.game.UnicodeCardDeck
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
+import starrysugar.unicodecards.appdata.database.table.QueryBlockPagingWithCollected
+import starrysugar.unicodecards.cards_hint_unlock
+import starrysugar.unicodecards.confirm
+import starrysugar.unicodecards.info
 
 /**
  * @author StarrySugar61
@@ -33,19 +59,136 @@ fun CardsPage(
     navController: NavHostController,
     viewModel: CardsViewModel = viewModel(),
 ) {
+    var isShowingDeckNotUnlockedDialog by remember { mutableStateOf(false) }
+
+    // Dialogs！
+    if (isShowingDeckNotUnlockedDialog) {
+        DeckNotUnlockedDialog(
+            onConfirmed = {
+                isShowingDeckNotUnlockedDialog = false
+            }
+        )
+    }
+
     AppLazyPagingVerticalGrid(
         modifier = Modifier.fillMaxSize(),
-        columns = GridCells.Fixed(3),
+        columns = GridCells.FixedSize(
+            size = 180.dp,
+        ),
         lazyPagingItems = viewModel.deckPagerFlow.collectAsLazyPagingItems(),
-        itemContent = { index, item ->
-            Text(
-                "${item.block_name}: ${item.collected} / ${item.char_count}"
+        contentPadding = PaddingValues(all = 4.dp),
+        horizontalArrangement = Arrangement.Center,
+        itemContent = { _, item ->
+            DeckItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        if (item.collected == 0L) {
+                            isShowingDeckNotUnlockedDialog = true
+                        } else {
+                            // TODO Navigate to deck page
+                        }
+                    },
+                item = item,
             )
         }
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun DeckItem() {
+private fun DeckItem(
+    modifier: Modifier,
+    item: QueryBlockPagingWithCollected,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        // Collect at least one card to unlock deck!
+        val isDeckUnlocked = item.collected > 0
+        // Card deck!
+        UnicodeCardDeck(
+            modifier = Modifier
+                .scale(0.7F),
+            codePoint = if (isDeckUnlocked) {
+                item.code_point_start.toInt()
+            } else {
+                -1
+            },
+        )
+        // Collecting progress!
+        LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    bottom = 4.dp,
+                ),
+            progress = {
+                item.collected * 1F / item.char_count
+            }
+        )
+        // Block name!
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .basicMarquee(
+                    iterations = Int.MAX_VALUE,
+                ),
+            text = if (isDeckUnlocked) {
+                item.block_name
+            } else {
+                "???"
+            },
+            maxLines = 1,
+            textAlign = TextAlign.Center,
+        )
+        // Cards collected
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = if (isDeckUnlocked) {
+                "${item.collected} / ${item.char_count}"
+            } else {
+                ""
+            },
+            textAlign = TextAlign.Center,
+        )
+    }
+}
 
+@Composable
+private fun DeckNotUnlockedDialog(
+    onConfirmed: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onConfirmed,
+        title = {
+            Text(
+                text = stringResource(
+                    resource = Res.string.info,
+                ),
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(
+                    resource = Res.string.cards_hint_unlock,
+                ),
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirmed,
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.confirm,
+                    ),
+                )
+            }
+        }
+    )
 }

@@ -7,5 +7,10 @@
     <string name="main_tab_market">Market</string>
     <string name="main_tab_settings">Settings</string>
 
+    <string name="cards_hint_unlock">Collect at least one card from this deck to view!</string>
+
+    <string name="info">Info</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="coming_soon">Coming soon</string>
 </resources>

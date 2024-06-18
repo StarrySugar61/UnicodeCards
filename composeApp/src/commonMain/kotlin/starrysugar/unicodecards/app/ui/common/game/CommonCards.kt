@@ -189,6 +189,10 @@ fun UnicodeCardPack(
 
 /**
  * Card deck!
+ *
+ * @param codePoint Code point show on the deck,
+ *                  -1 means no cards collected in this deck,
+ *                  and will show the card back instead.
  */
 @Composable
 fun UnicodeCardDeck(
@@ -210,12 +214,20 @@ fun UnicodeCardDeck(
                 .rotate(10F),
             content = {}
         )
-        UnicodeCard(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .rotate(-5F),
-            codePoint = codePoint,
-        )
+        if (codePoint == -1) {
+            UnicodeCardBack(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .rotate(-5F),
+            )
+        } else {
+            UnicodeCard(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .rotate(-5F),
+                codePoint = codePoint,
+            )
+        }
     }
 }
 
