@@ -42,6 +42,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.app.nav.Screen
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCardDeck
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
@@ -86,7 +87,13 @@ fun CardsPage(
                         if (item.collected == 0L) {
                             isShowingDeckNotUnlockedDialog = true
                         } else {
-                            // TODO Navigate to deck page
+                            navController.navigate(
+                                route = Screen.MainDeck.buildRoute(
+                                    startCodePoint = item.code_point_start.toInt(),
+                                ),
+                            ) {
+                                launchSingleTop = true
+                            }
                         }
                     },
                 item = item,

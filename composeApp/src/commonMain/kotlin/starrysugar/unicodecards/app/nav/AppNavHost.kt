@@ -20,9 +20,13 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import starrysugar.unicodecards.app.ui.main.MainScreen
+import starrysugar.unicodecards.app.ui.main.cards.deck.DeckScreen
+import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointScreen
 
 /**
  * App navigation!
@@ -39,9 +43,25 @@ fun AppNavHost(
         startDestination = Screen.Main.route,
     ) {
         appComposable(
-            screen = Screen.Main
+            screen = Screen.Main,
         ) {
             MainScreen(
+                navController = navController,
+            )
+        }
+        appComposable(
+            screen = Screen.MainDeck,
+        ) {
+            DeckScreen(
+                startCodePoint = it.arguments!!.getInt("startCodePoint"),
+                navController = navController,
+            )
+        }
+        appComposable(
+            screen = Screen.MainDeckCodePoint,
+        ) {
+            CodePointScreen(
+                codePoint = it.arguments!!.getInt("codePoint"),
                 navController = navController,
             )
         }
@@ -67,6 +87,36 @@ sealed class Screen(
     override val arguments: List<NamedNavArgument>? = null,
 ) : Route {
     data object Main : Screen(route = "uc_main")
+
+    data object MainDeck : Screen(
+        route = "uc_main_deck",
+        arguments = listOf(
+            navArgument(
+                name = "startCodePoint",
+            ) {
+                type = NavType.IntType
+            }
+        )
+    ) {
+        fun buildRoute(
+            startCodePoint: Int,
+        ): String = "$route/$startCodePoint"
+    }
+
+    data object MainDeckCodePoint : Screen(
+        route = "uc_main_deck_code_point",
+        arguments = listOf(
+            navArgument(
+                name = "codePoint",
+            ) {
+                type = NavType.IntType
+            }
+        )
+    ) {
+        fun buildRoute(
+            codePoint: Int,
+        ): String = "$route/$codePoint"
+    }
 }
 
 interface Route {
