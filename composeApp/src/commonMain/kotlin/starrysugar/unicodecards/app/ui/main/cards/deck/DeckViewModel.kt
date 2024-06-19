@@ -17,9 +17,20 @@ package starrysugar.unicodecards.app.ui.main.cards.deck
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.database.table.QueryDataPagingByBlockWithUserData
+import starrysugar.unicodecards.appdata.database.table.Uc_unicode_blocks
 import starrysugar.unicodecards.appdata.database.table.UnicodeBlocksQueries
 import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
 
@@ -35,15 +46,38 @@ class DeckViewModel(
 
     private val _unicodeDataQueries: UnicodeDataQueries by inject()
 
-    var title by mutableStateOf("")
+    var block by mutableStateOf<Uc_unicode_blocks?>(null)
         private set
+
+    var cardsPagingFlow: Flow<PagingData<QueryDataPagingByBlockWithUserData>>? = null
 
     init {
         _unicodeBlocksQueries
-            .queryBlockForCodePoint(startCodePoint.toLong())
+            .queryBlockForStartCodePoint(startCodePoint.toLong())
             .executeAsOneOrNull()
             ?.let {
-                title = it.block_name
+                block = it
+                cardsPagingFlow = Pager(
+                    config = PagingConfig(
+                        pageSize = 30,
+                    )
+                ) {
+                    QueryPagingSource(
+                        countQuery = _unicodeBlocksQueries.queryBlockCharCountForStartCodePoint(
+                            it.code_point_start
+                        ),
+                        transacter = _unicodeDataQueries,
+                        context = Dispatchers.IO,
+                        queryProvider = { limit, offset ->
+                            _unicodeDataQueries.queryDataPagingByBlockWithUserData(
+                                it.code_point_start,
+                                it.code_point_end,
+                                limit,
+                                offset,
+                            )
+                        },
+                    )
+                }.flow.cachedIn(viewModelScope)
             }
     }
 

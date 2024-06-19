@@ -21,21 +21,22 @@ INSERT OR REPLACE INTO `uc_unicode_data`(
     `bidi_class`
 ) VALUES (?,?,?,?,?);
 
-queryDataByCode:
-SELECT *
+queryDataByCodeWithUserData:
+SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
+uc_unicode_data.combining, uc_unicode_data.bidi_class,
+IFNULL(uc_user_cards.card_count, 0)
 FROM `uc_unicode_data`
-WHERE `code_point`=?;
+LEFT JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
+WHERE `uc_unicode_data`.`code_point`=?;
 
-queryDataByBlock:
-SELECT *
+queryDataPagingByBlockWithUserData:
+SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
+uc_unicode_data.combining, uc_unicode_data.bidi_class,
+IFNULL(uc_user_cards.card_count, 0)
 FROM `uc_unicode_data`
-WHERE `code_point` BETWEEN ? AND ?;
-
-queryDataByBlockWithUserData:
-SELECT *
-FROM `uc_unicode_data`
-JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
-WHERE `uc_unicode_data`.`code_point` BETWEEN ? AND ?;
+LEFT JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
+WHERE `uc_unicode_data`.`code_point` BETWEEN :start AND :end
+LIMIT :limit OFFSET :offset;
 
 queryBlockDataCount:
 SELECT COUNT(1)

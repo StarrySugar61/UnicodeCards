@@ -14,17 +14,24 @@
  */
 package starrysugar.unicodecards.app.ui.main.cards.deck
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import starrysugar.unicodecards.app.ui.base.AppScaffold
 import starrysugar.unicodecards.app.ui.base.appViewModelFactory
+import starrysugar.unicodecards.app.ui.common.game.UnicodeCard
+import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
+import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
 
 /**
  * Overview page for cards in a deck!
@@ -51,11 +58,27 @@ fun DeckScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = viewModel.title,
+                        text = viewModel.block?.block_name ?: "",
                     )
                 },
             )
         },
-    ) {
+    ) { paddingValues ->
+        val cardsPagingFlow = viewModel.cardsPagingFlow ?: return@AppScaffold
+        AppLazyPagingVerticalGrid(
+            modifier = Modifier.padding(paddingValues = paddingValues),
+            columns = GridCells.FixedSize(
+                size = 158.dp,
+            ),
+            lazyPagingItems = cardsPagingFlow.collectAsLazyPagingItems(),
+            horizontalArrangement = Arrangement.Center,
+            itemContent = { _, item ->
+                UnicodeCard(
+                    modifier = Modifier.padding(all = 4.dp),
+                    codePoint = item.code_point.toInt(),
+                    category = item.category,
+                )
+            }
+        )
     }
 }

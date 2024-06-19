@@ -24,10 +24,15 @@ SELECT *
 FROM `uc_unicode_blocks`
 WHERE 1;
 
-queryBlockForCodePoint:
+queryBlockForStartCodePoint:
 SELECT *
 FROM `uc_unicode_blocks`
-WHERE ? BETWEEN `code_point_start` AND `code_point_end`;
+WHERE `code_point_start`=?;
+
+queryBlockCharCountForStartCodePoint:
+SELECT `char_count`
+FROM `uc_unicode_blocks`
+WHERE `code_point_start`=?;
 
 queryBlockPagingWithCollected:
 SELECT b.code_point_start, b.code_point_end, b.block_name, b.char_count, COUNT(c.code_point) AS `collected`
