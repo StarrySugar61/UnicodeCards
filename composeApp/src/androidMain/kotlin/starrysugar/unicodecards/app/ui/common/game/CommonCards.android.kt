@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import starrysugar.unicodecards.appdata.unicode.CharCategory
 
 /**
  * Examples for Unicode cards!
@@ -31,19 +32,28 @@ import androidx.compose.ui.unit.dp
 @Composable
 @Preview
 private fun UnicodeCardExample1() {
-    UnicodeCard(codePoint = 0x21)
+    UnicodeCard(
+        codePoint = 0x21,
+        category = CharCategory.Po,
+    )
 }
 
 @Composable
 @Preview
 private fun UnicodeCardExample2() {
-    UnicodeCard(codePoint = 0x10000)
+    UnicodeCard(
+        codePoint = 0x10000,
+        category = CharCategory.Lo,
+    )
 }
 
 @Composable
 @Preview
 private fun UnicodeCardExample3() {
-    UnicodeCard(codePoint = 0x1f600)
+    UnicodeCard(
+        codePoint = 0x1f600,
+        category = CharCategory.So,
+    )
 }
 
 @Composable
@@ -109,5 +119,6 @@ private fun UnicodeCardDeckExample1() {
             vertical = 20.dp,
         ),
         codePoint = 0x21,
+        category = CharCategory.Po,
     )
 }

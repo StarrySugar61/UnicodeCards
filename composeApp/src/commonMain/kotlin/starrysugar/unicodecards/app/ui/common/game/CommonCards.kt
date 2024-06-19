@@ -31,13 +31,19 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import starrysugar.unicodecards.app.ui.theme.AppColors
+import starrysugar.unicodecards.appdata.unicode.CharCategory
 import starrysugar.unicodecards.arch.utils.UnicodeUtils
 
 /**
@@ -52,11 +58,15 @@ import starrysugar.unicodecards.arch.utils.UnicodeUtils
 fun UnicodeCard(
     modifier: Modifier = Modifier,
     codePoint: Int,
+    category: CharCategory? = null,
 ) {
     CardBorder(
         modifier = modifier
     ) {
-        CardContent(codePoint)
+        CardContent(
+            codePoint = codePoint,
+            category = category,
+        )
     }
 }
 
@@ -95,6 +105,7 @@ fun UnicodeCardPlaceholder(
                 modifier = Modifier.align(Alignment.Center),
                 text = codePoint.toString(radix = 16).uppercase(),
                 fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
             )
         }
     }
@@ -198,6 +209,7 @@ fun UnicodeCardPack(
 fun UnicodeCardDeck(
     modifier: Modifier = Modifier,
     codePoint: Int,
+    category: CharCategory? = null,
 ) {
     Box(
         modifier = modifier,
@@ -226,9 +238,53 @@ fun UnicodeCardDeck(
                     .align(Alignment.Center)
                     .rotate(-5F),
                 codePoint = codePoint,
+                category = category,
             )
         }
     }
+}
+
+/**
+ * Display color for char category!
+ */
+fun CharCategory.getDisplayColor(): Color = when (this) {
+    CharCategory.Lu,
+    CharCategory.Ll,
+    CharCategory.Lt,
+    CharCategory.Lm -> AppColors.Green500
+
+    CharCategory.Lo -> AppColors.Lime500
+    CharCategory.Mn,
+    CharCategory.Mc,
+    CharCategory.Me -> AppColors.Cyan500
+
+    CharCategory.Nd,
+    CharCategory.Nl,
+    CharCategory.No -> AppColors.Red500
+
+    CharCategory.Pc,
+    CharCategory.Pd,
+    CharCategory.Ps,
+    CharCategory.Pe,
+    CharCategory.Pi,
+    CharCategory.Pf,
+    CharCategory.Po -> AppColors.Purple500
+
+    CharCategory.Sm,
+    CharCategory.Sc,
+    CharCategory.Sk,
+    CharCategory.So -> AppColors.Orange500
+
+    CharCategory.Zs,
+    CharCategory.Zl,
+    CharCategory.Zp -> AppColors.Blue500
+
+    CharCategory.Cc,
+    CharCategory.Cf,
+    CharCategory.Cs,
+    CharCategory.Co -> AppColors.Yellow500
+
+    CharCategory.Cn -> AppColors.Gray500
 }
 
 @Composable
@@ -253,6 +309,7 @@ private fun CardBorder(
 @Composable
 private fun CardContent(
     codePoint: Int,
+    category: CharCategory? = null,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -263,15 +320,72 @@ private fun CardContent(
             fontSize = 80.sp,
         )
         Text(
-            modifier = Modifier.align(Alignment.TopStart).padding(all = 8.dp),
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(all = 8.dp)
+                .drawBehind {
+                    // Custom underline!
+                    // https://stackoverflow.com/a/75647847
+                    if (category != null) {
+                        val strokeWidthPx = 2.dp.toPx()
+                        val verticalOffset = size.height
+                        drawLine(
+                            color = category.getDisplayColor(),
+                            strokeWidth = strokeWidthPx,
+                            start = Offset(0f, verticalOffset),
+                            end = Offset(size.width, verticalOffset)
+                        )
+                    }
+                },
             text = codePoint.toString(radix = 16).uppercase(),
             fontSize = 16.sp,
         )
         Text(
-            modifier = Modifier.align(Alignment.BottomEnd).rotate(180F).padding(all = 8.dp),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(all = 8.dp)
+                .drawBehind {
+                    // Custom underline!
+                    // https://stackoverflow.com/a/75647847
+                    if (category != null) {
+                        val strokeWidthPx = 2.dp.toPx()
+                        val verticalOffset = 0f
+                        drawLine(
+                            color = category.getDisplayColor(),
+                            strokeWidth = strokeWidthPx,
+                            start = Offset(0f, verticalOffset),
+                            end = Offset(size.width, verticalOffset)
+                        )
+                    }
+                }
+                .rotate(180F),
             text = codePoint.toString(radix = 16).uppercase(),
             fontSize = 16.sp,
         )
+//        color?.let {
+//            Surface(
+//                modifier = Modifier
+//                    .align(Alignment.TopEnd)
+//                    .padding(all = 8.dp)
+//                    .size(
+//                        width = 4.dp,
+//                        height = 16.dp,
+//                    ),
+//                color = color,
+//                content = {},
+//            )
+//            Surface(
+//                modifier = Modifier
+//                    .align(Alignment.BottomStart)
+//                    .padding(all = 8.dp)
+//                    .size(
+//                        width = 4.dp,
+//                        height = 16.dp,
+//                    ),
+//                color = color,
+//                content = {},
+//            )
+//        }
     }
 }
 
