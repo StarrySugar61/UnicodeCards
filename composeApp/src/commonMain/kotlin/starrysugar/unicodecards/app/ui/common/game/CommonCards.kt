@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.material3.HorizontalDivider
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
@@ -51,17 +53,22 @@ import starrysugar.unicodecards.arch.utils.UnicodeUtils
  * @create 2024/6/17
  */
 
+private const val CARD_WIDTH = 150F
+private const val CARD_HEIGHT = 200F
+
 /**
  * A common unicode card!
  */
 @Composable
 fun UnicodeCard(
     modifier: Modifier = Modifier,
+    scale: Float = 1F,
     codePoint: Int,
     category: CharCategory? = null,
 ) {
     CardBorder(
-        modifier = modifier
+        modifier = modifier,
+        scale = scale,
     ) {
         CardContent(
             codePoint = codePoint,
@@ -76,9 +83,11 @@ fun UnicodeCard(
 @Composable
 fun UnicodeCardBack(
     modifier: Modifier = Modifier,
+    scale: Float = 1F,
 ) {
     CardBorder(
-        modifier = modifier
+        modifier = modifier,
+        scale = scale,
     ) {
         CardBackContent()
     }
@@ -90,23 +99,33 @@ fun UnicodeCardBack(
 @Composable
 fun UnicodeCardPlaceholder(
     modifier: Modifier = Modifier,
+    scale: Float = 1F,
     codePoint: Int,
 ) {
-    OutlinedCard(
+    Box(
         modifier = modifier.size(
-            width = 150.dp,
-            height = 200.dp,
+            width = (CARD_WIDTH * scale).dp,
+            height = (CARD_HEIGHT * scale).dp,
         ),
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
+        OutlinedCard(
+            modifier = Modifier
+                .scale(scale)
+                .requiredSize(
+                    width = CARD_WIDTH.dp,
+                    height = CARD_HEIGHT.dp,
+                ),
         ) {
-            Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = codePoint.toString(radix = 16).uppercase(),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.ExtraBold,
-            )
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = codePoint.toString(radix = 16).uppercase(),
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                )
+            }
         }
     }
 }
@@ -290,18 +309,28 @@ fun CharCategory.getDisplayColor(): Color = when (this) {
 @Composable
 private fun CardBorder(
     modifier: Modifier = Modifier,
+    scale: Float = 1F,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    OutlinedCard(
+    Box(
         modifier = modifier.size(
-            width = 150.dp,
-            height = 200.dp,
+            width = (CARD_WIDTH * scale).dp,
+            height = (CARD_HEIGHT * scale).dp,
         ),
     ) {
         OutlinedCard(
-            modifier = Modifier.fillMaxSize().padding(all = 4.dp),
-            content = content,
-        )
+            modifier = Modifier
+                .scale(scale)
+                .requiredSize(
+                    width = CARD_WIDTH.dp,
+                    height = CARD_HEIGHT.dp,
+                ),
+        ) {
+            OutlinedCard(
+                modifier = Modifier.fillMaxSize().padding(all = 4.dp),
+                content = content,
+            )
+        }
     }
 }
 

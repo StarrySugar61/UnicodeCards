@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +31,7 @@ import androidx.navigation.NavHostController
 import starrysugar.unicodecards.app.ui.base.AppScaffold
 import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCard
+import starrysugar.unicodecards.app.ui.common.game.UnicodeCardPlaceholder
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
 
@@ -68,16 +70,28 @@ fun DeckScreen(
         AppLazyPagingVerticalGrid(
             modifier = Modifier.padding(paddingValues = paddingValues),
             columns = GridCells.FixedSize(
-                size = 158.dp,
+                size = 98.dp,
             ),
             lazyPagingItems = cardsPagingFlow.collectAsLazyPagingItems(),
             horizontalArrangement = Arrangement.Center,
             itemContent = { _, item ->
-                UnicodeCard(
-                    modifier = Modifier.padding(all = 4.dp),
-                    codePoint = item.code_point.toInt(),
-                    category = item.category,
-                )
+                if (item.card_count == 0L) {
+                    UnicodeCardPlaceholder(
+                        modifier = Modifier
+                            .padding(all = 4.dp)
+                            .alpha(0.4F),
+                        scale = 0.6F,
+                        codePoint = item.code_point.toInt(),
+                    )
+                } else {
+                    UnicodeCard(
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        scale = 0.6F,
+                        codePoint = item.code_point.toInt(),
+                        category = item.category,
+                    )
+                }
             }
         )
     }
