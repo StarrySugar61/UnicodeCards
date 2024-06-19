@@ -25,3 +25,8 @@ setCardFontFor:
 UPDATE `uc_user_cards`
 SET `font_id`=:fontId
 WHERE `code_point` IN :codePoints;
+
+cardsCollected:
+SELECT COUNT(1)
+FROM uc_user_cards
+WHERE card_count;

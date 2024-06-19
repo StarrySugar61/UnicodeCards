@@ -12,6 +12,10 @@ CREATE TABLE `uc_unicode_data` (
 CREATE INDEX `uc_unicode_data_category` ON `uc_unicode_data`(`category`);
 CREATE INDEX `uc_unicode_data_bidi_class` ON `uc_unicode_data`(`bidi_class`);
 
+count:
+SELECT COUNT(1)
+FROM uc_unicode_data;
+
 insertData:
 INSERT OR REPLACE INTO `uc_unicode_data`(
     `code_point`,
@@ -20,6 +24,14 @@ INSERT OR REPLACE INTO `uc_unicode_data`(
     `combining`,
     `bidi_class`
 ) VALUES (?,?,?,?,?);
+
+queryDataByIndexWithUserData:
+SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
+uc_unicode_data.combining, uc_unicode_data.bidi_class,
+IFNULL(uc_user_cards.card_count, 0) AS `card_count`
+FROM `uc_unicode_data`
+LEFT JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
+LIMIT 1 OFFSET :index;
 
 queryDataByCodeWithUserData:
 SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
