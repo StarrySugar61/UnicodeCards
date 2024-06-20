@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
@@ -42,6 +44,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import starrysugar.unicodecards.app.ui.theme.AppColors
@@ -58,6 +61,10 @@ private const val CARD_HEIGHT = 200F
 
 /**
  * A common unicode card!
+ *
+ * @param valueCover When this value exists,
+ *                   it will replace the character display on the card with alpha of 0.4!
+ *                   see example 4 and 5.
  */
 @Composable
 fun UnicodeCard(
@@ -65,6 +72,7 @@ fun UnicodeCard(
     scale: Float = 1F,
     codePoint: Int,
     category: CharCategory? = null,
+    valueCover: String? = null,
 ) {
     CardBorder(
         modifier = modifier,
@@ -73,6 +81,7 @@ fun UnicodeCard(
         CardContent(
             codePoint = codePoint,
             category = category,
+            valueCover = valueCover,
         )
     }
 }
@@ -141,8 +150,8 @@ fun UnicodeCardPack(
     cardCount: Int,
 ) {
     OutlinedCard(
-        modifier = modifier.size(
-            width = 180.dp,
+        modifier = modifier.requiredSize(
+            width = 190.dp,
             height = 270.dp,
         ),
         shape = cardPackShape,
@@ -211,6 +220,52 @@ fun UnicodeCardPack(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             repeat(20) {
+                VerticalDivider()
+            }
+        }
+    }
+}
+
+@Composable
+fun UnicodeCardPackEndPart(
+    modifier: Modifier = Modifier
+) {
+
+    OutlinedCard(
+        modifier = modifier.requiredSize(
+            width = 30.dp,
+            height = 270.dp,
+        ),
+        shape = openCardPackEndPartShape,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(4) {
+                VerticalDivider()
+            }
+        }
+        HorizontalDivider()
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(8F)
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp,
+                ),
+        )
+        HorizontalDivider()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(4) {
                 VerticalDivider()
             }
         }
@@ -339,15 +394,36 @@ private fun CardBorder(
 private fun CardContent(
     codePoint: Int,
     category: CharCategory? = null,
+    valueCover: String? = null,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = UnicodeUtils.charToString(codePoint),
-            fontSize = 80.sp,
-        )
+        if (valueCover == null) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                text = UnicodeUtils.charToString(codePoint),
+                fontSize = 80.sp,
+                textAlign = TextAlign.Center,
+            )
+        } else {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .alpha(0.4F)
+                    .padding(horizontal = 4.dp),
+                text = valueCover,
+                fontSize = when (valueCover.length) {
+                    5 -> 36.sp
+                    6 -> 32.sp
+                    7 -> 28.sp
+                    8 -> 24.sp
+                    else -> 40.sp
+                },
+                textAlign = TextAlign.Center,
+            )
+        }
         Text(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -438,7 +514,7 @@ private fun CardBackContent() {
     }
 }
 
-private val cardPackShape = GenericShape { size, layoutDirection ->
+private val cardPackShape = GenericShape { size, _ ->
     val sideHeight = size.height / 10
     val curve = size.width / 20
     moveTo(0F, 0F)
@@ -468,4 +544,26 @@ private val cardPackShape = GenericShape { size, layoutDirection ->
         },
         PathOperation.Xor,
     )
+}
+
+private val openCardPackEndPartShape = GenericShape { size, layoutDirection ->
+    val start = when (layoutDirection) {
+        LayoutDirection.Ltr -> 0f
+        LayoutDirection.Rtl -> size.width
+    }
+    val end = when (layoutDirection) {
+        LayoutDirection.Ltr -> size.width
+        LayoutDirection.Rtl -> 0f
+    }
+    val sideHeight = size.height / 10
+    val curve = size.width / 3
+    moveTo(start, 0f)
+    lineTo(end, 0f)
+    lineTo(end, sideHeight)
+    lineTo(end - curve, sideHeight + curve)
+    lineTo(end - curve, size.height - sideHeight - curve)
+    lineTo(end, size.height - sideHeight)
+    lineTo(end, size.height)
+    lineTo(start, size.height)
+    close()
 }

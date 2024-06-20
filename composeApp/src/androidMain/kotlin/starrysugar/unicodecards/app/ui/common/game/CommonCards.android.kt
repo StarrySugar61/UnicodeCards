@@ -58,6 +58,26 @@ private fun UnicodeCardExample3() {
 
 @Composable
 @Preview
+private fun UnicodeCardExample4() {
+    UnicodeCard(
+        codePoint = 0xfeff,
+        category = CharCategory.Cf,
+        valueCover = "<ZWNBSP>",
+    )
+}
+
+@Composable
+@Preview
+private fun UnicodeCardExample5() {
+    UnicodeCard(
+        codePoint = 0x200c,
+        category = CharCategory.Cf,
+        valueCover = "<ZWNC>",
+    )
+}
+
+@Composable
+@Preview
 private fun UnicodeCardBackPreview() {
     UnicodeCardBack()
 }
@@ -108,6 +128,12 @@ private fun UnicodeCardPackExample3() {
         packName = "Emoji Pack",
         cardCount = 10,
     )
+}
+
+@Preview
+@Composable
+private fun UnicodeCardPackEndPartExample() {
+    UnicodeCardPackEndPart()
 }
 
 @Composable
