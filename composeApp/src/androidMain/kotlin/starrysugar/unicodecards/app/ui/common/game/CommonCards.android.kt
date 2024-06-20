@@ -35,6 +35,7 @@ private fun UnicodeCardExample1() {
     UnicodeCard(
         codePoint = 0x21,
         category = CharCategory.Po,
+        count = 2,
     )
 }
 

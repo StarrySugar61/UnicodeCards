@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.material3.Badge
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -73,10 +74,12 @@ fun UnicodeCard(
     codePoint: Int,
     category: CharCategory? = null,
     valueCover: String? = null,
+    count: Int = 0,
 ) {
     CardBorder(
         modifier = modifier,
         scale = scale,
+        count = count,
     ) {
         CardContent(
             codePoint = codePoint,
@@ -365,6 +368,7 @@ fun CharCategory.getDisplayColor(): Color = when (this) {
 private fun CardBorder(
     modifier: Modifier = Modifier,
     scale: Float = 1F,
+    count: Int = 0,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Box(
@@ -385,6 +389,19 @@ private fun CardBorder(
                 modifier = Modifier.fillMaxSize().padding(all = 4.dp),
                 content = content,
             )
+        }
+        if (count > 1) {
+            Badge(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(
+                        bottom = 6.dp,
+                    )
+            ) {
+                Text(
+                    text = "×$count",
+                )
+            }
         }
     }
 }

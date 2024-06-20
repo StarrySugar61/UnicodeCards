@@ -91,6 +91,7 @@ fun DeckScreen(
                         codePoint = item.code_point.toInt(),
                         category = item.category,
                         valueCover = item.cover,
+                        count = item.card_count.toInt(),
                     )
                 }
             }
