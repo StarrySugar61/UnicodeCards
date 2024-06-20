@@ -169,6 +169,32 @@ object UnicodeInitializer : KoinComponent {
                         }
                     }
                 }
+
+            // Correct names and add value cover from name aliases!
+            Res.readBytes("files/UCD/NameAliases.txt")
+                .decodeToString()
+                .lineSequence()
+                .filterNot {
+                    it.isBlank() || it.startsWith('#')
+                }
+                .forEach {
+                    val split = it.split(';')
+                    val type = split.getOrNull(2)?.trim() ?: return@forEach
+                    val name = split.getOrNull(1)?.trim() ?: return@forEach
+                    val codeString = split.getOrNull(0)?.trim() ?: return@forEach
+                    val codeValue = codeString.toIntOrNull(radix = 16) ?: return@forEach
+                    when (type) {
+                        "correction",
+                        "control",
+                        "figment" -> {
+                            dataQueries.updateNameFor(name = name, CodePoint = codeValue.toLong())
+                        }
+
+                        "abbreviation" -> {
+                            dataQueries.updateCoverFor(cover = name, CodePoint = codeValue.toLong())
+                        }
+                    }
+                }
             // Update version!
             dataStore.edit { prefs ->
                 prefs[AppDataStoreKeys.KEY_DATA_CHAR_VERSION] = DATA_CHAR_VERSION

@@ -62,7 +62,7 @@ private fun UnicodeCardExample4() {
     UnicodeCard(
         codePoint = 0xfeff,
         category = CharCategory.Cf,
-        valueCover = "<ZWNBSP>",
+        valueCover = "ZWNBSP",
     )
 }
 
@@ -72,7 +72,7 @@ private fun UnicodeCardExample5() {
     UnicodeCard(
         codePoint = 0x200c,
         category = CharCategory.Cf,
-        valueCover = "<ZWNC>",
+        valueCover = "ZWNC",
     )
 }
 

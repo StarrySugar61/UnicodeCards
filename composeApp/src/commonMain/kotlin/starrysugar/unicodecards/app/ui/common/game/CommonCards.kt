@@ -415,10 +415,8 @@ private fun CardContent(
                     .padding(horizontal = 4.dp),
                 text = valueCover,
                 fontSize = when (valueCover.length) {
-                    5 -> 36.sp
-                    6 -> 32.sp
-                    7 -> 28.sp
-                    8 -> 24.sp
+                    5 -> 35.sp
+                    6 -> 30.sp
                     else -> 40.sp
                 },
                 textAlign = TextAlign.Center,

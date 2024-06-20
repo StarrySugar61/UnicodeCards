@@ -6,7 +6,8 @@ CREATE TABLE `uc_unicode_data` (
 `name` TEXT NOT NULL,
 `category` TEXT AS CharCategory NOT NULL,
 `combining` INTEGER NOT NULL,
-`bidi_class` TEXT AS CharBidiClass NOT NULL
+`bidi_class` TEXT AS CharBidiClass NOT NULL,
+`cover` TEXT DEFAULT NULL
 );
 
 CREATE INDEX `uc_unicode_data_category` ON `uc_unicode_data`(`category`);
@@ -24,6 +25,16 @@ INSERT OR REPLACE INTO `uc_unicode_data`(
     `combining`,
     `bidi_class`
 ) VALUES (?,?,?,?,?);
+
+updateNameFor:
+UPDATE `uc_unicode_data`
+SET `name`=:name
+WHERE `code_point`=:CodePoint;
+
+updateCoverFor:
+UPDATE `uc_unicode_data`
+SET `cover`=:cover
+WHERE `code_point`=:CodePoint;
 
 queryDataByIndexWithUserData:
 SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
@@ -43,7 +54,7 @@ WHERE `uc_unicode_data`.`code_point`=?;
 
 queryDataPagingByBlockWithUserData:
 SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,
-uc_unicode_data.combining, uc_unicode_data.bidi_class,
+uc_unicode_data.combining, uc_unicode_data.bidi_class, uc_unicode_data.cover,
 IFNULL(uc_user_cards.card_count, 0) AS `card_count`
 FROM `uc_unicode_data`
 LEFT JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
