@@ -90,6 +90,7 @@ fun DeckScreen(
                         scale = 0.6F,
                         codePoint = item.code_point.toInt(),
                         category = item.category,
+                        valueCover = item.cover,
                     )
                 }
             }
