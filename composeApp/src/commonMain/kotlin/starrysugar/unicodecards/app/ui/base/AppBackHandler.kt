@@ -28,3 +28,11 @@ expect fun AppBackHandler(
     enabled: Boolean = true,
     onBack: () -> Unit,
 )
+
+/**
+ * Block the back button on Android!
+ */
+@Composable
+fun BlockBackPressed(
+    enabled: Boolean = true,
+) = AppBackHandler(enabled) {}

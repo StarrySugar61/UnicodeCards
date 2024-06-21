@@ -15,6 +15,7 @@
 package starrysugar.unicodecards.appdata.models.pack
 
 import org.koin.core.component.KoinComponent
+import starrysugar.unicodecards.appdata.database.table.QueryDataByIndexWithUserData
 
 /**
  * Card pack of the game!
@@ -36,12 +37,5 @@ interface CardPack : KoinComponent {
     /**
      * Collected a card from this pack!
      */
-    fun collectCards(
-        count: Int
-    ): List<CardResult>
-
-    data class CardResult(
-        val codePoint: Int,
-        val isNew: Boolean,
-    )
+    fun collectCards(count: Int): List<QueryDataByIndexWithUserData>
 }

@@ -15,6 +15,7 @@
 package starrysugar.unicodecards.appdata.models.pack
 
 import org.koin.core.component.inject
+import starrysugar.unicodecards.appdata.database.table.QueryDataByIndexWithUserData
 import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
 import starrysugar.unicodecards.appdata.database.table.UserCardsQueries
 import kotlin.random.Random
@@ -32,8 +33,8 @@ data class CommonCardPack(
 
     private val _userCardsQueries: UserCardsQueries by inject()
 
-    override fun collectCards(count: Int): List<CardPack.CardResult> {
-        val results = ArrayList<CardPack.CardResult>()
+    override fun collectCards(count: Int): List<QueryDataByIndexWithUserData> {
+        val results = ArrayList<QueryDataByIndexWithUserData>()
         val totalCount = _unicodeDataQueries.count().executeAsOneOrNull() ?: 0
         val collected = _userCardsQueries.cardsCollected().executeAsOneOrNull() ?: 0
         // User can collect the first 96 plus types of currently owned cards
@@ -42,12 +43,7 @@ data class CommonCardPack(
             val newCard = _unicodeDataQueries.queryDataByIndexWithUserData(
                 index = Random.nextLong(cardsAvailable)
             ).executeAsOneOrNull() ?: return@repeat
-            results.add(
-                CardPack.CardResult(
-                    codePoint = newCard.code_point.toInt(),
-                    isNew = newCard.card_count == 0L,
-                ),
-            )
+            results.add(newCard)
             _userCardsQueries.receivedCardFor(newCard.code_point)
         }
         return results

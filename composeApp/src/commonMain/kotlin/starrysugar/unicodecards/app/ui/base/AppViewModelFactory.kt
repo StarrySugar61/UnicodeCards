@@ -17,6 +17,7 @@ package starrysugar.unicodecards.app.ui.base
 import androidx.lifecycle.viewmodel.viewModelFactory
 import starrysugar.unicodecards.app.ui.main.cards.deck.DeckViewModel
 import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointViewModel
+import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackViewModel
 
 /**
  * @author StarrySugar61
@@ -31,6 +32,13 @@ val appViewModelFactory = viewModelFactory {
     addInitializer(CodePointViewModel::class) {
         CodePointViewModel(
             codePoint = this[CodePointViewModel.CodePointKey]!!
+        )
+    }
+
+    addInitializer(OpenPackViewModel::class) {
+        OpenPackViewModel(
+            packID = this[OpenPackViewModel.PackIDKey]!!,
+            count = this[OpenPackViewModel.CountKey]!!,
         )
     }
 }

@@ -45,7 +45,6 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import starrysugar.unicodecards.app.ui.theme.AppColors
@@ -66,6 +65,7 @@ private const val CARD_HEIGHT = 200F
  * @param valueCover When this value exists,
  *                   it will replace the character display on the card with alpha of 0.4!
  *                   see example 4 and 5.
+ * @param count Cards owned for this code point! Shows "NEW!" when value == -1
  */
 @Composable
 fun UnicodeCard(
@@ -148,6 +148,7 @@ fun UnicodeCardPlaceholder(
 @Composable
 fun UnicodeCardPack(
     modifier: Modifier = Modifier,
+    isOpened: Boolean = false,
     sampleCodePoint: Int,
     packName: String,
     cardCount: Int,
@@ -157,7 +158,11 @@ fun UnicodeCardPack(
             width = 190.dp,
             height = 270.dp,
         ),
-        shape = cardPackShape,
+        shape = if (isOpened) {
+            openCardPackStartPartShape
+        } else {
+            cardPackShape
+        },
     ) {
         Row(
             modifier = Modifier
@@ -390,7 +395,19 @@ private fun CardBorder(
                 content = content,
             )
         }
-        if (count > 1) {
+        if (count == -1) {
+            Badge(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(
+                        bottom = 6.dp,
+                    )
+            ) {
+                Text(
+                    text = "NEW!",
+                )
+            }
+        } else if (count > 1) {
             Badge(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -530,20 +547,22 @@ private fun CardBackContent() {
 }
 
 private val cardPackShape = GenericShape { size, _ ->
+    val start = 0f
+    val end = size.width
     val sideHeight = size.height / 10
     val curve = size.width / 20
-    moveTo(0F, 0F)
-    lineTo(size.width, 0F)
-    lineTo(size.width, sideHeight)
+    moveTo(start, 0F)
+    lineTo(end, 0F)
+    lineTo(end, sideHeight)
     lineTo(size.width - curve, sideHeight + curve)
     lineTo(size.width - curve, size.height - sideHeight - curve)
-    lineTo(size.width, size.height - sideHeight)
-    lineTo(size.width, size.height)
-    lineTo(0F, size.height)
-    lineTo(0F, size.height - sideHeight)
+    lineTo(end, size.height - sideHeight)
+    lineTo(end, size.height)
+    lineTo(start, size.height)
+    lineTo(start, size.height - sideHeight)
     lineTo(curve, size.height - sideHeight - curve)
     lineTo(curve, sideHeight + curve)
-    lineTo(0F, sideHeight)
+    lineTo(start, sideHeight)
     close()
     op(
         this,
@@ -561,15 +580,40 @@ private val cardPackShape = GenericShape { size, _ ->
     )
 }
 
-private val openCardPackEndPartShape = GenericShape { size, layoutDirection ->
-    val start = when (layoutDirection) {
-        LayoutDirection.Ltr -> 0f
-        LayoutDirection.Rtl -> size.width
-    }
-    val end = when (layoutDirection) {
-        LayoutDirection.Ltr -> size.width
-        LayoutDirection.Rtl -> 0f
-    }
+private val openCardPackStartPartShape = GenericShape { size, _ ->
+    val start = 0f
+    val end = size.width
+    val sideHeight = size.height / 10
+    val curve = size.width / 20
+    val opened = curve * 3
+    moveTo(start, 0F)
+    lineTo(end - opened, 0F)
+    lineTo(end - opened, size.height)
+    lineTo(start, size.height)
+    lineTo(start, size.height - sideHeight)
+    lineTo(curve, size.height - sideHeight - curve)
+    lineTo(curve, sideHeight + curve)
+    lineTo(start, sideHeight)
+    close()
+    op(
+        this,
+        Path().apply {
+            addOval(
+                Rect(
+                    size.width / 2 - sideHeight / 4,
+                    sideHeight / 4,
+                    size.width / 2 + sideHeight / 4,
+                    sideHeight * 3 / 4,
+                )
+            )
+        },
+        PathOperation.Xor,
+    )
+}
+
+private val openCardPackEndPartShape = GenericShape { size, _ ->
+    val start = 0f
+    val end = size.width
     val sideHeight = size.height / 10
     val curve = size.width / 3
     moveTo(start, 0f)

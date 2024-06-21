@@ -14,6 +14,8 @@
  */
 package starrysugar.unicodecards.appdata.models.pack
 
+import starrysugar.unicodecards.appdata.database.table.QueryDataByIndexWithUserData
+
 /**
  * @author StarrySugar61
  * @create 2024/6/20
@@ -24,7 +26,7 @@ class CategoryCardPack : CardPack {
     override val sampleCodePoint: Int
         get() = TODO("Not yet implemented")
 
-    override fun collectCards(count: Int): List<CardPack.CardResult> {
+    override fun collectCards(count: Int): List<QueryDataByIndexWithUserData> {
         TODO("Not yet implemented")
     }
 }
