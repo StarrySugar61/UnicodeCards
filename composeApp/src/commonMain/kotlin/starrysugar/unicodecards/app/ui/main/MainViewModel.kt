@@ -14,6 +14,9 @@
  */
 package starrysugar.unicodecards.app.ui.main
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -31,12 +34,29 @@ class MainViewModel : BaseViewModel() {
 
     private val database: Database by inject()
 
+    var currentStep by mutableStateOf(0)
+        private set
+    var totalSteps by mutableStateOf(0)
+        private set
+    var progress by mutableStateOf(1)
+        private set
+    var maxProgress by mutableStateOf(1)
+        private set
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             // Test
             database.userCardsQueries.setCardFontFor(0, emptySet())
             // Initialize unicode data
-            UnicodeInitializer.importUnicodeDataTo(database)
+            UnicodeInitializer.importUnicodeDataTo(
+                database,
+                onProgress = { i1, i2, i3, i4 ->
+                    currentStep = i1
+                    totalSteps = i2
+                    progress = i3
+                    maxProgress = i4
+                }
+            )
         }
     }
 
