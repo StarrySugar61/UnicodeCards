@@ -37,8 +37,8 @@ data class CommonCardPack(
         val results = ArrayList<QueryDataByIndexWithUserData>()
         val totalCount = _unicodeDataQueries.count().executeAsOneOrNull() ?: 0
         val collected = _userCardsQueries.cardsCollected().executeAsOneOrNull() ?: 0
-        // User can collect the first 96 plus types of currently owned cards
-        val cardsAvailable = (collected + 96).coerceAtMost(totalCount)
+        // User can collect the first 96 plus types of currently owned cards * 1.1
+        val cardsAvailable = ((collected * 1.1f) + 96).toLong().coerceAtMost(totalCount)
         repeat(count) {
             val newCard = _unicodeDataQueries.queryDataByIndexWithUserData(
                 index = Random.nextLong(cardsAvailable)
