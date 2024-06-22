@@ -52,9 +52,10 @@ kotlin = "2.0.0"
 cashapp-sqldelight = "2.0.2"
 compose-lifecycle-viewmodel-compose = "2.8.0"
 compose-navigation-compose = "2.7.0-alpha07"
-pagingComposeAndroid = "3.3.0"
 ##                      ⬆ = "2.8.0-alpha01"
 ##                      ⬆ = "2.8.0-alpha02"
+pagingComposeAndroid = "3.3.0"
+kotlinxDatetime = "0.6.0"
 
 [libraries]
 
@@ -81,3 +82,4 @@ cashapp-sqldelight-paging3-extensions = { module = "app.cash.sqldelight:androidx
 compose-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose-lifecycle-viewmodel-compose" }
 compose-navigation-compose = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation-compose" }
 androidx-paging-compose-android = { group = "androidx.paging", name = "paging-compose-android", version.ref = "pagingComposeAndroid" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
