@@ -303,6 +303,7 @@ fun UnicodeCardDeck(
     modifier: Modifier = Modifier,
     codePoint: Int,
     category: CharCategory? = null,
+    valueCover: String? = null,
 ) {
     Box(
         modifier = modifier,
@@ -332,6 +333,7 @@ fun UnicodeCardDeck(
                     .rotate(-5F),
                 codePoint = codePoint,
                 category = category,
+                valueCover = valueCover,
             )
         }
     }

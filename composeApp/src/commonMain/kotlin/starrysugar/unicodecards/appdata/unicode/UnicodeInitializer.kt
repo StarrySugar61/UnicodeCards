@@ -313,10 +313,20 @@ object UnicodeInitializer : KoinComponent {
                         val codePointStart = range.first.toLong()
                         val codePointEnd = range.last.toLong()
                         blocksQueries.insertBlock(
-                            code_point_start = codePointStart,
-                            code_point_end = codePointEnd,
-                            block_name = name,
-                            char_count = dataQueries
+                            start = codePointStart,
+                            end = codePointEnd,
+                            name = name,
+                            // We use the first letter of a block as example char!
+                            // If there are no letters exists in a block,
+                            // uses the first char instead!
+                            example = dataQueries
+                                .queryFirstLetterByBlock(codePointStart, codePointEnd)
+                                .executeAsOneOrNull()
+                                ?: dataQueries
+                                    .queryFirstCharByBlock(codePointStart, codePointEnd)
+                                    .executeAsOneOrNull()
+                                ?: codePointStart,
+                            count = dataQueries
                                 .queryBlockDataCount(codePointStart, codePointEnd)
                                 .executeAsOne()
                         )

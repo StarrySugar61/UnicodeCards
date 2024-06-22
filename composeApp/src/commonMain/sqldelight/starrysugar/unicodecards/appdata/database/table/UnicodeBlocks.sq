@@ -2,6 +2,7 @@ CREATE TABLE `uc_unicode_blocks` (
 `code_point_start` INTEGER PRIMARY KEY NOT NULL,
 `code_point_end` INTEGER NOT NULL,
 `block_name` TEXT NOT NULL,
+`example_char` INTEGER NOT NULL,
 `char_count` INTEGER NOT NULL DEFAULT 0
 );
 
@@ -16,8 +17,15 @@ INSERT OR REPLACE INTO `uc_unicode_blocks`(
     `code_point_start`,
     `code_point_end`,
     `block_name`,
+    `example_char`,
     `char_count`
-) VALUES(?,?,?,?);
+) VALUES(
+    :start,
+    :end,
+    :name,
+    :example,
+    :count
+);
 
 queryAllBlocks:
 SELECT *
@@ -35,8 +43,10 @@ FROM `uc_unicode_blocks`
 WHERE `code_point_start`=?;
 
 queryBlockPagingWithCollected:
-SELECT b.code_point_start, b.code_point_end, b.block_name, b.char_count, COUNT(c.code_point) AS `collected`
+SELECT b.code_point_start, b.code_point_end, b.block_name, b.char_count, b.example_char,
+COUNT(c.code_point) AS `collected`, d.category AS `category`, d.cover AS `cover`
 FROM `uc_unicode_blocks` AS b
+LEFT JOIN uc_unicode_data AS d ON b.example_char=d.code_point
 LEFT JOIN `uc_user_cards` AS c ON (c.code_point BETWEEN b.code_point_start AND b.code_point_end)
 AND c.card_count
 GROUP BY b.code_point_start

@@ -119,10 +119,12 @@ private fun DeckItem(
             modifier = Modifier
                 .scale(0.7F),
             codePoint = if (isDeckUnlocked) {
-                item.code_point_start.toInt()
+                item.example_char.toInt()
             } else {
                 -1
             },
+            category = item.category,
+            valueCover = item.cover,
         )
         // Collecting progress!
         LinearProgressIndicator(

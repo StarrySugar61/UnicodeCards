@@ -66,5 +66,17 @@ SELECT COUNT(1)
 FROM `uc_unicode_data`
 WHERE `code_point` BETWEEN ? AND ?;
 
+queryFirstLetterByBlock:
+SELECT `code_point`
+FROM `uc_unicode_data`
+WHERE (`code_point` BETWEEN ? AND ?) AND (`category` LIKE 'L_')
+LIMIT 1;
+
+queryFirstCharByBlock:
+SELECT `code_point`
+FROM `uc_unicode_data`
+WHERE `code_point` BETWEEN ? AND ?
+LIMIT 1;
+
 clear:
 DELETE FROM `uc_unicode_data` WHERE 1;
