@@ -30,6 +30,10 @@ object CardPacks {
             name = "Free Pack",
             sampleCodePoint = 0x1f381, // 🎁
         )
+        d[1] = CommonCardPack(
+            name = "Welcome Pack",
+            sampleCodePoint = 0x1f389, // 🎉
+        )
         d
     }
 

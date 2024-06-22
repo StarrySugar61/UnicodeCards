@@ -12,9 +12,24 @@
     <string name="market_click_me">点我点我！</string>
     <string name="market_pack_obtained">您获得了以下卡牌！</string>
 
+    <string name="market_welcome_pack_line_1">欢迎来到Unicode Cards！</string>
+    <string name="market_welcome_pack_line_2">免费领取迎新卡包，内含%1$d张卡！</string>
+
+    <string name="market_free_pack">免费卡包！（%1$d张卡）</string>
+    <plurals name="market_free_count">
+        <item quantity="other">当前已存%1$d包！</item>
+    </plurals>
+    >
+    <string name="market_free_refill">距离下次可领取还有：%1$s</string>
+
     <string name="info">提示</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="skip">跳过</string>
     <string name="coming_soon">敬请期待</string>
+
+    <string name="time_dh">%1$d天%2$d小时</string>
+    <string name="time_hm">%1$d小时%2$d分钟</string>
+    <string name="time_ms">%1$d分钟%2$d秒</string>
+    <string name="time_s">%1$d秒</string>
 </resources>

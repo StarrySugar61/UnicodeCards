@@ -58,6 +58,8 @@ import starrysugar.unicodecards.arch.utils.UnicodeUtils
 
 private const val CARD_WIDTH = 150F
 private const val CARD_HEIGHT = 200F
+private const val PACK_WIDTH = 190F
+private const val PACK_HEIGHT = 270F
 
 /**
  * A common unicode card!
@@ -148,87 +150,97 @@ fun UnicodeCardPlaceholder(
 @Composable
 fun UnicodeCardPack(
     modifier: Modifier = Modifier,
+    scale: Float = 1F,
     isOpened: Boolean = false,
     sampleCodePoint: Int,
     packName: String,
     cardCount: Int,
 ) {
-    OutlinedCard(
-        modifier = modifier.requiredSize(
-            width = 190.dp,
-            height = 270.dp,
+    Box(
+        modifier = modifier.size(
+            width = (PACK_WIDTH * scale).dp,
+            height = (PACK_HEIGHT * scale).dp,
         ),
-        shape = if (isOpened) {
-            openCardPackStartPartShape
-        } else {
-            cardPackShape
-        },
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1F),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            repeat(20) {
-                VerticalDivider()
-            }
-        }
-        HorizontalDivider()
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(8F)
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 8.dp,
+        OutlinedCard(
+            modifier = modifier
+                .scale(scale)
+                .requiredSize(
+                    width = 190.dp,
+                    height = 270.dp,
                 ),
+            shape = if (isOpened) {
+                openCardPackStartPartShape
+            } else {
+                cardPackShape
+            },
         ) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopStart),
-                text = "UNICODE CARDS",
-                fontSize = 12.sp,
-            )
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 32.dp),
-                text = UnicodeUtils.charToString(sampleCodePoint),
-                fontSize = 80.sp,
-            )
-            Text(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 48.dp),
-                text = packName,
-                textAlign = TextAlign.Center,
-                fontSize = 14.sp,
-            )
-            Text(
+                    .weight(1F),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                repeat(20) {
+                    VerticalDivider()
+                }
+            }
+            HorizontalDivider()
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(bottom = 11.dp),
-                text = "$cardCount Cards",
-                fontSize = 11.sp,
-            )
-            Text(
+                    .fillMaxWidth()
+                    .weight(8F)
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp,
+                    ),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.TopStart),
+                    text = "UNICODE CARDS",
+                    fontSize = 12.sp,
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(bottom = 32.dp),
+                    text = UnicodeUtils.charToString(sampleCodePoint),
+                    fontSize = 80.sp,
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 48.dp),
+                    text = packName,
+                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp,
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(bottom = 11.dp),
+                    text = "$cardCount Cards",
+                    fontSize = 11.sp,
+                )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart),
+                    text = "Per Pack",
+                    fontSize = 11.sp,
+                )
+            }
+            HorizontalDivider()
+            Row(
                 modifier = Modifier
-                    .align(Alignment.BottomStart),
-                text = "Per Pack",
-                fontSize = 11.sp,
-            )
-        }
-        HorizontalDivider()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1F),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            repeat(20) {
-                VerticalDivider()
+                    .fillMaxWidth()
+                    .weight(1F),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                repeat(20) {
+                    VerticalDivider()
+                }
             }
         }
     }
@@ -238,7 +250,6 @@ fun UnicodeCardPack(
 fun UnicodeCardPackEndPart(
     modifier: Modifier = Modifier
 ) {
-
     OutlinedCard(
         modifier = modifier.requiredSize(
             width = 30.dp,

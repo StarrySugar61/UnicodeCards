@@ -14,7 +14,14 @@
  */
 package starrysugar.unicodecards.arch.utils
 
+import androidx.compose.runtime.Composable
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.time_dh
+import starrysugar.unicodecards.time_hm
+import starrysugar.unicodecards.time_ms
+import starrysugar.unicodecards.time_s
 
 /**
  * @author StarrySugar61
@@ -23,5 +30,45 @@ import kotlinx.datetime.Clock
 object TimeUtils {
 
     fun currentTimeMillis(): Long = Clock.System.now().toEpochMilliseconds()
+
+    @Composable
+    fun millisToString(
+        millis: Long,
+    ): String {
+        val day = millis / DAY
+        val hour = (millis % DAY) / HOUR
+        if (day > 0) {
+            return stringResource(
+                resource = Res.string.time_dh,
+                day,
+                hour
+            )
+        }
+        val minute = (millis % HOUR) / MINUTE
+        if (hour > 0) {
+            return stringResource(
+                resource = Res.string.time_hm,
+                hour,
+                minute,
+            )
+        }
+        val second = (millis % MINUTE) / SECOND
+        if (minute > 0) {
+            return stringResource(
+                resource = Res.string.time_ms,
+                minute,
+                second,
+            )
+        }
+        return stringResource(
+            resource = Res.string.time_s,
+            second,
+        )
+    }
+
+    private const val SECOND = 1000L
+    private const val MINUTE = 60L * SECOND
+    private const val HOUR = 60L * MINUTE
+    private const val DAY = 24L * HOUR
 
 }

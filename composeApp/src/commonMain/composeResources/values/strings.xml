@@ -12,9 +12,24 @@
     <string name="market_click_me">Click me!</string>
     <string name="market_pack_obtained">You have obtained the following cards!</string>
 
+    <string name="market_welcome_pack_line_1">Welcome to Unicode Cards!</string>
+    <string name="market_welcome_pack_line_2">Claim this welcome pack with %1$d cards for free!</string>
+
+    <string name="market_free_pack">Free pack! (%1$d cards)</string>
+    <plurals name="market_free_count">
+        <item quantity="one">%1$d pack is waiting to be claimed!</item>
+        <item quantity="other">%1$d packs are waiting to be claimed!</item>
+    </plurals>
+    <string name="market_free_refill">Next pack will be available after %1$s!</string>
+
     <string name="info">Info</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="skip">Skip</string>
     <string name="coming_soon">Coming soon</string>
+
+    <string name="time_dh">%1$dD %2$dH</string>
+    <string name="time_hm">%1$dH %2$dM</string>
+    <string name="time_ms">%1$dM %2$dS</string>
+    <string name="time_s">%1$dS</string>
 </resources>
