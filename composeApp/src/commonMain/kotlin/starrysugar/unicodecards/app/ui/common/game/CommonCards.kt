@@ -445,10 +445,15 @@ private fun CardContent(
         modifier = Modifier.fillMaxSize()
     ) {
         if (valueCover == null) {
+            val char = UnicodeUtils.charToString(codePoint)
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = UnicodeUtils.charToString(codePoint),
+                text = if (category == CharCategory.Mn) {
+                    "◌$char"
+                } else {
+                    char
+                },
                 fontSize = 80.sp,
                 textAlign = TextAlign.Center,
             )
