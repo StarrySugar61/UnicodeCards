@@ -23,8 +23,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.common.AppInitializer
 import starrysugar.unicodecards.appdata.database.Database
-import starrysugar.unicodecards.appdata.unicode.UnicodeInitializer
 
 /**
  * @author StarrySugar61
@@ -48,7 +48,7 @@ class MainViewModel : BaseViewModel() {
             // Test
             database.userCardsQueries.setCardFontFor(0, emptySet())
             // Initialize unicode data
-            UnicodeInitializer.importUnicodeDataTo(
+            AppInitializer.importAppDataTo(
                 database,
                 onProgress = { i1, i2, i3, i4 ->
                     currentStep = i1

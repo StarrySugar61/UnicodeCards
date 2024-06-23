@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
  */
-package starrysugar.unicodecards.appdata.unicode
+package starrysugar.unicodecards.appdata.common
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -22,16 +22,20 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.appdata.configs.AppConfigs
 import starrysugar.unicodecards.appdata.database.Database
 import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
+import starrysugar.unicodecards.appdata.unicode.CharBidiClass
+import starrysugar.unicodecards.appdata.unicode.CharCategory
+import starrysugar.unicodecards.arch.utils.TimeUtils
 
 /**
- * Initialize unicode data to database!
+ * Initialize app data to database!
  *
  * @author StarrySugar61
  * @create 2024/6/16
  */
-object UnicodeInitializer : KoinComponent {
+object AppInitializer : KoinComponent {
 
     private const val DATA_SCRIPT_VERSION = 1
     private const val DATA_CHAR_VERSION = 1
@@ -41,7 +45,7 @@ object UnicodeInitializer : KoinComponent {
 
     // TODO Optimize database importing!
     @OptIn(ExperimentalResourceApi::class)
-    suspend fun importUnicodeDataTo(
+    suspend fun importAppDataTo(
         database: Database,
         onProgress: (
             currentStep: Int,
@@ -54,7 +58,7 @@ object UnicodeInitializer : KoinComponent {
         val currentScriptVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_SCRIPT_VERSION) ?: 0
         val currentCharVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_CHAR_VERSION) ?: 0
         val currentBlockVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_BLOCK_VERSION) ?: 0
-        var totalSteps = 0
+        var totalSteps = 1
         var currentStep = 0
         if (currentScriptVersion < DATA_SCRIPT_VERSION) {
             totalSteps += 2
@@ -65,6 +69,10 @@ object UnicodeInitializer : KoinComponent {
         if (currentBlockVersion < DATA_BLOCK_VERSION) {
             totalSteps++
         }
+
+        initPreferences(preferences)
+        currentStep++
+
         if (currentScriptVersion < DATA_SCRIPT_VERSION) {
             // Read iso 15924
             currentStep++
@@ -340,6 +348,21 @@ object UnicodeInitializer : KoinComponent {
         // Finish!
         currentStep++
         onProgress(currentStep, totalSteps, 1, 1)
+    }
+
+    private suspend fun initPreferences(prefs: Preferences?) {
+        // Initialize free pack!
+        val freePackFullTime =
+            prefs?.get(AppDataStoreKeys.KEY_MARKET_FREE_PACK_FULL_TIME) ?: 0L
+        if (freePackFullTime == 0L) {
+            val newFreePackFullTime = TimeUtils.currentTimeMillis() +
+                    (AppConfigs.FREE_PACK_MAXIMUM_STORAGE -
+                            AppConfigs.FREE_PACK_INITIAL_STORAGE) *
+                    AppConfigs.FREE_PACK_REFILL_TIME
+            dataStore.edit {
+                it[AppDataStoreKeys.KEY_MARKET_FREE_PACK_FULL_TIME] = newFreePackFullTime
+            }
+        }
     }
 
 }

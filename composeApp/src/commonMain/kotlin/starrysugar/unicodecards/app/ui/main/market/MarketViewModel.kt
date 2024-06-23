@@ -54,16 +54,6 @@ class MarketViewModel : BaseViewModel() {
             // Free pack
             freePackFullTime =
                 prefs[AppDataStoreKeys.KEY_MARKET_FREE_PACK_FULL_TIME] ?: 0L
-            if (freePackFullTime == 0L) {
-                val newFreePackFullTime = TimeUtils.currentTimeMillis() +
-                        (AppConfigs.FREE_PACK_MAXIMUM_STORAGE -
-                                AppConfigs.FREE_PACK_INITIAL_STORAGE) *
-                        AppConfigs.FREE_PACK_REFILL_TIME
-                dataStore.edit {
-                    it[AppDataStoreKeys.KEY_MARKET_FREE_PACK_FULL_TIME] = newFreePackFullTime
-                }
-                freePackFullTime = newFreePackFullTime
-            }
             isLoading = false
         }
     }
