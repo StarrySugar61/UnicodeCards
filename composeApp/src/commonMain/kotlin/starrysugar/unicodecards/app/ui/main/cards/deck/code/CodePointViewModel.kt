@@ -21,7 +21,10 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.database.table.QueryDataByCodeWithUserData
+import starrysugar.unicodecards.appdata.database.table.Uc_unicode_iso15924
+import starrysugar.unicodecards.appdata.database.table.UnicodeBlocksQueries
 import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
+import starrysugar.unicodecards.appdata.database.table.UnicodeIso15924Queries
 
 /**
  * @author StarrySugar61
@@ -31,9 +34,19 @@ class CodePointViewModel(
     val codePoint: Int,
 ) : BaseViewModel() {
 
+    private val _unicodeBlockQueries: UnicodeBlocksQueries by inject()
+
     private val _unicodeDataQueries: UnicodeDataQueries by inject()
 
+    private val _unicodeIso15924Queries: UnicodeIso15924Queries by inject()
+
     var charData by mutableStateOf<QueryDataByCodeWithUserData?>(null)
+        private set
+
+    var blockName by mutableStateOf("")
+        private set
+
+    var scriptData by mutableStateOf<Uc_unicode_iso15924?>(null)
         private set
 
     init {
@@ -41,6 +54,16 @@ class CodePointViewModel(
             .executeAsOneOrNull()
             ?.let {
                 charData = it
+            }
+        _unicodeBlockQueries.queryBlockForCodePoint(codePoint.toLong())
+            .executeAsOneOrNull()
+            ?.let {
+                blockName = it.block_name
+            }
+        _unicodeIso15924Queries.queryScriptForCodePoint(codePoint.toLong())
+            .executeAsOneOrNull()
+            ?.let {
+                scriptData = it
             }
     }
 

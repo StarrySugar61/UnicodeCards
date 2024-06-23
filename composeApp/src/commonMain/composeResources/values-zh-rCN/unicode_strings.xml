@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="unicode_plane">平面</string>
+    <string name="unicode_block">代码块</string>
+    <string name="unicode_script">书写系统</string>
+    <string name="unicode_category">字符类别</string>
+    <string name="unicode_bidirectional">书写方向</string>
+    <string name="unicode_combining">组合类别</string>
+</resources>

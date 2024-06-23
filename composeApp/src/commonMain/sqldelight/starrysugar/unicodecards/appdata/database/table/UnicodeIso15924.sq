@@ -11,5 +11,12 @@ INSERT OR REPLACE INTO `uc_unicode_iso15924`(
     `name`
 ) VALUES (?, ?, ?);
 
+queryScriptForCodePoint:
+SELECT uc_unicode_iso15924.id, uc_unicode_iso15924.code, uc_unicode_iso15924.name
+FROM uc_unicode_iso15924
+LEFT JOIN uc_unicode_scripts ON uc_unicode_iso15924.id=uc_unicode_scripts.id
+WHERE :codePoint BETWEEN uc_unicode_scripts.code_point_start AND uc_unicode_scripts.code_point_end
+LIMIT 1;
+
 clear:
 DELETE FROM `uc_unicode_iso15924` WHERE 1;

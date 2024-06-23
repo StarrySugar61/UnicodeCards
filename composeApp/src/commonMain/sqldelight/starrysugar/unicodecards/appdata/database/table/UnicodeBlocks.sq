@@ -32,6 +32,11 @@ SELECT *
 FROM `uc_unicode_blocks`
 WHERE 1;
 
+queryBlockForCodePoint:
+SELECT *
+FROM `uc_unicode_blocks`
+WHERE ? BETWEEN code_point_start AND code_point_end;
+
 queryBlockForStartCodePoint:
 SELECT *
 FROM `uc_unicode_blocks`

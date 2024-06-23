@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="unicode_plane">Plane</string>
+    <string name="unicode_block">Block</string>
+    <string name="unicode_script">Script</string>
+    <string name="unicode_category">Category</string>
+    <string name="unicode_bidirectional">Bidirectional</string>
+    <string name="unicode_combining">Combining</string>
+</resources>
