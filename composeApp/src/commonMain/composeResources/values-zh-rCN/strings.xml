@@ -11,6 +11,7 @@
 
     <string name="market_click_me">点我点我！</string>
     <string name="market_pack_obtained">您获得了以下卡牌！</string>
+    <string name="market_new_card">新！</string>
 
     <string name="market_welcome_pack_line_1">欢迎来到Unicode Cards！</string>
     <string name="market_welcome_pack_line_2">免费领取迎新卡包，内含%1$d张卡！</string>

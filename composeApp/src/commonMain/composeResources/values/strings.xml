@@ -11,6 +11,7 @@
 
     <string name="market_click_me">Click me!</string>
     <string name="market_pack_obtained">You have obtained the following cards!</string>
+    <string name="market_new_card">NEW!</string>
 
     <string name="market_welcome_pack_line_1">Welcome to Unicode Cards!</string>
     <string name="market_welcome_pack_line_2">Claim this welcome pack with %1$d cards for free!</string>

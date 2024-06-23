@@ -47,9 +47,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.theme.AppColors
 import starrysugar.unicodecards.appdata.unicode.CharCategory
 import starrysugar.unicodecards.arch.utils.UnicodeUtils
+import starrysugar.unicodecards.market_new_card
 
 /**
  * @author StarrySugar61
@@ -417,7 +420,9 @@ private fun CardBorder(
                     )
             ) {
                 Text(
-                    text = "NEW!",
+                    text = stringResource(
+                        resource = Res.string.market_new_card,
+                    ),
                 )
             }
         } else if (count > 1) {
