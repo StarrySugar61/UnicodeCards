@@ -72,6 +72,7 @@ object AppInitializer : KoinComponent {
 
         initPreferences(preferences)
         currentStep++
+        onProgress(currentStep, totalSteps, 1, 1)
 
         if (currentScriptVersion < DATA_SCRIPT_VERSION) {
             // Read iso 15924
