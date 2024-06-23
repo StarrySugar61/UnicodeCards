@@ -14,26 +14,38 @@
  */
 package starrysugar.unicodecards.app.ui.main.cards.deck
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.app.nav.Screen
+import starrysugar.unicodecards.app.ui.base.AppNavBackTopBar
 import starrysugar.unicodecards.app.ui.base.AppScaffold
 import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCard
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCardPlaceholder
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
+import starrysugar.unicodecards.cards_hint_not_obtained
+import starrysugar.unicodecards.confirm
+import starrysugar.unicodecards.info
 
 /**
  * Overview page for cards in a deck!
@@ -41,7 +53,6 @@ import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
  * @author StarrySugar61
  * @create 2024/6/19
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeckScreen(
     startCodePoint: Int,
@@ -53,15 +64,29 @@ fun DeckScreen(
         },
     ),
 ) {
+    var isShowingCardNotUnlockedDialog by remember { mutableStateOf(false) }
+
+    // Dialogs！
+    if (isShowingCardNotUnlockedDialog) {
+        CardNotUnlockedDialog(
+            onConfirmed = {
+                isShowingCardNotUnlockedDialog = false
+            }
+        )
+    }
+
     AppScaffold(
         modifier = Modifier.fillMaxSize(),
         viewModel = viewModel,
         topBar = {
-            TopAppBar(
+            AppNavBackTopBar(
                 title = {
                     Text(
                         text = viewModel.block?.block_name ?: "",
                     )
+                },
+                onBack = {
+                    navController.navigateUp()
                 },
             )
         },
@@ -79,14 +104,23 @@ fun DeckScreen(
                     UnicodeCardPlaceholder(
                         modifier = Modifier
                             .padding(all = 4.dp)
-                            .alpha(0.4F),
+                            .alpha(0.4F)
+                            .clickable {
+                                isShowingCardNotUnlockedDialog = true
+                            },
                         scale = 0.6F,
                         codePoint = item.code_point.toInt(),
                     )
                 } else {
                     UnicodeCard(
                         modifier = Modifier
-                            .padding(all = 4.dp),
+                            .padding(all = 4.dp)
+                            .clickable {
+                                navController.navigate(
+                                    route = Screen.MainDeckCodePoint
+                                        .buildRoute(item.code_point.toInt())
+                                )
+                            },
                         scale = 0.6F,
                         codePoint = item.code_point.toInt(),
                         category = item.category,
@@ -97,4 +131,39 @@ fun DeckScreen(
             }
         )
     }
+}
+
+
+@Composable
+private fun CardNotUnlockedDialog(
+    onConfirmed: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onConfirmed,
+        title = {
+            Text(
+                text = stringResource(
+                    resource = Res.string.info,
+                ),
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(
+                    resource = Res.string.cards_hint_not_obtained,
+                ),
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirmed,
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.confirm,
+                    ),
+                )
+            }
+        }
+    )
 }

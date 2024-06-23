@@ -145,6 +145,9 @@ private fun DeckItem(
                 .fillMaxWidth()
                 .basicMarquee(
                     iterations = Int.MAX_VALUE,
+                )
+                .padding(
+                    horizontal = 4.dp,
                 ),
             text = if (isDeckUnlocked) {
                 item.block_name

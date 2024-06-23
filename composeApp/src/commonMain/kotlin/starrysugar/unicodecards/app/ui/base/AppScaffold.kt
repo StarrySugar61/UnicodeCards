@@ -16,10 +16,19 @@ package starrysugar.unicodecards.app.ui.base
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.back
+import starrysugar.unicodecards.ic_baseline_arrow_back_24
 
 /**
  * App base scaffold!
@@ -45,6 +54,29 @@ fun <VM : BaseViewModel> AppScaffold(
         content = content,
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppNavBackTopBar(
+    title: @Composable () -> Unit,
+    onBack: () -> Unit,
+) = TopAppBar(
+    title = title,
+    navigationIcon = {
+        IconButton(
+            onClick = onBack,
+        ) {
+            Icon(
+                painter = painterResource(
+                    resource = Res.drawable.ic_baseline_arrow_back_24,
+                ),
+                contentDescription = stringResource(
+                    resource = Res.string.back,
+                ),
+            )
+        }
+    },
+)
 
 /**
  * Loading dialog!

@@ -14,8 +14,14 @@
  */
 package starrysugar.unicodecards.app.ui.main.cards.deck.code
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.CreationExtras
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.database.table.QueryDataByCodeWithUserData
+import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
 
 /**
  * @author StarrySugar61
@@ -24,6 +30,19 @@ import starrysugar.unicodecards.app.ui.base.BaseViewModel
 class CodePointViewModel(
     val codePoint: Int,
 ) : BaseViewModel() {
+
+    private val _unicodeDataQueries: UnicodeDataQueries by inject()
+
+    var charData by mutableStateOf<QueryDataByCodeWithUserData?>(null)
+        private set
+
+    init {
+        _unicodeDataQueries.queryDataByCodeWithUserData(codePoint.toLong())
+            .executeAsOneOrNull()
+            ?.let {
+                charData = it
+            }
+    }
 
     object CodePointKey : CreationExtras.Key<Int>
 }

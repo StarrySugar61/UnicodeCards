@@ -7,7 +7,10 @@
     <string name="main_tab_market">Market</string>
     <string name="main_tab_settings">Settings</string>
 
+    <string name="cards_details">Card Details</string>
+
     <string name="cards_hint_unlock">Collect at least one card from this deck to view!</string>
+    <string name="cards_hint_not_obtained">Open card packs or transfer in market to obtain this card!</string>
 
     <string name="market_click_me">Click me!</string>
     <string name="market_pack_obtained">You have obtained the following cards!</string>
@@ -27,6 +30,7 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="skip">Skip</string>
+    <string name="back">Back</string>
     <string name="coming_soon">Coming soon</string>
 
     <string name="time_dh">%1$dD %2$dH</string>

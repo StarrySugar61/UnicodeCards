@@ -50,7 +50,8 @@ uc_unicode_data.combining, uc_unicode_data.bidi_class, uc_unicode_data.cover,
 IFNULL(uc_user_cards.card_count, 0) AS `card_count`
 FROM `uc_unicode_data`
 LEFT JOIN `uc_user_cards` ON `uc_user_cards`.`code_point`=`uc_unicode_data`.`code_point`
-WHERE `uc_unicode_data`.`code_point`=?;
+WHERE `uc_unicode_data`.`code_point`=?
+LIMIT 1;
 
 queryDataPagingByBlockWithUserData:
 SELECT uc_unicode_data.code_point, uc_unicode_data.name, uc_unicode_data.category,

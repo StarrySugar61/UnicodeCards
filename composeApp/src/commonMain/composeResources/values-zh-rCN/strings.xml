@@ -7,7 +7,10 @@
     <string name="main_tab_market">集市</string>
     <string name="main_tab_settings">设置</string>
 
+    <string name="cards_details">卡牌详情</string>
+
     <string name="cards_hint_unlock">至少收集一张此卡册的卡牌才可以查看哦！</string>
+    <string name="cards_hint_not_obtained">开启卡包或在集市交换以获得此卡牌！</string>
 
     <string name="market_click_me">点我点我！</string>
     <string name="market_pack_obtained">您获得了以下卡牌！</string>
@@ -27,6 +30,7 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="skip">跳过</string>
+    <string name="back">返回</string>
     <string name="coming_soon">敬请期待</string>
 
     <string name="time_dh">%1$d天%2$d小时</string>
