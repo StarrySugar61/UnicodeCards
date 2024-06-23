@@ -34,6 +34,8 @@ class MainViewModel : BaseViewModel() {
 
     private val database: Database by inject()
 
+    var selectedTabIndex by mutableStateOf(0)
+
     var currentStep by mutableStateOf(0)
         private set
     var totalSteps by mutableStateOf(0)

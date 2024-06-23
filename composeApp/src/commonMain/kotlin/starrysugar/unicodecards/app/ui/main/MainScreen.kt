@@ -97,7 +97,11 @@ fun MainScreen(
             },
             bottomBar = {
                 HomeBottomBar(
-                    navController = homeBottomNavController
+                    navController = homeBottomNavController,
+                    selectedTabIndex = viewModel.selectedTabIndex,
+                    onTabSelected = {
+                        viewModel.selectedTabIndex = it
+                    },
                 )
             },
         ) { paddingValues ->
@@ -133,7 +137,7 @@ private fun LoadingScreen(
         }
     }
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -181,12 +185,13 @@ private fun LoadingScreen(
 @Composable
 private fun HomeBottomBar(
     navController: NavHostController,
+    selectedTabIndex: Int,
+    onTabSelected: (Int) -> Unit,
 ) {
-    var selectedIndex by remember { mutableStateOf(0) }
     NavigationBar {
         mainBottomAppBarItems.forEachIndexed { index, item ->
             NavigationBarItem(
-                selected = selectedIndex == index,
+                selected = selectedTabIndex == index,
                 label = {
                     Text(
                         text = stringResource(
@@ -203,7 +208,7 @@ private fun HomeBottomBar(
                     )
                 },
                 onClick = {
-                    selectedIndex = index
+                    onTabSelected(index)
                     navController.navigate(item.route) {
                         navController.graph.findStartDestination().route?.let {
                             popUpTo(it) {
