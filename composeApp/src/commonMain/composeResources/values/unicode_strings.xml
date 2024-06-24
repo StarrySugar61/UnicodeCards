@@ -6,4 +6,36 @@
     <string name="unicode_category">Category</string>
     <string name="unicode_bidirectional">Bidirectional</string>
     <string name="unicode_combining">Combining</string>
+
+    <string name="unicode_category_format">%1$s (%2$s)</string>
+    <string name="unicode_category_lu">Uppercase Letter</string>
+    <string name="unicode_category_ll">Lowercase Letter</string>
+    <string name="unicode_category_lt">Titlecase Letter</string>
+    <string name="unicode_category_lm">Modifier Letter</string>
+    <string name="unicode_category_lo">Other Letter</string>
+    <string name="unicode_category_mn">Non-Spacing Mark</string>
+    <string name="unicode_category_mc">Spacing Combining Mark</string>
+    <string name="unicode_category_me">Enclosing Mark</string>
+    <string name="unicode_category_nd">Decimal Number</string>
+    <string name="unicode_category_nl">Letter Number</string>
+    <string name="unicode_category_no">Other Number</string>
+    <string name="unicode_category_pc">Connector Punctuation</string>
+    <string name="unicode_category_pd">Dash Punctuation</string>
+    <string name="unicode_category_ps">Open Punctuation</string>
+    <string name="unicode_category_pe">Close Punctuation</string>
+    <string name="unicode_category_pi">Initial Quote Punctuation</string>
+    <string name="unicode_category_pf">Final Quote Punctuation</string>
+    <string name="unicode_category_po">Other Punctuation</string>
+    <string name="unicode_category_sm">Math Symbol</string>
+    <string name="unicode_category_sc">Currency Symbol</string>
+    <string name="unicode_category_sk">Modifier Symbol</string>
+    <string name="unicode_category_so">Other Symbol</string>
+    <string name="unicode_category_zs">Space Separator</string>
+    <string name="unicode_category_zl">Line Separator</string>
+    <string name="unicode_category_zp">Paragraph Separator</string>
+    <string name="unicode_category_cc">Control</string>
+    <string name="unicode_category_cf">Format</string>
+    <string name="unicode_category_cs">Surrogate</string>
+    <string name="unicode_category_co">Private Use</string>
+    <string name="unicode_category_cn">Not Assigned</string>
 </resources>

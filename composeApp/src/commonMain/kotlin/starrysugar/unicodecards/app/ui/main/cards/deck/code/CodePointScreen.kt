@@ -53,6 +53,7 @@ import starrysugar.unicodecards.cards_details
 import starrysugar.unicodecards.unicode_bidirectional
 import starrysugar.unicodecards.unicode_block
 import starrysugar.unicodecards.unicode_category
+import starrysugar.unicodecards.unicode_category_format
 import starrysugar.unicodecards.unicode_combining
 import starrysugar.unicodecards.unicode_plane
 import starrysugar.unicodecards.unicode_script
@@ -238,7 +239,13 @@ private fun CodePointInfoItem(
                 key = stringResource(
                     resource = Res.string.unicode_category,
                 ),
-                value = charData.category.toString(),
+                value = stringResource(
+                    resource = Res.string.unicode_category_format,
+                    stringResource(
+                        resource = charData.category.getInfoStringRes(),
+                    ),
+                    charData.category.toString(),
+                ),
             )
             ClickableCardProperties(
                 onClick = {

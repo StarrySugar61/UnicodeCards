@@ -6,4 +6,36 @@
     <string name="unicode_category">字符类别</string>
     <string name="unicode_bidirectional">书写方向</string>
     <string name="unicode_combining">组合类别</string>
+
+    <string name="unicode_category_format">%1$s（%2$s）</string>
+    <string name="unicode_category_lu">大写字母</string>
+    <string name="unicode_category_ll">小写字母</string>
+    <string name="unicode_category_lt">标题字母</string>
+    <string name="unicode_category_lm">音标修饰字母</string>
+    <string name="unicode_category_lo">其他字母</string>
+    <string name="unicode_category_mn">不占空间的组合标记</string>
+    <string name="unicode_category_mc">占空间的组合标记</string>
+    <string name="unicode_category_me">闭合标记</string>
+    <string name="unicode_category_nd">十进制数字</string>
+    <string name="unicode_category_nl">字母式数字</string>
+    <string name="unicode_category_no">其他数字</string>
+    <string name="unicode_category_pc">连接词标点符号</string>
+    <string name="unicode_category_pd">连字号</string>
+    <string name="unicode_category_ps">开括号</string>
+    <string name="unicode_category_pe">闭括号</string>
+    <string name="unicode_category_pi">开引号</string>
+    <string name="unicode_category_pf">闭引号</string>
+    <string name="unicode_category_po">其他标点符号</string>
+    <string name="unicode_category_sm">数学符号</string>
+    <string name="unicode_category_sc">货币符号</string>
+    <string name="unicode_category_sk">组合符号</string>
+    <string name="unicode_category_so">其他符号</string>
+    <string name="unicode_category_zs">占空间的空格</string>
+    <string name="unicode_category_zl">分隔线</string>
+    <string name="unicode_category_zp">分段符</string>
+    <string name="unicode_category_cc">控制字符</string>
+    <string name="unicode_category_cf">格式字符</string>
+    <string name="unicode_category_cs">代理区</string>
+    <string name="unicode_category_co">私用区</string>
+    <string name="unicode_category_cn">未分配</string>
 </resources>
