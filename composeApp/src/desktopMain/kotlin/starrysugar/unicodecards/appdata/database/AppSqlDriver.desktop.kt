@@ -2,6 +2,7 @@ package starrysugar.unicodecards.appdata.database
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import java.io.File
 
 /**
  * @author StarrySugar61
@@ -11,6 +12,9 @@ actual class AppDriverFactory {
     actual fun createDriver(): SqlDriver = JdbcSqliteDriver(
         url = "jdbc:sqlite:unicode_cards.db",
     ).apply {
-        Database.Schema.create(this)
+        val file = File("unicode_cards.db")
+        if (!file.exists()) {
+            Database.Schema.create(this)
+        }
     }
 }
