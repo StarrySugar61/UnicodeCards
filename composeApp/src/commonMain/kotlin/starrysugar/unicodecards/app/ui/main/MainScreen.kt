@@ -49,6 +49,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.AppScaffold
+import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCard
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCardBack
 import starrysugar.unicodecards.app.ui.main.cards.CardsPage
@@ -78,7 +79,9 @@ import kotlin.math.sin
 @Composable
 fun MainScreen(
     navController: NavHostController,
-    viewModel: MainViewModel = viewModel(),
+    viewModel: MainViewModel = viewModel(
+        factory = appViewModelFactory,
+    ),
 ) {
     val homeBottomNavController = rememberNavController()
     if (viewModel.currentStep > viewModel.totalSteps) {

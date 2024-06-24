@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.nav.Screen
+import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCardDeck
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingVerticalGrid
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
@@ -58,7 +59,9 @@ import starrysugar.unicodecards.info
 @Composable
 fun CardsPage(
     navController: NavHostController,
-    viewModel: CardsViewModel = viewModel(),
+    viewModel: CardsViewModel = viewModel(
+        factory = appViewModelFactory,
+    ),
 ) {
     var isShowingDeckNotUnlockedDialog by remember { mutableStateOf(false) }
 

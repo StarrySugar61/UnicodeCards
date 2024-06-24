@@ -45,6 +45,7 @@ import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.nav.Screen
+import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCardPack
 import starrysugar.unicodecards.appdata.configs.AppConfigs
 import starrysugar.unicodecards.appdata.models.pack.CardPacks
@@ -63,7 +64,9 @@ import starrysugar.unicodecards.market_welcome_pack_line_2
 @Composable
 fun MarketPage(
     navController: NavHostController,
-    viewModel: MarketViewModel = viewModel(),
+    viewModel: MarketViewModel = viewModel(
+        factory = appViewModelFactory,
+    ),
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),

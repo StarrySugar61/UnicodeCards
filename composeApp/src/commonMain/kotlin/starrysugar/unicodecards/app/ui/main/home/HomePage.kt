@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.coming_soon
 
 /**
@@ -29,7 +30,9 @@ import starrysugar.unicodecards.coming_soon
 @Composable
 fun HomePage(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HomeViewModel = viewModel(
+        factory = appViewModelFactory,
+    ),
 ) {
     Text(
         text = stringResource(

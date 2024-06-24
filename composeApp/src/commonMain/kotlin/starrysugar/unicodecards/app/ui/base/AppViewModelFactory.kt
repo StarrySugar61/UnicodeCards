@@ -15,15 +15,27 @@
 package starrysugar.unicodecards.app.ui.base
 
 import androidx.lifecycle.viewmodel.viewModelFactory
+import starrysugar.unicodecards.app.ui.main.MainViewModel
+import starrysugar.unicodecards.app.ui.main.cards.CardsViewModel
 import starrysugar.unicodecards.app.ui.main.cards.deck.DeckViewModel
 import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointViewModel
+import starrysugar.unicodecards.app.ui.main.home.HomeViewModel
+import starrysugar.unicodecards.app.ui.main.market.MarketViewModel
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackViewModel
+import starrysugar.unicodecards.app.ui.main.settings.SettingsViewModel
 
 /**
  * @author StarrySugar61
  * @create 2024/6/19
  */
 val appViewModelFactory = viewModelFactory {
+
+    addInitializer(MainViewModel::class) { MainViewModel() }
+    addInitializer(HomeViewModel::class) { HomeViewModel() }
+    addInitializer(CardsViewModel::class) { CardsViewModel() }
+    addInitializer(MarketViewModel::class) { MarketViewModel() }
+    addInitializer(SettingsViewModel::class) { SettingsViewModel() }
+
     addInitializer(DeckViewModel::class) {
         DeckViewModel(
             startCodePoint = this[DeckViewModel.StartCodePointKey]!!
