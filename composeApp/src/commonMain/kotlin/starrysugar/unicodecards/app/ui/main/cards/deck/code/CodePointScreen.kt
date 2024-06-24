@@ -254,7 +254,13 @@ private fun CodePointInfoItem(
                 key = stringResource(
                     resource = Res.string.unicode_bidirectional,
                 ),
-                value = charData.bidi_class.toString(),
+                value = stringResource(
+                    resource = Res.string.unicode_category_format,
+                    stringResource(
+                        resource = charData.bidi_class.getInfoStringRes(),
+                    ),
+                    charData.bidi_class.toString(),
+                ),
             )
             ClickableCardProperties(
                 onClick = {

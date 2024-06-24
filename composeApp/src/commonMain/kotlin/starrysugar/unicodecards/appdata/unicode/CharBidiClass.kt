@@ -14,6 +14,31 @@
  */
 package starrysugar.unicodecards.appdata.unicode
 
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.unicode_bidirectional_al
+import starrysugar.unicodecards.unicode_bidirectional_an
+import starrysugar.unicodecards.unicode_bidirectional_b
+import starrysugar.unicodecards.unicode_bidirectional_bn
+import starrysugar.unicodecards.unicode_bidirectional_cs
+import starrysugar.unicodecards.unicode_bidirectional_en
+import starrysugar.unicodecards.unicode_bidirectional_es
+import starrysugar.unicodecards.unicode_bidirectional_et
+import starrysugar.unicodecards.unicode_bidirectional_fsi
+import starrysugar.unicodecards.unicode_bidirectional_l
+import starrysugar.unicodecards.unicode_bidirectional_lre
+import starrysugar.unicodecards.unicode_bidirectional_lri
+import starrysugar.unicodecards.unicode_bidirectional_lro
+import starrysugar.unicodecards.unicode_bidirectional_nsm
+import starrysugar.unicodecards.unicode_bidirectional_on
+import starrysugar.unicodecards.unicode_bidirectional_pdf
+import starrysugar.unicodecards.unicode_bidirectional_pdi
+import starrysugar.unicodecards.unicode_bidirectional_r
+import starrysugar.unicodecards.unicode_bidirectional_rle
+import starrysugar.unicodecards.unicode_bidirectional_rli
+import starrysugar.unicodecards.unicode_bidirectional_rlo
+import starrysugar.unicodecards.unicode_bidirectional_s
+import starrysugar.unicodecards.unicode_bidirectional_ws
+
 /**
  * @author StarrySugar61
  * @create 2024/6/16
@@ -133,5 +158,33 @@ enum class CharBidiClass {
      * Pop Directional Isolate
      */
     PDI,
+
+    ;
+
+    fun getInfoStringRes() = when (this) {
+        L -> Res.string.unicode_bidirectional_l
+        LRE -> Res.string.unicode_bidirectional_lre
+        LRO -> Res.string.unicode_bidirectional_lro
+        R -> Res.string.unicode_bidirectional_r
+        AL -> Res.string.unicode_bidirectional_al
+        RLE -> Res.string.unicode_bidirectional_rle
+        RLO -> Res.string.unicode_bidirectional_rlo
+        PDF -> Res.string.unicode_bidirectional_pdf
+        EN -> Res.string.unicode_bidirectional_en
+        ES -> Res.string.unicode_bidirectional_es
+        ET -> Res.string.unicode_bidirectional_et
+        AN -> Res.string.unicode_bidirectional_an
+        CS -> Res.string.unicode_bidirectional_cs
+        NSM -> Res.string.unicode_bidirectional_nsm
+        BN -> Res.string.unicode_bidirectional_bn
+        B -> Res.string.unicode_bidirectional_b
+        S -> Res.string.unicode_bidirectional_s
+        WS -> Res.string.unicode_bidirectional_ws
+        ON -> Res.string.unicode_bidirectional_on
+        LRI -> Res.string.unicode_bidirectional_lri
+        RLI -> Res.string.unicode_bidirectional_rli
+        FSI -> Res.string.unicode_bidirectional_fsi
+        PDI -> Res.string.unicode_bidirectional_pdi
+    }
 
 }

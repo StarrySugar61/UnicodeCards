@@ -38,4 +38,30 @@
     <string name="unicode_category_cs">代理区</string>
     <string name="unicode_category_co">私用区</string>
     <string name="unicode_category_cn">未分配</string>
+
+    <!-- TODO translate! -->
+    <string name="unicode_bidirectional_format">%1$s（%2$s）</string>
+    <string name="unicode_bidirectional_l">Left-to-Right</string>
+    <string name="unicode_bidirectional_lre">Left-to-Right Embedding</string>
+    <string name="unicode_bidirectional_lro">Left-to-Right Override</string>
+    <string name="unicode_bidirectional_r">Right-to-Left</string>
+    <string name="unicode_bidirectional_al">Right-to-Left Arabic</string>
+    <string name="unicode_bidirectional_rle">Right-to-Left Embedding</string>
+    <string name="unicode_bidirectional_rlo">Right-to-Left Override</string>
+    <string name="unicode_bidirectional_pdf">Pop Directional Format</string>
+    <string name="unicode_bidirectional_en">European Number</string>
+    <string name="unicode_bidirectional_es">European Number Separator</string>
+    <string name="unicode_bidirectional_et">European Number Terminator</string>
+    <string name="unicode_bidirectional_an">Arabic Number</string>
+    <string name="unicode_bidirectional_cs">Common Number Separator</string>
+    <string name="unicode_bidirectional_nsm">Non-Spacing Mark</string>
+    <string name="unicode_bidirectional_bn">Boundary Neutral</string>
+    <string name="unicode_bidirectional_b">Paragraph Separator</string>
+    <string name="unicode_bidirectional_s">Segment Separator</string>
+    <string name="unicode_bidirectional_ws">Whitespace</string>
+    <string name="unicode_bidirectional_on">Other Neutrals</string>
+    <string name="unicode_bidirectional_lri">Left-to-Right Isolate</string>
+    <string name="unicode_bidirectional_rli">Right-to-Left Isolate</string>
+    <string name="unicode_bidirectional_fsi">First-Strong Isolate</string>
+    <string name="unicode_bidirectional_pdi">Pop Directional Isolate</string>
 </resources>
