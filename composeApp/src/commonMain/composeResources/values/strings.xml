@@ -26,6 +26,11 @@
     </plurals>
     <string name="market_free_refill">Next pack will be available after %1$s!</string>
 
+    <string name="market_exchange_hub">Exchange Hub</string>
+    <string name="market_the_chamber_of_time">The Chamber of Time</string>
+
+    <string name="market_unlock_requirement">Collect %1$d different cards to unlock!</string>
+
     <string name="info">Info</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>

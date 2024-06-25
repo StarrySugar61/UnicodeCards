@@ -26,6 +26,11 @@
     >
     <string name="market_free_refill">距离下次可领取还有：%1$s</string>
 
+    <string name="market_exchange_hub">交易所</string>
+    <string name="market_the_chamber_of_time">时光密室</string>
+
+    <string name="market_unlock_requirement">收集%1$d种不同的卡牌以解锁！</string>
+
     <string name="info">提示</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>

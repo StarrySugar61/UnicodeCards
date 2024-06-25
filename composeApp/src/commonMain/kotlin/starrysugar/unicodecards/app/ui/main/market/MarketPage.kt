@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
@@ -50,9 +51,12 @@ import starrysugar.unicodecards.app.ui.common.game.UnicodeCardPack
 import starrysugar.unicodecards.appdata.configs.AppConfigs
 import starrysugar.unicodecards.appdata.models.pack.CardPacks
 import starrysugar.unicodecards.arch.utils.TimeUtils
+import starrysugar.unicodecards.coming_soon
+import starrysugar.unicodecards.market_exchange_hub
 import starrysugar.unicodecards.market_free_count
 import starrysugar.unicodecards.market_free_pack
 import starrysugar.unicodecards.market_free_refill
+import starrysugar.unicodecards.market_the_chamber_of_time
 import starrysugar.unicodecards.market_welcome_pack_line_1
 import starrysugar.unicodecards.market_welcome_pack_line_2
 
@@ -137,6 +141,34 @@ fun MarketPage(
                     }
                 )
             }
+        }
+        item(
+            key = "Exchange"
+        ) {
+            MarketItemExchange(
+                modifier = Modifier
+                    .animateItemPlacement()
+                    .padding(
+                        start = 4.dp,
+                        end = 4.dp,
+                        bottom = 4.dp,
+                    ),
+                onClick = {}
+            )
+        }
+        item(
+            key = "TimeChamber"
+        ) {
+            MarketItemTimeChamber(
+                modifier = Modifier
+                    .animateItemPlacement()
+                    .padding(
+                        start = 4.dp,
+                        end = 4.dp,
+                        bottom = 4.dp,
+                    ),
+                onClick = {}
+            )
         }
     }
 }
@@ -279,6 +311,110 @@ private fun MarketItemFree(
                             TimeUtils.millisToString(refillTime),
                         )
                     },
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Exchange Hub!
+ * Exchange cards with others!
+ */
+@Composable
+private fun MarketItemExchange(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    OutlinedCard(
+        modifier = modifier
+            .requiredHeight(180.dp),
+        onClick = onClick,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1F),
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = "\uD83C\uDFEC",
+                    fontSize = 96.sp,
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1F),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.market_exchange_hub,
+                    ),
+                )
+                Text(
+                    text = stringResource(
+                        resource = Res.string.coming_soon,
+                    ),
+                )
+            }
+        }
+    }
+}
+
+/**
+ * The Chamber of Time!
+ * The only way to obtain cards above SMP!
+ */
+@Composable
+private fun MarketItemTimeChamber(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    OutlinedCard(
+        modifier = modifier
+            .requiredHeight(180.dp),
+        onClick = onClick,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1F),
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = "\uD83D\uDD70\uFE0F",
+                    fontSize = 96.sp,
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1F),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.market_the_chamber_of_time,
+                    ),
+                )
+                Text(
+                    text = stringResource(
+                        resource = Res.string.coming_soon,
+                    ),
                 )
             }
         }
