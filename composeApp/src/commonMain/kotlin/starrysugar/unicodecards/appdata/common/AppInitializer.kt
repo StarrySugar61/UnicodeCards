@@ -89,15 +89,19 @@ object AppInitializer : KoinComponent {
                 .toList()
                 .let { res ->
                     val size = res.size
-                    res.forEachIndexed { index, s ->
-                        onProgress(currentStep, totalSteps, index, size)
-                        val split = s.split(';')
-                        val code = split.getOrNull(0)?.trim() ?: return@forEachIndexed
-                        val id = split.getOrNull(1)?.trim()?.toIntOrNull() ?: return@forEachIndexed
-                        val name =
-                            split.getOrNull(4)?.trim()?.ifEmpty { null } ?: return@forEachIndexed
-                        iso15924Map[name] = id to code
-                        iso15924Queries.insertData(id.toLong(), code, name)
+                    iso15924Queries.transaction {
+                        res.forEachIndexed { index, s ->
+                            onProgress(currentStep, totalSteps, index, size)
+                            val split = s.split(';')
+                            val code = split.getOrNull(0)?.trim() ?: return@forEachIndexed
+                            val id =
+                                split.getOrNull(1)?.trim()?.toIntOrNull() ?: return@forEachIndexed
+                            val name =
+                                split.getOrNull(4)?.trim()?.ifEmpty { null }
+                                    ?: return@forEachIndexed
+                            iso15924Map[name] = id to code
+                            iso15924Queries.insertData(id.toLong(), code, name)
+                        }
                     }
                 }
 
@@ -117,46 +121,49 @@ object AppInitializer : KoinComponent {
                 .toList()
                 .let { res ->
                     val size = res.size
-                    res.asSequence()
-                        .map {
-                            val split = it.substringBefore('#')
-                                .split(';')
-                            val rangeText = split.getOrNull(0)?.trim() ?: return@map null
-                            val range = rangeText.split("..").let { r ->
-                                r.getOrNull(0)
-                                    ?.toIntOrNull(radix = 16)
-                                    ?.rangeTo(
-                                        r.getOrElse(1) {
-                                            r[0]
-                                        }.toIntOrNull(radix = 16) ?: return@map null
-                                    ) ?: return@map null
-                            }
-                            val id =
-                                iso15924Map[split.getOrNull(1)?.trim()]?.first ?: return@map null
-                            range to id
-                        }
-                        .filterNotNull()
-                        .sortedBy {
-                            it.first.first
-                        }
-                        .forEachIndexed { index, pair ->
-                            onProgress(currentStep, totalSteps, index, size)
-                            if (
-                                pair.second != lastScript
-                                || lastRangeEnd + 1 < pair.first.first
-                            ) {
-                                if (lastScript >= 0) {
-                                    scriptQueries.insertScript(
-                                        code_point_start = lastRangeStart.toLong(),
-                                        code_point_end = lastRangeEnd.toLong(),
-                                        id = lastScript.toLong(),
-                                    )
+                    scriptQueries.transaction {
+                        res.asSequence()
+                            .map {
+                                val split = it.substringBefore('#')
+                                    .split(';')
+                                val rangeText = split.getOrNull(0)?.trim() ?: return@map null
+                                val range = rangeText.split("..").let { r ->
+                                    r.getOrNull(0)
+                                        ?.toIntOrNull(radix = 16)
+                                        ?.rangeTo(
+                                            r.getOrElse(1) {
+                                                r[0]
+                                            }.toIntOrNull(radix = 16) ?: return@map null
+                                        ) ?: return@map null
                                 }
-                                lastRangeStart = pair.first.first
-                                lastScript = pair.second
+                                val id =
+                                    iso15924Map[split.getOrNull(1)?.trim()]?.first
+                                        ?: return@map null
+                                range to id
                             }
-                            lastRangeEnd = pair.first.last
-                        }
+                            .filterNotNull()
+                            .sortedBy {
+                                it.first.first
+                            }
+                            .forEachIndexed { index, pair ->
+                                onProgress(currentStep, totalSteps, index, size)
+                                if (
+                                    pair.second != lastScript
+                                    || lastRangeEnd + 1 < pair.first.first
+                                ) {
+                                    if (lastScript >= 0) {
+                                        scriptQueries.insertScript(
+                                            code_point_start = lastRangeStart.toLong(),
+                                            code_point_end = lastRangeEnd.toLong(),
+                                            id = lastScript.toLong(),
+                                        )
+                                    }
+                                    lastRangeStart = pair.first.first
+                                    lastScript = pair.second
+                                }
+                                lastRangeEnd = pair.first.last
+                            }
+                    }
                 }
             // flush!
             scriptQueries.insertScript(
@@ -188,55 +195,57 @@ object AppInitializer : KoinComponent {
                 .toList()
                 .let { res ->
                     val size = res.size
-                    res.asSequence()
-                        .filterNot {
-                            it.isBlank() || it.startsWith('#')
-                        }
-                        .forEachIndexed { index, s ->
-                            onProgress(currentStep, totalSteps, index, size)
-                            val split = s.split(';')
-                            val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
-                            // filter surrogates and private use
-                            if (name.contains("Surrogates") || name.contains("Private")) {
-                                return@forEachIndexed
+                    dataQueries.transaction {
+                        res.asSequence()
+                            .filterNot {
+                                it.isBlank() || it.startsWith('#')
                             }
-                            val codeString = split.getOrNull(0)?.trim() ?: return@forEachIndexed
-                            val codeValue =
-                                codeString.toIntOrNull(radix = 16) ?: return@forEachIndexed
-                            if (name.endsWith("First>")) {
-                                lastRangedCode = codeValue
-                            } else {
-                                val category = CharCategory.valueOf(
-                                    value = split.getOrNull(2) ?: "Cn"
-                                )
-                                val combining = split.getOrNull(3)?.toIntOrNull() ?: 0
-                                val bidiClass = CharBidiClass.valueOf(
-                                    value = split.getOrNull(4) ?: "ON"
-                                )
-                                if (name.endsWith("Last>")) {
-                                    val tempName = name.removeSurrounding("<", ", Last>")
-                                    (lastRangedCode..codeValue).forEach { code ->
+                            .forEachIndexed { index, s ->
+                                onProgress(currentStep, totalSteps, index, size)
+                                val split = s.split(';')
+                                val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
+                                // filter surrogates and private use
+                                if (name.contains("Surrogates") || name.contains("Private")) {
+                                    return@forEachIndexed
+                                }
+                                val codeString = split.getOrNull(0)?.trim() ?: return@forEachIndexed
+                                val codeValue =
+                                    codeString.toIntOrNull(radix = 16) ?: return@forEachIndexed
+                                if (name.endsWith("First>")) {
+                                    lastRangedCode = codeValue
+                                } else {
+                                    val category = CharCategory.valueOf(
+                                        value = split.getOrNull(2) ?: "Cn"
+                                    )
+                                    val combining = split.getOrNull(3)?.toIntOrNull() ?: 0
+                                    val bidiClass = CharBidiClass.valueOf(
+                                        value = split.getOrNull(4) ?: "ON"
+                                    )
+                                    if (name.endsWith("Last>")) {
+                                        val tempName = name.removeSurrounding("<", ", Last>")
+                                        (lastRangedCode..codeValue).forEach { code ->
+                                            dataQueries.insertData(
+                                                code_point = code.toLong(),
+                                                name = "$tempName-${code.toString(radix = 16)}".uppercase(),
+                                                category = category,
+                                                combining = combining.toLong(),
+                                                bidi_class = bidiClass,
+                                            )
+                                            totalChars++
+                                        }
+                                    } else {
                                         dataQueries.insertData(
-                                            code_point = code.toLong(),
-                                            name = "$tempName-${code.toString(radix = 16)}".uppercase(),
+                                            code_point = codeValue.toLong(),
+                                            name = name,
                                             category = category,
                                             combining = combining.toLong(),
                                             bidi_class = bidiClass,
                                         )
                                         totalChars++
                                     }
-                                } else {
-                                    dataQueries.insertData(
-                                        code_point = codeValue.toLong(),
-                                        name = name,
-                                        category = category,
-                                        combining = combining.toLong(),
-                                        bidi_class = bidiClass,
-                                    )
-                                    totalChars++
                                 }
                             }
-                        }
+                    }
                 }
             // Save total chars
             dataStore.edit { prefs ->
@@ -254,28 +263,31 @@ object AppInitializer : KoinComponent {
                 .toList()
                 .let { res ->
                     val size = res.size
-                    res.forEachIndexed { index, s ->
-                        onProgress(currentStep, totalSteps, index, size)
-                        val split = s.split(';')
-                        val type = split.getOrNull(2)?.trim() ?: return@forEachIndexed
-                        val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
-                        val codeString = split.getOrNull(0)?.trim() ?: return@forEachIndexed
-                        val codeValue = codeString.toIntOrNull(radix = 16) ?: return@forEachIndexed
-                        when (type) {
-                            "correction",
-                            "control",
-                            "figment" -> {
-                                dataQueries.updateNameFor(
-                                    name = name,
-                                    CodePoint = codeValue.toLong()
-                                )
-                            }
+                    dataQueries.transaction {
+                        res.forEachIndexed { index, s ->
+                            onProgress(currentStep, totalSteps, index, size)
+                            val split = s.split(';')
+                            val type = split.getOrNull(2)?.trim() ?: return@forEachIndexed
+                            val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
+                            val codeString = split.getOrNull(0)?.trim() ?: return@forEachIndexed
+                            val codeValue =
+                                codeString.toIntOrNull(radix = 16) ?: return@forEachIndexed
+                            when (type) {
+                                "correction",
+                                "control",
+                                "figment" -> {
+                                    dataQueries.updateNameFor(
+                                        name = name,
+                                        CodePoint = codeValue.toLong()
+                                    )
+                                }
 
-                            "abbreviation" -> {
-                                dataQueries.updateCoverFor(
-                                    cover = name,
-                                    CodePoint = codeValue.toLong()
-                                )
+                                "abbreviation" -> {
+                                    dataQueries.updateCoverFor(
+                                        cover = name,
+                                        CodePoint = codeValue.toLong()
+                                    )
+                                }
                             }
                         }
                     }
@@ -301,44 +313,46 @@ object AppInitializer : KoinComponent {
                 .toList()
                 .let { res ->
                     val size = res.size
-                    res.forEachIndexed { index, s ->
-                        onProgress(currentStep, totalSteps, index, size)
-                        val split = s.split(';')
-                        val rangeText = split.getOrNull(0)?.trim() ?: return@forEachIndexed
-                        val range = rangeText.split("..").let { r ->
-                            r.getOrNull(0)
-                                ?.toIntOrNull(radix = 16)
-                                ?.rangeTo(
-                                    r.getOrElse(1) {
-                                        r[0]
-                                    }.toIntOrNull(radix = 16) ?: return@forEachIndexed
-                                ) ?: return@forEachIndexed
-                        }
-                        val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
-                        // filter surrogates and private use
-                        if (name.contains("Surrogates") || name.contains("Private")) {
-                            return@forEachIndexed
-                        }
-                        val codePointStart = range.first.toLong()
-                        val codePointEnd = range.last.toLong()
-                        blocksQueries.insertBlock(
-                            start = codePointStart,
-                            end = codePointEnd,
-                            name = name,
-                            // We use the first letter of a block as example char!
-                            // If there are no letters exists in a block,
-                            // uses the first char instead!
-                            example = dataQueries
-                                .queryFirstLetterByBlock(codePointStart, codePointEnd)
-                                .executeAsOneOrNull()
-                                ?: dataQueries
-                                    .queryFirstCharByBlock(codePointStart, codePointEnd)
+                    blocksQueries.transaction {
+                        res.forEachIndexed { index, s ->
+                            onProgress(currentStep, totalSteps, index, size)
+                            val split = s.split(';')
+                            val rangeText = split.getOrNull(0)?.trim() ?: return@forEachIndexed
+                            val range = rangeText.split("..").let { r ->
+                                r.getOrNull(0)
+                                    ?.toIntOrNull(radix = 16)
+                                    ?.rangeTo(
+                                        r.getOrElse(1) {
+                                            r[0]
+                                        }.toIntOrNull(radix = 16) ?: return@forEachIndexed
+                                    ) ?: return@forEachIndexed
+                            }
+                            val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
+                            // filter surrogates and private use
+                            if (name.contains("Surrogates") || name.contains("Private")) {
+                                return@forEachIndexed
+                            }
+                            val codePointStart = range.first.toLong()
+                            val codePointEnd = range.last.toLong()
+                            blocksQueries.insertBlock(
+                                start = codePointStart,
+                                end = codePointEnd,
+                                name = name,
+                                // We use the first letter of a block as example char!
+                                // If there are no letters exists in a block,
+                                // uses the first char instead!
+                                example = dataQueries
+                                    .queryFirstLetterByBlock(codePointStart, codePointEnd)
                                     .executeAsOneOrNull()
-                                ?: codePointStart,
-                            count = dataQueries
-                                .queryBlockDataCount(codePointStart, codePointEnd)
-                                .executeAsOne()
-                        )
+                                    ?: dataQueries
+                                        .queryFirstCharByBlock(codePointStart, codePointEnd)
+                                        .executeAsOneOrNull()
+                                    ?: codePointStart,
+                                count = dataQueries
+                                    .queryBlockDataCount(codePointStart, codePointEnd)
+                                    .executeAsOne()
+                            )
+                        }
                     }
                 }
             // Update version!
