@@ -27,6 +27,7 @@ import kotlin.random.Random
 data class CommonCardPack(
     override val name: String,
     override val sampleCodePoint: Int,
+    val maxCodePoint: Int,
 ) : CardPack {
 
     private val _unicodeDataQueries: UnicodeDataQueries by inject()
@@ -35,7 +36,8 @@ data class CommonCardPack(
 
     override fun collectCards(count: Int): List<QueryDataByIndexWithUserData> {
         val results = ArrayList<QueryDataByIndexWithUserData>()
-        val totalCount = _unicodeDataQueries.count().executeAsOneOrNull() ?: 0
+        val totalCount =
+            _unicodeDataQueries.countBefore(maxCodePoint.toLong()).executeAsOneOrNull() ?: 0
         val collected = _userCardsQueries.cardsCollected().executeAsOneOrNull() ?: 0
         // User can collect the first 96 plus types of currently owned cards * 1.1
         val cardsAvailable = ((collected * 1.1f) + 96).toLong().coerceAtMost(totalCount)

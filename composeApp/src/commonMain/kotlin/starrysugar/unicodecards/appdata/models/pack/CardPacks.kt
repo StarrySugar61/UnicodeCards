@@ -29,10 +29,12 @@ object CardPacks {
         d[0] = CommonCardPack(
             name = "Free Pack",
             sampleCodePoint = 0x1f381, // 🎁
+            maxCodePoint = 0xffff,
         )
         d[1] = CommonCardPack(
             name = "Welcome Pack",
             sampleCodePoint = 0x1f389, // 🎉
+            maxCodePoint = 0xffff,
         )
         d
     }

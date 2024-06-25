@@ -17,6 +17,11 @@ count:
 SELECT COUNT(1)
 FROM uc_unicode_data;
 
+countBefore:
+SELECT COUNT(1)
+FROM uc_unicode_data
+WHERE `code_point`<=:CodePoint;
+
 insertData:
 INSERT OR REPLACE INTO `uc_unicode_data`(
     `code_point`,
