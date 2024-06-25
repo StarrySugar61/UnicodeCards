@@ -43,8 +43,8 @@
     <string name="unicode_bidirectional_l">Left-to-Right</string>
     <string name="unicode_bidirectional_lre">Left-to-Right Embedding</string>
     <string name="unicode_bidirectional_lro">Left-to-Right Override</string>
-    <string name="unicode_bidirectional_r">Right-to-Left</string>
-    <string name="unicode_bidirectional_al">Right-to-Left Arabic</string>
+    <string name="unicode_bidirectional_r">Non-arabic-type Right-to-Left</string>
+    <string name="unicode_bidirectional_al">Arabic-type Right-to-Left</string>
     <string name="unicode_bidirectional_rle">Right-to-Left Embedding</string>
     <string name="unicode_bidirectional_rlo">Right-to-Left Override</string>
     <string name="unicode_bidirectional_pdf">Pop Directional Format</string>
