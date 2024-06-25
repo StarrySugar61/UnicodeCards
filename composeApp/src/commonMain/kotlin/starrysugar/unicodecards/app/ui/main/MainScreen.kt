@@ -148,9 +148,9 @@ private fun LoadingScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val scaleX = sin(sineAnimate * 0.05026f)
-            val stepProgress = 1f / viewModel.totalSteps
+            val stepProgress = 1f / viewModel.totalSteps.coerceAtLeast(1)
             val progress = stepProgress * (viewModel.currentStep - 1
-                    + 1f * viewModel.progress / viewModel.maxProgress)
+                    + 1f * viewModel.progress / viewModel.maxProgress.coerceAtLeast(1))
             if (scaleX > 0) {
                 UnicodeCard(
                     modifier = Modifier
