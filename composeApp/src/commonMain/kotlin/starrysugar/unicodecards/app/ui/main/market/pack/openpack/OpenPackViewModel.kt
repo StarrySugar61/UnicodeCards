@@ -17,13 +17,19 @@ package starrysugar.unicodecards.app.ui.main.market.pack.openpack
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.database.table.QueryDataByIndexWithUserData
+import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
 import starrysugar.unicodecards.appdata.models.pack.CardPack
 import starrysugar.unicodecards.appdata.models.pack.CardPacks
 
@@ -35,6 +41,8 @@ class OpenPackViewModel(
     private val packID: Int,
     private val count: Int,
 ) : BaseViewModel() {
+
+    private val dataStore: DataStore<Preferences> by inject()
 
     var cardPack: CardPack? by mutableStateOf(null)
         private set
@@ -74,6 +82,20 @@ class OpenPackViewModel(
     init {
         cardPack = CardPacks.data[packID]
         cardPackResult = cardPack?.collectCards(count) ?: emptyList()
+        viewModelScope.launch {
+            val prefs = dataStore.data.firstOrNull()
+            // Update statistics!
+            dataStore.edit {
+                // Packs opened
+                it[AppDataStoreKeys.KEY_STATISTIC_PACKS_OPENED] =
+                    (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_PACKS_OPENED) ?: 0) + 1
+                // Free packs opened
+                if (packID == 0) {
+                    it[AppDataStoreKeys.KEY_STATISTIC_FREE_PACKS_OPENED] =
+                        (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_FREE_PACKS_OPENED) ?: 0) + 1
+                }
+            }
+        }
     }
 
     fun startAnimation() {
