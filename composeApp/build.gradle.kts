@@ -54,6 +54,7 @@ kotlin {
             implementation(libs.androidx.paging)
             implementation(libs.koin.core)
             implementation(libs.cashapp.sqldelight.paging3.extensions)
+            implementation(libs.cashapp.sqldelight.coroutines.extensions)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
         }
