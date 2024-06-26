@@ -31,15 +31,19 @@ object AppDataStoreKeys {
 
     val KEY_DATA_TOTAL_CARDS = intPreferencesKey("KEY_DATA_TOTAL_CARDS")
 
-    val KEY_USER_COINS = longPreferencesKey("KEY_USER_COINS")
-    val KEY_USER_BITS = intPreferencesKey("KEY_USER_BITS")
+    val KEY_USER_CC = longPreferencesKey("KEY_USER_CC")
+    val KEY_USER_BG = longPreferencesKey("KEY_USER_BG")
+    val KEY_USER_RS = longPreferencesKey("KEY_USER_RS")
+    val KEY_USER_PS = longPreferencesKey("KEY_USER_PS")
 
     val KEY_MARKET_WELCOME_PACK_COLLECTED =
         booleanPreferencesKey("KEY_MARKET_WELCOME_PACK_COLLECTED")
     val KEY_MARKET_FREE_PACK_FULL_TIME = longPreferencesKey("KEY_MARKET_FREE_PACK_FULL_TIME")
 
-    val KEY_STATISTIC_COINS_OBTAINED = longPreferencesKey("KEY_STATISTIC_COINS_OBTAINED")
-    val KEY_STATISTIC_BITS_OBTAINED = intPreferencesKey("KEY_STATISTIC_BITS_OBTAINED")
+    val KEY_STATISTIC_CC_OBTAINED = longPreferencesKey("KEY_STATISTIC_CC_OBTAINED")
+    val KEY_STATISTIC_BG_OBTAINED = longPreferencesKey("KEY_STATISTIC_BG_OBTAINED")
+    val KEY_STATISTIC_RS_OBTAINED = longPreferencesKey("KEY_STATISTIC_RS_OBTAINED")
+    val KEY_STATISTIC_PS_OBTAINED = longPreferencesKey("KEY_STATISTIC_PS_OBTAINED")
     val KEY_STATISTIC_CARDS_OBTAINED = longPreferencesKey("KEY_STATISTIC_CARDS_OBTAINED")
     val KEY_STATISTIC_FREE_PACKS_OPENED = intPreferencesKey("KEY_STATISTIC_FREE_PACKS_OPENED")
     val KEY_STATISTIC_PACKS_OPENED = intPreferencesKey("KEY_STATISTIC_PACKS_OPENED")

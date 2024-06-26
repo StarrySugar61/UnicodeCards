@@ -31,6 +31,11 @@
 
     <string name="market_unlock_requirement">收集%1$d种不同的卡牌以解锁！</string>
 
+    <string name="currency_code_chip">代码晶片</string>
+    <string name="currency_byte_gem">字节宝石</string>
+    <string name="currency_runic_sigil">符文印记</string>
+    <string name="currency_picto_stone">象形灵石</string>
+
     <string name="info">提示</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
