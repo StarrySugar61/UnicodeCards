@@ -1,0 +1,22 @@
+CREATE TABLE `uc_fake_users` (
+    `user_name` TEXT PRIMARY KEY NOT NULL
+);
+
+count:
+SELECT COUNT(1)
+FROM `uc_fake_users`;
+
+queryUserByIndex:
+SELECT *
+FROM `uc_fake_users`
+LIMIT 1 OFFSET :index;
+
+insertFakeUser:
+INSERT OR IGNORE INTO `uc_fake_users`(
+    `user_name`
+) VALUES (
+    :username
+);
+
+clear:
+DELETE FROM `uc_fake_users` WHERE 1;

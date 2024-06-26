@@ -27,6 +27,8 @@ object AppDataStoreKeys {
     val KEY_DATA_CHAR_VERSION = intPreferencesKey("KEY_DATA_CHAR_VERSION")
     val KEY_DATA_BLOCK_VERSION = intPreferencesKey("KEY_DATA_BLOCK_VERSION")
 
+    val KEY_DATA_USERNAME_VERSION = intPreferencesKey("KEY_DATA_BLOCK_USERNAME")
+
     val KEY_DATA_TOTAL_CARDS = intPreferencesKey("KEY_DATA_TOTAL_CARDS")
 
     val KEY_USER_COINS = longPreferencesKey("KEY_USER_COINS")

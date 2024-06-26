@@ -40,6 +40,7 @@ object AppInitializer : KoinComponent {
     private const val DATA_SCRIPT_VERSION = 1
     private const val DATA_CHAR_VERSION = 1
     private const val DATA_BLOCK_VERSION = 1
+    private const val DATA_USERNAME_VERSION = 1
 
     private val dataStore: DataStore<Preferences> by inject()
 
@@ -58,25 +59,22 @@ object AppInitializer : KoinComponent {
         val currentScriptVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_SCRIPT_VERSION) ?: 0
         val currentCharVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_CHAR_VERSION) ?: 0
         val currentBlockVersion = preferences?.get(AppDataStoreKeys.KEY_DATA_BLOCK_VERSION) ?: 0
-        var totalSteps = 1
-        var currentStep = 0
-        if (currentScriptVersion < DATA_SCRIPT_VERSION) {
-            totalSteps += 2
-        }
-        if (currentCharVersion < DATA_CHAR_VERSION) {
-            totalSteps += 2
-        }
-        if (currentBlockVersion < DATA_BLOCK_VERSION) {
-            totalSteps++
-        }
+        val currentUsernameVersion =
+            preferences?.get(AppDataStoreKeys.KEY_DATA_USERNAME_VERSION) ?: 0
+        // prefs    * 1
+        // script   * 2
+        // data     * 2
+        // block    * 1
+        // username * 1
+        val totalSteps = 7
+        var currentStep = 1
 
         initPreferences(preferences)
-        currentStep++
         onProgress(currentStep, totalSteps, 1, 1)
 
         if (currentScriptVersion < DATA_SCRIPT_VERSION) {
             // Read iso 15924
-            currentStep++
+            currentStep = 2
             val iso15924Queries = database.unicodeIso15924Queries
             iso15924Queries.clear()
             val iso15924Map = HashMap<String, Pair<Int, String>>()
@@ -106,7 +104,7 @@ object AppInitializer : KoinComponent {
                 }
 
             // Read scripts
-            currentStep++
+            currentStep = 3
             val scriptQueries = database.unicodeScriptsQueries
             scriptQueries.clear()
             var lastRangeStart = 0
@@ -182,7 +180,7 @@ object AppInitializer : KoinComponent {
         // Read character data
         val dataQueries = database.unicodeDataQueries
         if (currentCharVersion < DATA_CHAR_VERSION) {
-            currentStep++
+            currentStep = 4
             dataQueries.clear()
             var lastRangedCode = 0
             var totalChars = 0
@@ -252,7 +250,7 @@ object AppInitializer : KoinComponent {
                 prefs[AppDataStoreKeys.KEY_DATA_TOTAL_CARDS] = totalChars
             }
 
-            currentStep++
+            currentStep = 5
             // Correct names and add value cover from name aliases!
             Res.readBytes("files/UCD/NameAliases.txt")
                 .decodeToString()
@@ -300,7 +298,7 @@ object AppInitializer : KoinComponent {
 
         // Update block char count when char data changed
         if (currentBlockVersion < DATA_BLOCK_VERSION || currentCharVersion < DATA_CHAR_VERSION) {
-            currentStep++
+            currentStep = 6
             // Read unicode blocks
             val blocksQueries = database.unicodeBlocksQueries
             blocksQueries.clear()
@@ -360,8 +358,35 @@ object AppInitializer : KoinComponent {
                 prefs[AppDataStoreKeys.KEY_DATA_BLOCK_VERSION] = DATA_BLOCK_VERSION
             }
         }
+
+        // Update fake usernames!
+        if (currentUsernameVersion < DATA_USERNAME_VERSION) {
+            currentStep = 7
+            val fakeUsersQueries = database.fakeUsersQueries
+            fakeUsersQueries.clear()
+            Res.readBytes("files/game/FakeUsers.txt")
+                .decodeToString()
+                .lineSequence()
+                .filterNot {
+                    it.isBlank() || it.startsWith('#')
+                }
+                .toList()
+                .let { res ->
+                    val size = res.size
+                    fakeUsersQueries.transaction {
+                        res.forEachIndexed { index, s ->
+                            onProgress(currentStep, totalSteps, index, size)
+                            fakeUsersQueries.insertFakeUser(s)
+                        }
+                    }
+                }
+            // Update version!
+            dataStore.edit { prefs ->
+                prefs[AppDataStoreKeys.KEY_DATA_USERNAME_VERSION] = DATA_USERNAME_VERSION
+            }
+        }
         // Finish!
-        currentStep++
+        currentStep = totalSteps + 1
         onProgress(currentStep, totalSteps, 1, 1)
     }
 
