@@ -94,6 +94,9 @@ class OpenPackViewModel(
                     it[AppDataStoreKeys.KEY_STATISTIC_FREE_PACKS_OPENED] =
                         (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_FREE_PACKS_OPENED) ?: 0) + 1
                 }
+                // Cards obtained
+                it[AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED] =
+                    (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED) ?: 0) + count
             }
         }
     }
