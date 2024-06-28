@@ -52,12 +52,12 @@ import starrysugar.unicodecards.app.ui.common.game.UnicodeCardPack
 import starrysugar.unicodecards.appdata.configs.AppConfigs
 import starrysugar.unicodecards.appdata.models.pack.CardPacks
 import starrysugar.unicodecards.arch.utils.TimeUtils
-import starrysugar.unicodecards.coming_soon
 import starrysugar.unicodecards.market_exchange_hub
 import starrysugar.unicodecards.market_free_count
 import starrysugar.unicodecards.market_free_pack
 import starrysugar.unicodecards.market_free_refill
 import starrysugar.unicodecards.market_the_chamber_of_time
+import starrysugar.unicodecards.market_unlock_requirement_gd
 import starrysugar.unicodecards.market_welcome_pack_line_1
 import starrysugar.unicodecards.market_welcome_pack_line_2
 
@@ -367,7 +367,8 @@ private fun MarketItemExchange(
                 )
                 Text(
                     text = stringResource(
-                        resource = Res.string.coming_soon,
+                        resource = Res.string.market_unlock_requirement_gd,
+                        AppConfigs.GD_UNLOCK_EXCHANGE_HUB,
                     ),
                 )
             }
@@ -419,7 +420,8 @@ private fun MarketItemTimeChamber(
                 )
                 Text(
                     text = stringResource(
-                        resource = Res.string.coming_soon,
+                        resource = Res.string.market_unlock_requirement_gd,
+                        AppConfigs.GD_UNLOCK_TIME_CHAMBER,
                     ),
                 )
             }

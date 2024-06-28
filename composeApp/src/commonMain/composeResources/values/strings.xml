@@ -27,14 +27,19 @@
     <string name="market_free_refill">Next pack will be available after %1$s!</string>
 
     <string name="market_exchange_hub">Exchange Hub</string>
+    <string name="market_exchange_hub_info">Exchange duplicate cards with others!</string>
+
     <string name="market_the_chamber_of_time">The Chamber of Time</string>
 
     <string name="market_unlock_requirement">Collect %1$d different cards to unlock!</string>
+    <string name="market_unlock_requirement_gd">Unlock at Glyph Dimensional %1$d!</string>
 
     <string name="currency_code_chip">Code Chip</string>
     <string name="currency_byte_gem">Byte Gem</string>
     <string name="currency_runic_sigil">Runic Sigil</string>
     <string name="currency_picto_stone">Picto Stone</string>
+
+    <string name="user_glyph_dimensional">Glyph Dimensional</string>
 
     <string name="info">Info</string>
     <string name="confirm">Confirm</string>

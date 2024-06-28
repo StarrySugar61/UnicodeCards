@@ -97,6 +97,10 @@ class OpenPackViewModel(
                 // Cards obtained
                 it[AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED] =
                     (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED) ?: 0) + count
+                // Cards obtained from pack (EXP)
+                it[AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED_FROM_PACK] =
+                    (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_CARDS_OBTAINED_FROM_PACK) ?: 0) +
+                            count
             }
         }
     }

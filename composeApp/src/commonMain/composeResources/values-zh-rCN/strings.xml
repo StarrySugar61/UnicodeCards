@@ -27,14 +27,19 @@
     <string name="market_free_refill">距离下次可领取还有：%1$s</string>
 
     <string name="market_exchange_hub">交易所</string>
+    <string name="market_exchange_hub_info">和其他玩家交换重复的卡牌！</string>
+
     <string name="market_the_chamber_of_time">时光密室</string>
 
     <string name="market_unlock_requirement">收集%1$d种不同的卡牌以解锁！</string>
+    <string name="market_unlock_requirement_gd">字符维度%1$d解锁！</string>
 
     <string name="currency_code_chip">代码晶片</string>
     <string name="currency_byte_gem">字节宝石</string>
     <string name="currency_runic_sigil">符文印记</string>
     <string name="currency_picto_stone">象形灵石</string>
+
+    <string name="user_glyph_dimensional">字符维度</string>
 
     <string name="info">提示</string>
     <string name="confirm">确定</string>

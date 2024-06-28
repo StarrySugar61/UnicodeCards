@@ -21,11 +21,16 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.viewModelScope
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrDefault
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.configs.AppConfigs
+import starrysugar.unicodecards.appdata.database.table.UserCardsQueries
 import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
 import starrysugar.unicodecards.arch.utils.TimeUtils
 
@@ -37,9 +42,15 @@ class MarketViewModel : BaseViewModel() {
 
     private val dataStore: DataStore<Preferences> by inject()
 
+    private val _userCardsQueries: UserCardsQueries by inject()
+
     var isWelcomePackClaimed by mutableStateOf(true)
 
     var freePackFullTime by mutableStateOf(0L)
+
+    val cardsCollectedFlow = _userCardsQueries.cardsCollected()
+        .asFlow()
+        .mapToOneOrDefault(0L, Dispatchers.IO)
 
     init {
         isLoading = true

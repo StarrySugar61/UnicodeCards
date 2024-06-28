@@ -43,6 +43,10 @@ object AppConfigs {
      */
     const val FREE_PACK_INITIAL_STORAGE = 3
 
+    const val GD_UNLOCK_EXCHANGE_HUB = 3
+
+    const val GD_UNLOCK_TIME_CHAMBER = 6
+
     object Utils {
 
         fun freePacksAvailable(
@@ -53,6 +57,23 @@ object AppConfigs {
                     ((freePackFullTime - now) / FREE_PACK_REFILL_TIME).toInt() - 1)
                 .coerceIn(0..FREE_PACK_MAXIMUM_STORAGE)
         }
+
+        fun userGlyphDimensional(
+            cardsObtained: Long,
+        ) = (cardsObtained / 9).toString(radix = 4).length
+
+        fun cardsRequiredForGlyphDimensional(
+            level: Int,
+        ) = if (level == 1) {
+            0
+        } else {
+            9 * (4 shl level)
+        }
+
+        fun userCurrentGlyphDimensionalExp(
+            level: Int,
+            cardsObtained: Long,
+        ) = cardsObtained - cardsRequiredForGlyphDimensional(level)
 
     }
 
