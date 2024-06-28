@@ -29,6 +29,7 @@ val koinModules = module {
     single { AppDriverFactory() }
     single { get<AppDriverFactory>().createDriver() }
     single { createDatabase(get()) }
+    single { get<Database>().fakeExchangeRequestsQueries }
     single { get<Database>().fakeUsersQueries }
     single { get<Database>().unicodeBlocksQueries }
     single { get<Database>().unicodeDataQueries }

@@ -159,7 +159,9 @@ fun MarketPage(
                         end = 4.dp,
                         bottom = 4.dp,
                     ),
-                onClick = {}
+                onClick = {
+                    navController.navigate(Screen.MarketExchangeHub.route)
+                }
             )
         }
         item(

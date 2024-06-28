@@ -27,6 +27,7 @@ import androidx.navigation.navArgument
 import starrysugar.unicodecards.app.ui.main.MainScreen
 import starrysugar.unicodecards.app.ui.main.cards.deck.DeckScreen
 import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointScreen
+import starrysugar.unicodecards.app.ui.main.market.exchangehub.ExchangeHubScreen
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackScreen
 
 /**
@@ -67,6 +68,13 @@ fun AppNavHost(
             )
         }
 
+        appComposable(
+            screen = Screen.MarketExchangeHub,
+        ) {
+            ExchangeHubScreen(
+                navController = navController,
+            )
+        }
         appComposable(
             screen = Screen.MarketOpenPack,
         ) {
@@ -129,6 +137,7 @@ sealed class Screen(
         ): String = "$route/$codePoint"
     }
 
+    data object MarketExchangeHub : Screen(route = "uc_market_exchange_hub")
     data object MarketOpenPack : Screen(
         route = "uc_market_open_pack",
         arguments = listOf(

@@ -21,6 +21,7 @@ import starrysugar.unicodecards.app.ui.main.cards.deck.DeckViewModel
 import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointViewModel
 import starrysugar.unicodecards.app.ui.main.home.HomeViewModel
 import starrysugar.unicodecards.app.ui.main.market.MarketViewModel
+import starrysugar.unicodecards.app.ui.main.market.exchangehub.ExchangeHubViewModel
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackViewModel
 import starrysugar.unicodecards.app.ui.main.settings.SettingsViewModel
 
@@ -47,6 +48,7 @@ val appViewModelFactory = viewModelFactory {
         )
     }
 
+    addInitializer(ExchangeHubViewModel::class) { ExchangeHubViewModel() }
     addInitializer(OpenPackViewModel::class) {
         OpenPackViewModel(
             packID = this[OpenPackViewModel.PackIDKey]!!,

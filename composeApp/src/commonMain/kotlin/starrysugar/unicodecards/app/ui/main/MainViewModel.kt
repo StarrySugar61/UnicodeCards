@@ -20,11 +20,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.common.AppInitializer
 import starrysugar.unicodecards.appdata.database.Database
+import starrysugar.unicodecards.appdata.helper.ExchangeHubHelper
 
 /**
  * @author StarrySugar61
@@ -59,7 +61,19 @@ class MainViewModel : BaseViewModel() {
                     maxProgress = i4
                 }
             )
+            delay(1000)
+            // Looped job!
+            loopedJob()
         }
+    }
+
+    private suspend fun loopedJob() {
+        // Updates!
+        ExchangeHubHelper.onUpdate()
+
+        // Delay for next job!
+        delay(60_000)
+        loopedJob()
     }
 
 }
