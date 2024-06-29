@@ -208,7 +208,7 @@ private fun ExchangeItem(
             )
             Text(
                 modifier = Modifier.width(40.dp),
-                text = "←",
+                text = "→",
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center,
             )
