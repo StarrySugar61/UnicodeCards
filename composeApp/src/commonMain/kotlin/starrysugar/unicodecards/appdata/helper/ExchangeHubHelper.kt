@@ -106,7 +106,7 @@ object ExchangeHubHelper : KoinComponent {
         val cardsAvailable = ((cardWantedIndex - 0x200)..(cardWantedIndex + 0x200))
             .asSequence()
             .filter {
-                it in 0.._totalCards
+                it in 0..<_totalCards
             }
             .filter {
                 it != cardWantedIndex
