@@ -16,14 +16,24 @@ package starrysugar.unicodecards.app.ui.main.market.exchangehub
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.AppNavBackTopBar
@@ -47,8 +58,17 @@ import starrysugar.unicodecards.app.ui.base.appViewModelFactory
 import starrysugar.unicodecards.app.ui.common.game.UnicodeCard
 import starrysugar.unicodecards.app.ui.common.paging.AppLazyPagingList
 import starrysugar.unicodecards.app.ui.common.paging.collectAsLazyPagingItems
+import starrysugar.unicodecards.appdata.database.table.QueryDataByCodeWithUserData
 import starrysugar.unicodecards.appdata.database.table.Uc_fake_exchange_requests
 import starrysugar.unicodecards.arch.utils.TimeUtils
+import starrysugar.unicodecards.cancel
+import starrysugar.unicodecards.confirm
+import starrysugar.unicodecards.market_exchange_dialog_give
+import starrysugar.unicodecards.market_exchange_dialog_select
+import starrysugar.unicodecards.market_exchange_dialog_title
+import starrysugar.unicodecards.market_exchange_dialog_warn_already_owned
+import starrysugar.unicodecards.market_exchange_dialog_warn_no_duplicate
+import starrysugar.unicodecards.market_exchange_dialog_warn_not_selected
 import starrysugar.unicodecards.market_exchange_hub
 import starrysugar.unicodecards.market_exchange_hub_available
 import starrysugar.unicodecards.market_exchange_hub_posted_time
@@ -67,6 +87,21 @@ fun ExchangeHubScreen(
 ) {
     var now by remember {
         mutableStateOf(TimeUtils.currentTimeMillis())
+    }
+    var exchangingItem by remember {
+        mutableStateOf<Uc_fake_exchange_requests?>(null)
+    }
+    exchangingItem?.let {
+        ExchangingDialog(
+            viewModel = viewModel,
+            item = it,
+            onConfirmed = { codePoint ->
+
+            },
+            onDismiss = {
+                exchangingItem = null
+            },
+        )
     }
     LaunchedEffect(
         key1 = now,
@@ -107,12 +142,166 @@ fun ExchangeHubScreen(
                     now = now,
                     viewModel = viewModel,
                     onClick = {
-
+                        exchangingItem = item
                     },
                 )
             },
         )
     }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ExchangingDialog(
+    viewModel: ExchangeHubViewModel,
+    item: Uc_fake_exchange_requests,
+    onConfirmed: (selectedCodePoint: Long) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var selectedCodePoint by remember {
+        mutableStateOf(-1L)
+    }
+    var warningText by remember {
+        mutableStateOf<StringResource?>(null)
+    }
+    val cardWanted = viewModel.getCodePointData(item.card_wanted)
+
+    @Composable
+    fun mapAvailableFor(
+        cardAvailable: Long,
+    ) {
+        cardAvailable.takeUnless { it == -1L }
+            ?.let {
+                viewModel.getCodePointData(it)
+            }
+            ?.let {
+                ExchangeAvailableSelectingCard(
+                    modifier = Modifier
+                        .padding(
+                            all = 2.dp
+                        ),
+                    data = it,
+                    isSelected = it.code_point == selectedCodePoint,
+                    onClicked = {
+                        selectedCodePoint = it.code_point
+                        warningText = if (it.card_count > 0) {
+                            Res.string.market_exchange_dialog_warn_already_owned
+                        } else {
+                            null
+                        }
+                    }
+                )
+            }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(
+                    resource = Res.string.market_exchange_dialog_title,
+                ),
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(
+                        resource = Res.string.market_exchange_dialog_give,
+                        item.username,
+                    ),
+                )
+                UnicodeCard(
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp,
+                        ),
+                    scale = 0.4F,
+                    codePoint = cardWanted.code_point.toInt(),
+                    category = cardWanted.category,
+                    valueCover = cardWanted.cover,
+                )
+                if (cardWanted.card_count > 1) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(
+                                vertical = 4.dp,
+                            ),
+                        text = stringResource(
+                            resource = Res.string.market_exchange_dialog_select,
+                        ),
+                    )
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        mapAvailableFor(item.card_available_1)
+                        mapAvailableFor(item.card_available_2)
+                        mapAvailableFor(item.card_available_3)
+                        mapAvailableFor(item.card_available_4)
+                        mapAvailableFor(item.card_available_5)
+                    }
+                } else {
+                    Text(
+                        modifier = Modifier
+                            .padding(
+                                vertical = 4.dp,
+                            ),
+                        text = stringResource(
+                            resource = Res.string.market_exchange_dialog_warn_no_duplicate,
+                        ),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+                warningText?.let {
+                    Text(
+                        modifier = Modifier
+                            .padding(
+                                vertical = 4.dp,
+                            ),
+                        text = stringResource(
+                            resource = it,
+                        ),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    when {
+                        cardWanted.card_count < 2 -> onDismiss()
+                        selectedCodePoint < 0 -> warningText =
+                            Res.string.market_exchange_dialog_warn_not_selected
+
+                        else -> onConfirmed(selectedCodePoint)
+                    }
+                },
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.confirm,
+                    ),
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+            ) {
+                Text(
+                    text = stringResource(
+                        resource = Res.string.cancel,
+                    ),
+                )
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -226,22 +415,12 @@ private fun ExchangeItem(
                         viewModel.getCodePointData(it)
                     }
                     ?.let {
-                        UnicodeCard(
+                        ExchangeAvailableCard(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
-                                )
-                                .alpha(
-                                    alpha = if (it.card_count == 0L) {
-                                        1F
-                                    } else {
-                                        0.4F
-                                    },
                                 ),
-                            scale = 0.4F,
-                            codePoint = it.code_point.toInt(),
-                            category = it.category,
-                            valueCover = it.cover,
+                            data = it,
                         )
                     }
                 // card2
@@ -251,22 +430,12 @@ private fun ExchangeItem(
                         viewModel.getCodePointData(it)
                     }
                     ?.let {
-                        UnicodeCard(
+                        ExchangeAvailableCard(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
-                                )
-                                .alpha(
-                                    alpha = if (it.card_count == 0L) {
-                                        1F
-                                    } else {
-                                        0.4F
-                                    },
                                 ),
-                            scale = 0.4F,
-                            codePoint = it.code_point.toInt(),
-                            category = it.category,
-                            valueCover = it.cover,
+                            data = it,
                         )
                     }
                 // card3
@@ -276,22 +445,12 @@ private fun ExchangeItem(
                         viewModel.getCodePointData(it)
                     }
                     ?.let {
-                        UnicodeCard(
+                        ExchangeAvailableCard(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
-                                )
-                                .alpha(
-                                    alpha = if (it.card_count == 0L) {
-                                        1F
-                                    } else {
-                                        0.4F
-                                    },
                                 ),
-                            scale = 0.4F,
-                            codePoint = it.code_point.toInt(),
-                            category = it.category,
-                            valueCover = it.cover,
+                            data = it,
                         )
                     }
                 // card4
@@ -301,22 +460,12 @@ private fun ExchangeItem(
                         viewModel.getCodePointData(it)
                     }
                     ?.let {
-                        UnicodeCard(
+                        ExchangeAvailableCard(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
-                                )
-                                .alpha(
-                                    alpha = if (it.card_count == 0L) {
-                                        1F
-                                    } else {
-                                        0.4F
-                                    },
                                 ),
-                            scale = 0.4F,
-                            codePoint = it.code_point.toInt(),
-                            category = it.category,
-                            valueCover = it.cover,
+                            data = it,
                         )
                     }
                 // card5
@@ -326,25 +475,61 @@ private fun ExchangeItem(
                         viewModel.getCodePointData(it)
                     }
                     ?.let {
-                        UnicodeCard(
+                        ExchangeAvailableCard(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
-                                )
-                                .alpha(
-                                    alpha = if (it.card_count == 0L) {
-                                        1F
-                                    } else {
-                                        0.4F
-                                    },
                                 ),
-                            scale = 0.4F,
-                            codePoint = it.code_point.toInt(),
-                            category = it.category,
-                            valueCover = it.cover,
+                            data = it,
                         )
                     }
             }
         }
     }
 }
+
+@Composable
+private fun ExchangeAvailableCard(
+    modifier: Modifier = Modifier,
+    data: QueryDataByCodeWithUserData,
+) {
+    UnicodeCard(
+        modifier = modifier
+            .alpha(
+                alpha = if (data.card_count == 0L) {
+                    1F
+                } else {
+                    0.4F
+                },
+            ),
+        scale = 0.4F,
+        codePoint = data.code_point.toInt(),
+        category = data.category,
+        valueCover = data.cover,
+    )
+}
+
+@Composable
+private fun ExchangeAvailableSelectingCard(
+    modifier: Modifier = Modifier,
+    data: QueryDataByCodeWithUserData,
+    isSelected: Boolean?,
+    onClicked: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+    ) {
+        ExchangeAvailableCard(
+            modifier = Modifier.clickable(onClick = onClicked),
+            data = data,
+        )
+        isSelected?.let {
+            RadioButton(
+                modifier = Modifier.align(Alignment.TopEnd),
+                selected = it,
+                onClick = null,
+            )
+        }
+    }
+}
+

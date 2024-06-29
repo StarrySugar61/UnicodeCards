@@ -32,6 +32,12 @@
     <string name="market_exchange_hub_wanted">我想要的</string>
     <string name="market_exchange_hub_available">我提供的</string>
     <string name="market_exchange_hub_posted_time">发布于%1$s之前</string>
+    <string name="market_exchange_dialog_title">交换卡牌</string>
+    <string name="market_exchange_dialog_give">将一张此卡牌交给%1$s：</string>
+    <string name="market_exchange_dialog_select">从以下卡牌中选择一张获得：</string>
+    <string name="market_exchange_dialog_warn_not_selected">请选择想要获得的卡牌。</string>
+    <string name="market_exchange_dialog_warn_already_owned">注意：你已经拥有这张卡牌了。</string>
+    <string name="market_exchange_dialog_warn_no_duplicate">你没有可供交换的重复卡牌。</string>
 
     <string name="market_the_chamber_of_time">时光密室</string>
 
