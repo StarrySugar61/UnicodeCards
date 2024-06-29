@@ -36,7 +36,7 @@
     <string name="market_exchange_dialog_give">Give one of this card to %1$s:</string>
     <string name="market_exchange_dialog_select">And choose one of the following cards to obtain:</string>
     <string name="market_exchange_dialog_warn_not_selected">Please select the card you want to obtain.</string>
-    <string name="market_exchange_dialog_warn_already_owned">Warning: You have already owned this card.</string>
+    <string name="market_exchange_dialog_warn_already_owned">Warning: You have already owned this card, but you can still proceed to exchange.</string>
     <string name="market_exchange_dialog_warn_no_duplicate">You have no duplicate cards available for this exchange.</string>
 
     <string name="market_the_chamber_of_time">The Chamber of Time</string>

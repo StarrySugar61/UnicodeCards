@@ -36,7 +36,7 @@
     <string name="market_exchange_dialog_give">将一张此卡牌交给%1$s：</string>
     <string name="market_exchange_dialog_select">从以下卡牌中选择一张获得：</string>
     <string name="market_exchange_dialog_warn_not_selected">请选择想要获得的卡牌。</string>
-    <string name="market_exchange_dialog_warn_already_owned">注意：你已经拥有这张卡牌了。</string>
+    <string name="market_exchange_dialog_warn_already_owned">注意：你已经拥有这张卡牌了，但你仍然可以选择交换这张卡牌。</string>
     <string name="market_exchange_dialog_warn_no_duplicate">你没有可供交换的重复卡牌。</string>
 
     <string name="market_the_chamber_of_time">时光密室</string>
