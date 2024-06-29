@@ -29,6 +29,10 @@
     <string name="market_exchange_hub">Exchange Hub</string>
     <string name="market_exchange_hub_info">Exchange duplicate cards with others!</string>
 
+    <string name="market_exchange_hub_wanted">WANTED</string>
+    <string name="market_exchange_hub_available">AVAILABLE</string>
+    <string name="market_exchange_hub_posted_time">Posted %1$s ago</string>
+
     <string name="market_the_chamber_of_time">The Chamber of Time</string>
 
     <string name="market_unlock_requirement">Collect %1$d different cards to unlock!</string>

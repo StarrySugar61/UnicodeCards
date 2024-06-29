@@ -29,6 +29,10 @@
     <string name="market_exchange_hub">交易所</string>
     <string name="market_exchange_hub_info">和其他玩家交换重复的卡牌！</string>
 
+    <string name="market_exchange_hub_wanted">我想要的</string>
+    <string name="market_exchange_hub_available">我提供的</string>
+    <string name="market_exchange_hub_posted_time">发布于%1$s之前</string>
+
     <string name="market_the_chamber_of_time">时光密室</string>
 
     <string name="market_unlock_requirement">收集%1$d种不同的卡牌以解锁！</string>

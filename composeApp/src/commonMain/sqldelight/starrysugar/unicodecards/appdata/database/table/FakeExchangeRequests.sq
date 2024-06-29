@@ -5,9 +5,16 @@ CREATE TABLE `uc_fake_exchange_requests` (
     `card_available_1` INTEGER NOT NULL,
     `card_available_2` INTEGER NOT NULL,
     `card_available_3` INTEGER NOT NULL,
+    `card_available_4` INTEGER NOT NULL,
+    `card_available_5` INTEGER NOT NULL,
     `sent_time` INTEGER NOT NULL,
     `expired_time` INTEGER NOT NULL
 );
+
+count:
+SELECT COUNT(1)
+FROM `uc_fake_exchange_requests`
+WHERE 1;
 
 queryDataPaging:
 SELECT *
@@ -23,9 +30,13 @@ INSERT INTO `uc_fake_exchange_requests`(
     `card_available_1`,
     `card_available_2`,
     `card_available_3`,
+    `card_available_4`,
+    `card_available_5`,
     `sent_time`,
     `expired_time`
 ) VALUES (
+    ?,
+    ?,
     ?,
     ?,
     ?,

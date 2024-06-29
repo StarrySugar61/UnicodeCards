@@ -1,3 +1,17 @@
+/*
+ * Copyright (C) 2024 StarrySugar
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
 package starrysugar.unicodecards.appdata.helper
 
 import androidx.datastore.core.DataStore
@@ -113,7 +127,7 @@ object ExchangeHubHelper : KoinComponent {
             }
             .shuffled()
             .take(
-                Random.nextInt(1..3)
+                Random.nextInt(1..5)
             )
             .map {
                 _unicodeDataQueries.queryCodePointByIndex(it).executeAsOne()
@@ -128,6 +142,8 @@ object ExchangeHubHelper : KoinComponent {
             card_available_1 = cardsAvailable.getOrElse(0) { -1 },
             card_available_2 = cardsAvailable.getOrElse(1) { -1 },
             card_available_3 = cardsAvailable.getOrElse(2) { -1 },
+            card_available_4 = cardsAvailable.getOrElse(3) { -1 },
+            card_available_5 = cardsAvailable.getOrElse(4) { -1 },
             sent_time = sentTime,
             expired_time = expiredTime,
         )

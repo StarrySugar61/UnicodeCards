@@ -14,10 +14,45 @@
  */
 package starrysugar.unicodecards.app.ui.main.market.exchangehub
 
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
+import starrysugar.unicodecards.appdata.database.table.FakeExchangeRequestsQueries
+import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
 
 /**
  * @author StarrySugar61
  * @create 2024/6/28
  */
-class ExchangeHubViewModel : BaseViewModel()
+class ExchangeHubViewModel : BaseViewModel() {
+
+    private val _fakeExchangeRequestsQueries: FakeExchangeRequestsQueries by inject()
+
+    private val _unicodeDataQueries: UnicodeDataQueries by inject()
+
+    val requestFlow = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+        )
+    ) {
+        QueryPagingSource(
+            countQuery = _fakeExchangeRequestsQueries.count(),
+            transacter = _fakeExchangeRequestsQueries,
+            context = Dispatchers.IO,
+            queryProvider = _fakeExchangeRequestsQueries::queryDataPaging,
+        )
+    }.flow.cachedIn(viewModelScope)
+
+    fun getCodePointData(
+        codePoint: Long
+    ) = _unicodeDataQueries
+        .queryDataByCodeWithUserData(codePoint)
+        .executeAsOne()
+
+}
