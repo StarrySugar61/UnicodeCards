@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -192,6 +193,14 @@ private fun ExchangeItem(
         ) {
             val cardWanted = viewModel.getCodePointData(item.card_wanted)
             UnicodeCard(
+                modifier = Modifier
+                    .alpha(
+                        alpha = if (cardWanted.card_count > 1) {
+                            1F
+                        } else {
+                            0.4F
+                        },
+                    ),
                 scale = 0.4F,
                 codePoint = cardWanted.code_point.toInt(),
                 category = cardWanted.category,
@@ -221,6 +230,13 @@ private fun ExchangeItem(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
+                                )
+                                .alpha(
+                                    alpha = if (it.card_count == 0L) {
+                                        1F
+                                    } else {
+                                        0.4F
+                                    },
                                 ),
                             scale = 0.4F,
                             codePoint = it.code_point.toInt(),
@@ -239,6 +255,13 @@ private fun ExchangeItem(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
+                                )
+                                .alpha(
+                                    alpha = if (it.card_count == 0L) {
+                                        1F
+                                    } else {
+                                        0.4F
+                                    },
                                 ),
                             scale = 0.4F,
                             codePoint = it.code_point.toInt(),
@@ -257,6 +280,13 @@ private fun ExchangeItem(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
+                                )
+                                .alpha(
+                                    alpha = if (it.card_count == 0L) {
+                                        1F
+                                    } else {
+                                        0.4F
+                                    },
                                 ),
                             scale = 0.4F,
                             codePoint = it.code_point.toInt(),
@@ -275,6 +305,13 @@ private fun ExchangeItem(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
+                                )
+                                .alpha(
+                                    alpha = if (it.card_count == 0L) {
+                                        1F
+                                    } else {
+                                        0.4F
+                                    },
                                 ),
                             scale = 0.4F,
                             codePoint = it.code_point.toInt(),
@@ -293,6 +330,13 @@ private fun ExchangeItem(
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp
+                                )
+                                .alpha(
+                                    alpha = if (it.card_count == 0L) {
+                                        1F
+                                    } else {
+                                        0.4F
+                                    },
                                 ),
                             scale = 0.4F,
                             codePoint = it.code_point.toInt(),
