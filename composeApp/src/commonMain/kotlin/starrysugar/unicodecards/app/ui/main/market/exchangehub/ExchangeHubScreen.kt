@@ -25,6 +25,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.AppNavBackTopBar
@@ -58,7 +64,15 @@ fun ExchangeHubScreen(
         factory = appViewModelFactory,
     ),
 ) {
-    val now = TimeUtils.currentTimeMillis()
+    var now by remember {
+        mutableStateOf(TimeUtils.currentTimeMillis())
+    }
+    LaunchedEffect(
+        key1 = now,
+    ) {
+        delay(1000)
+        now = TimeUtils.currentTimeMillis()
+    }
     AppScaffold(
         modifier = Modifier.fillMaxSize(),
         viewModel = viewModel,
