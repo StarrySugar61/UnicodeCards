@@ -95,8 +95,13 @@ fun ExchangeHubScreen(
         ExchangingDialog(
             viewModel = viewModel,
             item = it,
-            onConfirmed = { codePoint ->
-
+            onConfirmed = { selectedCodePoint ->
+                viewModel.onExchangeCard(
+                    exchangeId = it.id,
+                    cardGiven = it.card_wanted,
+                    cardReceived = selectedCodePoint,
+                )
+                exchangingItem = null
             },
             onDismiss = {
                 exchangingItem = null

@@ -25,6 +25,7 @@ import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.database.table.FakeExchangeRequestsQueries
 import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
+import starrysugar.unicodecards.appdata.database.table.UserCardsQueries
 
 /**
  * @author StarrySugar61
@@ -35,6 +36,8 @@ class ExchangeHubViewModel : BaseViewModel() {
     private val _fakeExchangeRequestsQueries: FakeExchangeRequestsQueries by inject()
 
     private val _unicodeDataQueries: UnicodeDataQueries by inject()
+
+    private val _userCardsQueries: UserCardsQueries by inject()
 
     val requestFlow = Pager(
         config = PagingConfig(
@@ -54,5 +57,16 @@ class ExchangeHubViewModel : BaseViewModel() {
     ) = _unicodeDataQueries
         .queryDataByCodeWithUserData(codePoint)
         .executeAsOne()
+
+    fun onExchangeCard(
+        exchangeId: Long,
+        cardGiven: Long,
+        cardReceived: Long,
+    ) {
+        _fakeExchangeRequestsQueries.delete(exchangeId)
+        _userCardsQueries.giveawayCardFor(cardGiven)
+        _userCardsQueries.receivedCardFor(cardReceived)
+    }
+
 
 }
