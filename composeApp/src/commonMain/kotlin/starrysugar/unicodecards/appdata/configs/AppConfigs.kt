@@ -47,8 +47,8 @@ object AppConfigs {
 
     const val GD_UNLOCK_TIME_CHAMBER = 6
 
-    const val EXCHANGE_HUB_NEW_REQUEST_LEAST_TIME = 30 * 60 * 1000L
-    const val EXCHANGE_HUB_NEW_REQUEST_MOST_TIME = 120 * 60 * 1000L
+    const val EXCHANGE_HUB_NEW_REQUEST_LEAST_TIME = 10 * 60 * 1000L
+    const val EXCHANGE_HUB_NEW_REQUEST_MOST_TIME = 60 * 60 * 1000L
     const val EXCHANGE_HUB_EXPIRED_TIME = 72 * 60 * 60 * 1000L
 
     object Utils {
