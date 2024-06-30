@@ -73,11 +73,13 @@ import starrysugar.unicodecards.market_exchange_hub
 import starrysugar.unicodecards.market_exchange_hub_available
 import starrysugar.unicodecards.market_exchange_hub_posted_time
 import starrysugar.unicodecards.market_exchange_hub_wanted
+import kotlin.random.Random
 
 /**
  * @author StarrySugar61
  * @create 2024/6/28
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExchangeHubScreen(
     navController: NavHostController,
@@ -132,12 +134,18 @@ fun ExchangeHubScreen(
             )
         }
     ) { paddingValues ->
+        val lazyPagingItems = viewModel.requestFlow.collectAsLazyPagingItems()
         AppLazyPagingList(
             modifier = Modifier.padding(paddingValues = paddingValues),
-            lazyPagingItems = viewModel.requestFlow.collectAsLazyPagingItems(),
+            lazyPagingItems = lazyPagingItems,
+            itemKey = { index ->
+                lazyPagingItems[index]?.id ?: Random.nextLong()
+            },
             itemContent = { _, item ->
                 ExchangeItem(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .animateItemPlacement()
+                        .fillMaxWidth()
                         .padding(
                             start = 4.dp,
                             end = 4.dp,
