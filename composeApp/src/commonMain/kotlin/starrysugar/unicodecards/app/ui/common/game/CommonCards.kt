@@ -43,14 +43,18 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.theme.AppColors
 import starrysugar.unicodecards.appdata.unicode.CharCategory
+import starrysugar.unicodecards.appdata.unicode.fonts.CardDefaultFont
 import starrysugar.unicodecards.arch.utils.UnicodeUtils
 import starrysugar.unicodecards.market_new_card
 
@@ -463,6 +467,7 @@ private fun CardContent(
                 },
                 fontSize = 80.sp,
                 textAlign = TextAlign.Center,
+                fontFamily = CardDefaultFont.getFontFamilyFor(codePoint),
             )
         } else {
             Text(
