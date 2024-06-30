@@ -203,7 +203,7 @@ object AppInitializer : KoinComponent {
                                 val split = s.split(';')
                                 val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
                                 // filter surrogates and private use
-                                if (name.contains("Surrogates") || name.contains("Private")) {
+                                if (name.contains("Surrogate") || name.contains("Private")) {
                                     return@forEachIndexed
                                 }
                                 val codeString = split.getOrNull(0)?.trim() ?: return@forEachIndexed
@@ -327,7 +327,7 @@ object AppInitializer : KoinComponent {
                             }
                             val name = split.getOrNull(1)?.trim() ?: return@forEachIndexed
                             // filter surrogates and private use
-                            if (name.contains("Surrogates") || name.contains("Private")) {
+                            if (name.contains("Surrogate") || name.contains("Private")) {
                                 return@forEachIndexed
                             }
                             val codePointStart = range.first.toLong()
