@@ -22,10 +22,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.FontResource
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_Regular
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
-import starrysugar.unicodecards.NotoSansHistorical_Regular
-import starrysugar.unicodecards.NotoSansLiving_Regular
-import starrysugar.unicodecards.NotoSerifHistorical_Regular
-import starrysugar.unicodecards.NotoSerifLiving_Regular
+import starrysugar.unicodecards.NotoSansPlane0_Regular
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.Roboto_Regular
 
@@ -60,152 +57,35 @@ object CardDefaultFont {
         in 0x0..0x17f -> Res.font.Roboto_Regular
         in 0x380..0x3ce, 0x3d1, 0x3d2, 0x3d6, in 0x400..0x513
         -> Res.font.Roboto_Regular
-
-        in 0x180..0x7ff -> Res.font.NotoSansLiving_Regular
-
-        in 0x800..0x85f -> Res.font.NotoSansHistorical_Regular
         // TODO 0x860..0x86f Syriac Supplement
-        in 0x870..0xeff -> Res.font.NotoSansLiving_Regular
-        in 0xf00..0xfff -> Res.font.NotoSerifLiving_Regular
-
-        in 0x1000..0x10ff -> Res.font.NotoSansLiving_Regular
         // TODO 0x1100..0x11ff Hangul Jamo
-        in 0x1200..0x167f -> Res.font.NotoSansLiving_Regular
-
         0x1e00, 0x1e01, 0x1e3e, 0x1e3f, in 0x1e80..0x1e85, in 0x1ea0..0x1ef9, 0x1f4d
         -> Res.font.Roboto_Regular
-
-        in 0x1680..0x1fff -> Res.font.NotoSansLiving_Regular
-
-        in 0x2000..0x27ff -> Res.font.NotoSansLiving_Regular
-        // TODO 0x2800..0x28ff Braille Patterns
-        in 0x2900..0x2bff -> Res.font.NotoSansLiving_Regular
-        in 0x2c00..0x2c5f -> Res.font.NotoSansHistorical_Regular
-        in 0x2c60..0x2e7f -> Res.font.NotoSansLiving_Regular
         // TODO 0x2e80..0x2eff CJK Radicals Supplement
         in 0x2f00..0x2fdf -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
         in 0x2ff0..0x2fff -> Res.font.AlibabaPuHuiTi_3_55_Regular
-
         // TODO 0x3000..0x33ff
         in 0x3400..0x4dbf -> Res.font.AlibabaPuHuiTi_3_55_Regular
-
         in 0x4e00..0x9fef -> Res.font.AlibabaPuHuiTi_3_55_Regular
-
-        in 0xa000..0xa83f -> Res.font.NotoSansLiving_Regular
-        in 0xa840..0xa87f -> Res.font.NotoSansHistorical_Regular
-        in 0xa880..0xa95f -> Res.font.NotoSansLiving_Regular
         // TODO 0xa960..0xa97f Hangul Jamo Extended-A
-        in 0xa980..0xabff -> Res.font.NotoSansLiving_Regular
         // TODO 0xac00..0xd7ff Hangul Syllables & Hangul Jamo Extended-B
-
         in 0xf900..0xfaff -> Res.font.AlibabaPuHuiTi_3_55_Regular
         in 0xfb01..0xfb04 -> Res.font.Roboto_Regular
-        in 0xfb00..0xfdff -> Res.font.NotoSansLiving_Regular
         // TODO 0xfe00..0xfe6f
-        in 0xfe70..0xfeff -> Res.font.NotoSansLiving_Regular
-        // TODO 0xff00..0xfffd
-
-
-        in 0x10000..0x1013f -> Res.font.NotoSansHistorical_Regular
-        // TODO 0x10140..0x1027f
-        in 0x10280..0x1047f -> Res.font.NotoSansHistorical_Regular
-        in 0x10480..0x104ff -> Res.font.NotoSansLiving_Regular
-        in 0x10500..0x105bf,
-        in 0x10600..0x107bf,
-        in 0x10800..0x108af,
-        in 0x108e0..0x1093f,
-        in 0x10980..0x10a9f,
-        in 0x10ac0..0x10baf,
-        in 0x10c00..0x10c4f,
-        in 0x10c80..0x10cff -> Res.font.NotoSansHistorical_Regular
-
-        in 0x10d00..0x10d3f -> Res.font.NotoSansLiving_Regular
-        // TODO 0x10e60..0x10e7f Rumi Numeral Symbols
-        in 0x10e80..0x10ebf -> Res.font.NotoSerifHistorical_Regular
         // TODO 0x10ec0..0x10eff Arabic Extended-C
-        in 0x10f00..0x10f6f -> Res.font.NotoSansHistorical_Regular
-        in 0x10f70..0x10faf -> Res.font.NotoSerifHistorical_Regular
-        in 0x10fb0..0x10fff -> Res.font.NotoSansHistorical_Regular
-
-        in 0x11000..0x110cf -> Res.font.NotoSansHistorical_Regular
-        in 0x110d0..0x1114f -> Res.font.NotoSansLiving_Regular
-        in 0x11150..0x1117f,
-        in 0x11180..0x111ff -> Res.font.NotoSansHistorical_Regular
-
-        in 0x11200..0x1124f,
-        in 0x11280..0x112af -> Res.font.NotoSansLiving_Regular
-
-        in 0x112b0..0x1137f -> Res.font.NotoSansHistorical_Regular
-        in 0x11400..0x1147f -> Res.font.NotoSansLiving_Regular
-        in 0x11480..0x114df -> Res.font.NotoSansHistorical_Regular
-        in 0x11580..0x115ff,
-        in 0x11600..0x116cf -> Res.font.NotoSansLiving_Regular
-
-        in 0x11700..0x1174f -> Res.font.NotoSerifLiving_Regular
-        in 0x11800..0x1184f -> Res.font.NotoSerifHistorical_Regular
-        in 0x118a0..0x118ff -> Res.font.NotoSansLiving_Regular
-        in 0x11900..0x1195f -> Res.font.NotoSerifHistorical_Regular
-        in 0x119a0..0x119ff -> Res.font.NotoSansHistorical_Regular
-        in 0x11a00..0x11a4f -> Res.font.NotoSansLiving_Regular
-        in 0x11a50..0x11aaf -> Res.font.NotoSansHistorical_Regular
-        in 0x11ab0..0x11b5f -> Res.font.NotoSansLiving_Regular
-        in 0x11c00..0x11cbf -> Res.font.NotoSansHistorical_Regular
-        in 0x11d00..0x11daf -> Res.font.NotoSansLiving_Regular
-        in 0x11ee0..0x11eff -> Res.font.NotoSerifHistorical_Regular
-        in 0x11f00..0x11f5f -> Res.font.NotoSansHistorical_Regular
-        in 0x11fb0..0x11fbf -> Res.font.NotoSansLiving_Regular
         // TODO 0x11fc0..0x11fff Tamil Supplement
-
-        in 0x12000..0x1254f,
-        in 0x12f90..0x12fff -> Res.font.NotoSansHistorical_Regular
-
-        in 0x13000..0x1345f,
-        in 0x14400..0x1467f -> Res.font.NotoSansHistorical_Regular
-
-        in 0x16800..0x16b8f,
-        in 0x16e40..0x16e9f,
-        in 0x16f00..0x16f9f -> Res.font.NotoSansLiving_Regular
-
-        0x16fe0, 0x16fe4 -> Res.font.NotoSerifHistorical_Regular
-        0x16fe1 -> Res.font.NotoSansHistorical_Regular
-
-        in 0x17000..0x18d7f -> Res.font.NotoSerifHistorical_Regular
-
         // TODO Kana Extensions
-
-        in 0x1b170..0x1b2ff -> Res.font.NotoSansHistorical_Regular
-
         // TODO 0x1bc00..0x1bcaf Duployan
         // TODO 0x1cf00..0x1cf9f Znamenny Musical Notation
         // TODO 0x1d000..0x1d3ff
-
-        in 0x1d400..0x1d7ff -> Res.font.NotoSansLiving_Regular
-
         // TODO 0x1d800..0x1daaf Sutton SignWriting
-
-        in 0x1df00..0x1dfff -> Res.font.NotoSansLiving_Regular
-
-        in 0x1e000..0x1e02f -> Res.font.NotoSansHistorical_Regular
         // TODO 0x1e030..0x1e08f Cyrillic Extended-D
-        in 0x1e100..0x1e14f,
-        in 0x1e290..0x1e2bf -> Res.font.NotoSerifLiving_Regular
-
-        in 0x1e2c0..0x1e2ff,
-        in 0x1e4d0..0x1e4df,
-        in 0x1e7e0..0x1e7ff,
-        in 0x1e800..0x1e8df,
-        in 0x1e900..0x1e95f -> Res.font.NotoSansLiving_Regular
-
-        in 0x1ec70..0x1ecbf -> Res.font.NotoSansHistorical_Regular
-        in 0x1ed00..0x1ed4f -> Res.font.NotoSerifHistorical_Regular
-        in 0x1ee00..0x1eeff -> Res.font.NotoSansLiving_Regular
-
         // TODO 0x1f000..0x1f0ff
-        in 0x1f100..0x1f1ff -> Res.font.NotoSansLiving_Regular
         // TODO 0x1f200..0x1f6ff
-        in 0x1f700..0x1f7df -> Res.font.NotoSansLiving_Regular
         // TODO 0x1f7e0..0x1f7ff
         // TODO 0x1f800..0x1fbff
+        in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
+        in 0x10000..0x1ffff -> Res.font.NotoSansPlane0_Regular
 
         0x20164, 0x20676, 0x20cd0, 0x2139a, 0x21413, 0x235cb, 0x239c7, 0x239c8, 0x23e23, 0x249db,
         0x24a7d, 0x24ac9, 0x25532, 0x25562, 0x255a8, 0x25ed7, 0x26221, 0x2648d, 0x26676, 0x2677c,
