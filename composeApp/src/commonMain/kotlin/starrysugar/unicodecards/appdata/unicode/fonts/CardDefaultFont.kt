@@ -24,6 +24,7 @@ import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_Regular
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
+import starrysugar.unicodecards.NotoSansPlane1_Regular
 import starrysugar.unicodecards.NotoSansSignWriting_Regular
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.Roboto_Regular
@@ -87,7 +88,7 @@ object CardDefaultFont {
         // TODO 0x1f7e0..0x1f7ff
         // TODO 0x1f800..0x1fbff
         in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
-        in 0x10000..0x1ffff -> Res.font.NotoSansPlane0_Regular
+        in 0x10000..0x1ffff -> Res.font.NotoSansPlane1_Regular
 
         0x20164, 0x20676, 0x20cd0, 0x2139a, 0x21413, 0x235cb, 0x239c7, 0x239c8, 0x23e23, 0x249db,
         0x24a7d, 0x24ac9, 0x25532, 0x25562, 0x255a8, 0x25ed7, 0x26221, 0x2648d, 0x26676, 0x2677c,
