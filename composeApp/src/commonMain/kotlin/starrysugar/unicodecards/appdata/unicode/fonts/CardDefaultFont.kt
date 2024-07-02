@@ -22,7 +22,9 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.FontResource
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_Regular
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
+import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
+import starrysugar.unicodecards.NotoSansSignWriting_Regular
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.Roboto_Regular
 
@@ -75,10 +77,10 @@ object CardDefaultFont {
         // TODO 0x10ec0..0x10eff Arabic Extended-C
         // TODO 0x11fc0..0x11fff Tamil Supplement
         // TODO Kana Extensions
-        // TODO 0x1bc00..0x1bcaf Duployan
+        in 0x1bc00..0x1bcaf -> Res.font.NotoSansDuployan_Regular
         // TODO 0x1cf00..0x1cf9f Znamenny Musical Notation
         // TODO 0x1d000..0x1d3ff
-        // TODO 0x1d800..0x1daaf Sutton SignWriting
+        in 0x1d800..0x1daaf -> Res.font.NotoSansSignWriting_Regular
         // TODO 0x1e030..0x1e08f Cyrillic Extended-D
         // TODO 0x1f000..0x1f0ff
         // TODO 0x1f200..0x1f6ff
