@@ -22,6 +22,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.FontResource
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.BabelStoneHan
+import starrysugar.unicodecards.NotoColorEmoji_Regular
 import starrysugar.unicodecards.NotoMusic_Regular
 import starrysugar.unicodecards.NotoSansCJKtc_Regular
 import starrysugar.unicodecards.NotoSansDuployan_Regular
@@ -92,6 +93,11 @@ object CardDefaultFont {
         in 0x1d000..0x1d24f -> Res.font.NotoMusic_Regular
         in 0x1d800..0x1daaf -> Res.font.NotoSansSignWriting_Regular
         // TODO 0x1e030..0x1e08f Cyrillic Extended-D
+        in 0x1f300..0x1f64f,
+        in 0x1f680..0x1f6ff,
+        in 0x1f7e0..0x1f7ff,
+        in 0x1f90c..0x1f9ff,
+        in 0x1fa70..0x1faff -> Res.font.NotoColorEmoji_Regular
         // TODO 0x1f300..0x1f6ff
         // TODO 0x1f7e0..0x1f7ff
         // TODO 0x1f900..0x1fbff
