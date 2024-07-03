@@ -52,18 +52,18 @@ object CardDefaultFont {
             name = "Roboto",
             url = "https://fonts.google.com/specimen/Roboto",
         ),
+        DefaultFontCredits(
+            name = "Roboto Serif",
+            url = "https://fonts.google.com/specimen/Roboto+Serif",
+        ),
     )
 
     private fun getFontResFor(
         codePoint: Int,
     ): FontResource? = when (codePoint) {
-        in 0x0..0x17f -> Res.font.Roboto_Regular
-        in 0x380..0x3ce, 0x3d1, 0x3d2, 0x3d6, in 0x400..0x513
-        -> Res.font.Roboto_Regular
+        in 0x0..0x17e -> Res.font.Roboto_Regular
         // TODO 0x860..0x86f Syriac Supplement
         // TODO 0x1100..0x11ff Hangul Jamo
-        0x1e00, 0x1e01, 0x1e3e, 0x1e3f, in 0x1e80..0x1e85, in 0x1ea0..0x1ef9, 0x1f4d
-        -> Res.font.Roboto_Regular
         // TODO 0x2e80..0x2eff CJK Radicals Supplement
         in 0x2f00..0x2fdf -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
         in 0x2ff0..0x2fff -> Res.font.AlibabaPuHuiTi_3_55_Regular
@@ -87,6 +87,7 @@ object CardDefaultFont {
         // TODO 0x1f200..0x1f6ff
         // TODO 0x1f7e0..0x1f7ff
         // TODO 0x1f800..0x1fbff
+
         in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
         in 0x10000..0x1ffff -> Res.font.NotoSansPlane1_Regular
 
