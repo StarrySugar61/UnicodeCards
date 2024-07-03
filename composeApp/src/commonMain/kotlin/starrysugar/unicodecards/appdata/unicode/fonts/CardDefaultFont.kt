@@ -20,8 +20,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.FontResource
-import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_Regular
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
+import starrysugar.unicodecards.BabelStoneHan
+import starrysugar.unicodecards.NotoSansCJKtc_Regular
 import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
 import starrysugar.unicodecards.NotoSansPlane1_Regular
@@ -46,6 +47,10 @@ object CardDefaultFont {
             url = "https://www.alibabafonts.com/#/font",
         ),
         DefaultFontCredits(
+            name = "BabelStone Han",
+            url = "https://www.babelstone.co.uk/Fonts/Han.html",
+        ),
+        DefaultFontCredits(
             name = "Noto",
             url = "https://fonts.google.com/noto",
         ),
@@ -64,18 +69,19 @@ object CardDefaultFont {
     ): FontResource? = when (codePoint) {
         in 0x0..0x17e -> Res.font.Roboto_Regular
         // TODO 0x860..0x86f Syriac Supplement
-        // TODO 0x1100..0x11ff Hangul Jamo
-        // TODO 0x2e80..0x2eff CJK Radicals Supplement
+        in 0x1100..0x11ff,
+        in 0x2500..0x259f,
+        in 0x2e80..0x2eff,
+        in 0x2ff0..0x2fff,
+        in 0x3000..0x4dbf,
+        in 0x4e00..0x9fef,
+        in 0xa960..0xa97f,
+        in 0xac00..0xd7ff,
+        in 0xf900..0xfaff,
+        in 0xff00..0xffef -> Res.font.NotoSansCJKtc_Regular
+
         in 0x2f00..0x2fdf -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
-        in 0x2ff0..0x2fff -> Res.font.AlibabaPuHuiTi_3_55_Regular
-        // TODO 0x3000..0x33ff
-        in 0x3400..0x4dbf -> Res.font.AlibabaPuHuiTi_3_55_Regular
-        in 0x4e00..0x9fef -> Res.font.AlibabaPuHuiTi_3_55_Regular
-        // TODO 0xa960..0xa97f Hangul Jamo Extended-A
-        // TODO 0xac00..0xd7ff Hangul Syllables & Hangul Jamo Extended-B
-        in 0xf900..0xfaff -> Res.font.AlibabaPuHuiTi_3_55_Regular
         in 0xfb01..0xfb04 -> Res.font.Roboto_Regular
-        // TODO 0xfe00..0xfe6f
         // TODO 0x10ec0..0x10eff Arabic Extended-C
         // TODO 0x11fc0..0x11fff Tamil Supplement
         // TODO Kana Extensions
@@ -112,9 +118,13 @@ object CardDefaultFont {
         0x2cc5f, 0x2ccf5, 0x2ccf6, 0x2ccfd, 0x2ccff, 0x2cd02, 0x2cd03, 0x2cd0a, 0x2cd8b, 0x2cd8d,
         0x2cd8f, 0x2cd90, 0x2cd9f, 0x2cda0, 0x2cda8, 0x2cdad, 0x2cdae, 0x2ccd5, 0x2ce18, 0x2ce1a,
         0x2ce23, 0x2ce26, 0x2ce2a, 0x2ce7c, 0x2ce88, 0x2ce93
-        -> Res.font.AlibabaPuHuiTi_3_55_Regular
+        -> Res.font.NotoSansCJKtc_Regular
 
-        in 0x20000..0x2ffff -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
+        in 0x20000..0x2ebef -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
+        in 0x2ebf0..0x2ee5f,
+        in 0x2f800..0x2fa1f,
+        in 0x30000..0x3ffff -> Res.font.BabelStoneHan
+
         else -> null
     }
 
