@@ -22,6 +22,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.FontResource
 import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.BabelStoneHan
+import starrysugar.unicodecards.NotoMusic_Regular
 import starrysugar.unicodecards.NotoSansCJKtc_Regular
 import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
@@ -78,7 +79,8 @@ object CardDefaultFont {
         in 0xa960..0xa97f,
         in 0xac00..0xd7ff,
         in 0xf900..0xfaff,
-        in 0xff00..0xffef -> Res.font.NotoSansCJKtc_Regular
+        in 0xff00..0xffef,
+        in 0x1f200..0x1f2ff -> Res.font.NotoSansCJKtc_Regular
 
         in 0x2f00..0x2fdf -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
         in 0xfb01..0xfb04 -> Res.font.Roboto_Regular
@@ -87,13 +89,12 @@ object CardDefaultFont {
         // TODO Kana Extensions
         in 0x1bc00..0x1bcaf -> Res.font.NotoSansDuployan_Regular
         in 0x1cf00..0x1cf9f -> Res.font.NotoZnamennyMusicalNotation_Regular
-        // TODO 0x1d000..0x1d3ff
+        in 0x1d000..0x1d24f -> Res.font.NotoMusic_Regular
         in 0x1d800..0x1daaf -> Res.font.NotoSansSignWriting_Regular
         // TODO 0x1e030..0x1e08f Cyrillic Extended-D
-        // TODO 0x1f000..0x1f0ff
-        // TODO 0x1f200..0x1f6ff
+        // TODO 0x1f300..0x1f6ff
         // TODO 0x1f7e0..0x1f7ff
-        // TODO 0x1f800..0x1fbff
+        // TODO 0x1f900..0x1fbff
 
         in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
         in 0x10000..0x1ffff -> Res.font.NotoSansPlane1_Regular
