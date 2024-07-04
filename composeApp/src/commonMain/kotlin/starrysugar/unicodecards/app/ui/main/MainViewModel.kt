@@ -49,8 +49,6 @@ class MainViewModel : BaseViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            // Test
-            database.userCardsQueries.setCardFontFor(0, emptySet())
             // Initialize unicode data
             AppInitializer.importAppDataTo(
                 database,

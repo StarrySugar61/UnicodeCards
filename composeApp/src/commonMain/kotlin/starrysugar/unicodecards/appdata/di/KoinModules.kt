@@ -35,7 +35,6 @@ val koinModules = module {
     single { get<Database>().unicodeDataQueries }
     single { get<Database>().unicodeIso15924Queries }
     single { get<Database>().unicodeScriptsQueries }
-    single { get<Database>().userCardFontsQueries }
     single { get<Database>().userCardsQueries }
 
     // DataStore!

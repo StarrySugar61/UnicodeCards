@@ -29,8 +29,12 @@ import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
 import starrysugar.unicodecards.NotoSansPlane1_Regular
 import starrysugar.unicodecards.NotoSansSignWriting_Regular
+import starrysugar.unicodecards.NotoSerifCJKtc_Regular
+import starrysugar.unicodecards.NotoSerifPlane0_Regular
+import starrysugar.unicodecards.NotoSerifPlane1_Regular
 import starrysugar.unicodecards.NotoZnamennyMusicalNotation_Regular
 import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.RobotoSerif_Regular
 import starrysugar.unicodecards.Roboto_Regular
 
 /**
@@ -68,8 +72,13 @@ object CardDefaultFont {
 
     private fun getFontResFor(
         codePoint: Int,
+        isSerif: Boolean = false,
     ): FontResource? = when (codePoint) {
-        in 0x0..0x17e -> Res.font.Roboto_Regular
+        in 0x0..0x17e -> if (isSerif) {
+            Res.font.RobotoSerif_Regular
+        } else {
+            Res.font.Roboto_Regular
+        }
         // TODO 0x860..0x86f Syriac Supplement
         in 0x1100..0x11ff,
         in 0x2500..0x259f,
@@ -81,10 +90,18 @@ object CardDefaultFont {
         in 0xac00..0xd7ff,
         in 0xf900..0xfaff,
         in 0xff00..0xffef,
-        in 0x1f200..0x1f2ff -> Res.font.NotoSansCJKtc_Regular
+        in 0x1f200..0x1f2ff -> if (isSerif) {
+            Res.font.NotoSerifCJKtc_Regular
+        } else {
+            Res.font.NotoSansCJKtc_Regular
+        }
 
         in 0x2f00..0x2fdf -> Res.font.AlibabaPuHuiTi_3_55_RegularL3
-        in 0xfb01..0xfb04 -> Res.font.Roboto_Regular
+        in 0xfb01..0xfb04 -> if (isSerif) {
+            Res.font.RobotoSerif_Regular
+        } else {
+            Res.font.Roboto_Regular
+        }
         // TODO 0x10ec0..0x10eff Arabic Extended-C
         // TODO 0x11fc0..0x11fff Tamil Supplement
         // TODO Kana Extensions
@@ -99,8 +116,17 @@ object CardDefaultFont {
         in 0x1f90c..0x1f9ff,
         in 0x1fa70..0x1faff -> Res.font.NotoColorEmoji_Regular
 
-        in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
-        in 0x10000..0x1ffff -> Res.font.NotoSansPlane1_Regular
+        in 0x0..0xffff -> if (isSerif) {
+            Res.font.NotoSerifPlane0_Regular
+        } else {
+            Res.font.NotoSansPlane0_Regular
+        }
+
+        in 0x10000..0x1ffff -> if (isSerif) {
+            Res.font.NotoSerifPlane1_Regular
+        } else {
+            Res.font.NotoSansPlane1_Regular
+        }
 
         0x20164, 0x20676, 0x20cd0, 0x2139a, 0x21413, 0x235cb, 0x239c7, 0x239c8, 0x23e23, 0x249db,
         0x24a7d, 0x24ac9, 0x25532, 0x25562, 0x255a8, 0x25ed7, 0x26221, 0x2648d, 0x26676, 0x2677c,
@@ -135,9 +161,30 @@ object CardDefaultFont {
     @Composable
     fun getFontFamilyFor(
         codePoint: Int,
+        isSerif: Boolean = false,
     ): FontFamily? = getFontResFor(
         codePoint = codePoint,
+        isSerif = isSerif,
     )?.let {
+        _buffer[it] ?: FontFamily(
+            Font(
+                resource = it,
+                weight = FontWeight.Normal,
+                style = FontStyle.Normal,
+            ),
+        ).also { fontFamily ->
+            _buffer[it] = fontFamily
+        }
+    }
+
+    @Composable
+    fun getCardNumFontFamily(
+        isSerif: Boolean = false,
+    ) = if (isSerif) {
+        Res.font.RobotoSerif_Regular
+    } else {
+        Res.font.Roboto_Regular
+    }.let {
         _buffer[it] ?: FontFamily(
             Font(
                 resource = it,
