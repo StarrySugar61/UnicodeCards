@@ -1,7 +1,6 @@
 CREATE TABLE `uc_user_cards` (
 `code_point` INTEGER PRIMARY KEY NOT NULL,
-`card_count` INTEGER NOT NULL DEFAULT 0,
-`font_id` INTEGER NOT NULL DEFAULT 0
+`card_count` INTEGER NOT NULL DEFAULT 0
 );
 
 receivedCardFor {
@@ -11,20 +10,14 @@ receivedCardFor {
 
     INSERT OR IGNORE INTO uc_user_cards(
         `code_point`,
-        `card_count`,
-        `font_id`
-    ) VALUES (:codePoint, 1, 0);
+        `card_count`
+    ) VALUES (:codePoint, 1);
 }
 
 giveawayCardFor:
 UPDATE `uc_user_cards`
 SET `card_count`=`card_count`-1
 WHERE `code_point`=:codePoint;
-
-setCardFontFor:
-UPDATE `uc_user_cards`
-SET `font_id`=:fontId
-WHERE `code_point` IN :codePoints;
 
 cardsCollected:
 SELECT COUNT(1)
