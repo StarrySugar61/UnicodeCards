@@ -43,14 +43,11 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
-import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.theme.AppColors
 import starrysugar.unicodecards.appdata.unicode.CharCategory
@@ -352,8 +349,9 @@ fun UnicodeCardDeck(
 fun CharCategory.getDisplayColor(): Color = when (this) {
     CharCategory.Lu,
     CharCategory.Ll,
-    CharCategory.Lt,
-    CharCategory.Lm -> AppColors.Green500
+    CharCategory.Lt -> AppColors.Green500
+
+    CharCategory.Lm -> AppColors.Teal500
 
     CharCategory.Lo -> AppColors.Lime500
     CharCategory.Mn,

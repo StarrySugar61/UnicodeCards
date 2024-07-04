@@ -14,6 +14,7 @@ object AppColors {
     val Yellow500 = Color(0xffffeb3b)
     val Lime500 = Color(0xffcddc39)
     val Green500 = Color(0xff4caf50)
+    val Teal500 = Color(0xff009688)
     val Cyan500 = Color(0xff00bcd4)
     val Blue500 = Color(0xff2196f3)
     val Purple500 = Color(0xff9c27b0)

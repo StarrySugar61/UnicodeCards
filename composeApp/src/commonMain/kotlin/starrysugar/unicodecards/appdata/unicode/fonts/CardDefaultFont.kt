@@ -89,7 +89,7 @@ object CardDefaultFont {
         // TODO 0x11fc0..0x11fff Tamil Supplement
         // TODO Kana Extensions
         in 0x1bc00..0x1bcaf -> Res.font.NotoSansDuployan_Regular
-        in 0x1cf00..0x1cf9f -> Res.font.NotoZnamennyMusicalNotation_Regular
+        in 0x1cf00..0x1cfcf -> Res.font.NotoZnamennyMusicalNotation_Regular
         in 0x1d000..0x1d24f -> Res.font.NotoMusic_Regular
         in 0x1d800..0x1daaf -> Res.font.NotoSansSignWriting_Regular
         // TODO 0x1e030..0x1e08f Cyrillic Extended-D
@@ -98,9 +98,6 @@ object CardDefaultFont {
         in 0x1f7e0..0x1f7ff,
         in 0x1f90c..0x1f9ff,
         in 0x1fa70..0x1faff -> Res.font.NotoColorEmoji_Regular
-        // TODO 0x1f300..0x1f6ff
-        // TODO 0x1f7e0..0x1f7ff
-        // TODO 0x1f900..0x1fbff
 
         in 0x0..0xffff -> Res.font.NotoSansPlane0_Regular
         in 0x10000..0x1ffff -> Res.font.NotoSansPlane1_Regular
