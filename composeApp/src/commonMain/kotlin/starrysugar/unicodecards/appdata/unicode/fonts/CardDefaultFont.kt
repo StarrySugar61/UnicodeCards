@@ -29,7 +29,9 @@ import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
 import starrysugar.unicodecards.NotoSansPlane1_Regular
 import starrysugar.unicodecards.NotoSansSignWriting_Regular
+import starrysugar.unicodecards.NotoSansTamilSupplement_Regular
 import starrysugar.unicodecards.NotoSerifCJKtc_Regular
+import starrysugar.unicodecards.NotoSerifHentaigana_Regular
 import starrysugar.unicodecards.NotoSerifPlane0_Regular
 import starrysugar.unicodecards.NotoSerifPlane1_Regular
 import starrysugar.unicodecards.NotoZnamennyMusicalNotation_Regular
@@ -103,8 +105,8 @@ object CardDefaultFont {
             Res.font.Roboto_Regular
         }
         // TODO 0x10ec0..0x10eff Arabic Extended-C
-        // TODO 0x11fc0..0x11fff Tamil Supplement
-        // TODO Kana Extensions
+        in 0x11fc0..0x11fff -> Res.font.NotoSansTamilSupplement_Regular
+        in 0x1aff0..0x1b16f -> Res.font.NotoSerifHentaigana_Regular
         in 0x1bc00..0x1bcaf -> Res.font.NotoSansDuployan_Regular
         in 0x1cf00..0x1cfcf -> Res.font.NotoZnamennyMusicalNotation_Regular
         in 0x1d000..0x1d24f -> Res.font.NotoMusic_Regular
