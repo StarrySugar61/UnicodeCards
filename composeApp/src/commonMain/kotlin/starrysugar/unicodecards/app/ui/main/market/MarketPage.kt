@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -82,6 +83,9 @@ fun MarketPage(
     ) {
         item(
             key = "Placeholder",
+            span = {
+                GridItemSpan(maxLineSpan)
+            },
         ) {
             Spacer(modifier = Modifier)
         }
