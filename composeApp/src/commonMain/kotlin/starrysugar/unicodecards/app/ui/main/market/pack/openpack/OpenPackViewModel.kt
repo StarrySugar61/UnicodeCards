@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
@@ -42,7 +43,13 @@ class OpenPackViewModel(
     private val count: Int,
 ) : BaseViewModel() {
 
-    private val dataStore: DataStore<Preferences> by inject()
+    private val _dataStore: DataStore<Preferences> by inject()
+
+    val isPlatformFontFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SYSTEM_FONT] ?: false }
+
+    val isSerifFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SERIF] ?: false }
 
     var cardPack: CardPack? by mutableStateOf(null)
         private set
@@ -83,9 +90,9 @@ class OpenPackViewModel(
         cardPack = CardPacks.data[packID]
         cardPackResult = cardPack?.collectCards(count) ?: emptyList()
         viewModelScope.launch {
-            val prefs = dataStore.data.firstOrNull()
+            val prefs = _dataStore.data.firstOrNull()
             // Update statistics!
-            dataStore.edit {
+            _dataStore.edit {
                 // Packs opened
                 it[AppDataStoreKeys.KEY_STATISTIC_PACKS_OPENED] =
                     (prefs?.get(AppDataStoreKeys.KEY_STATISTIC_PACKS_OPENED) ?: 0) + 1

@@ -44,6 +44,9 @@
     <string name="market_unlock_requirement">收集%1$d种不同的卡牌以解锁！</string>
     <string name="market_unlock_requirement_gd">字符维度%1$d解锁！</string>
 
+    <string name="settings_appearance_system_font">使用系统字体</string>
+    <string name="settings_appearance_serif">优先使用带衬线字体</string>
+
     <string name="currency_code_chip">代码晶片</string>
     <string name="currency_byte_gem">字节宝石</string>
     <string name="currency_runic_sigil">符文印记</string>

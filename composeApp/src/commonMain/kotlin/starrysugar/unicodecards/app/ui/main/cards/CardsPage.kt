@@ -29,6 +29,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +66,9 @@ fun CardsPage(
 ) {
     var isShowingDeckNotUnlockedDialog by remember { mutableStateOf(false) }
 
+    val isPlatformFont by viewModel.isPlatformFontFlow.collectAsState(false)
+    val isSerif by viewModel.isSerifFlow.collectAsState(false)
+
     // Dialogs！
     if (isShowingDeckNotUnlockedDialog) {
         DeckNotUnlockedDialog(
@@ -100,6 +104,8 @@ fun CardsPage(
                         }
                     },
                 item = item,
+                isPlatformFont = isPlatformFont,
+                isSerif = isSerif,
             )
         }
     )
@@ -110,6 +116,8 @@ fun CardsPage(
 private fun DeckItem(
     modifier: Modifier,
     item: QueryBlockPagingWithCollected,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     Column(
         modifier = modifier,
@@ -128,6 +136,8 @@ private fun DeckItem(
             },
             category = item.category,
             valueCover = item.cover,
+            isPlatformFont = isPlatformFont,
+            isSerif = isSerif,
         )
         // Collecting progress!
         LinearProgressIndicator(

@@ -78,7 +78,8 @@ fun UnicodeCard(
     modifier: Modifier = Modifier,
     scale: Float = 1F,
     codePoint: Int,
-    isSerif: Boolean = false,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
     category: CharCategory? = null,
     valueCover: String? = null,
     count: Int = 0,
@@ -90,6 +91,7 @@ fun UnicodeCard(
     ) {
         CardContent(
             codePoint = codePoint,
+            isPlatformFont = isPlatformFont,
             isSerif = isSerif,
             category = category,
             valueCover = valueCover,
@@ -157,7 +159,8 @@ fun UnicodeCardPlaceholder(
 fun UnicodeCardPack(
     modifier: Modifier = Modifier,
     scale: Float = 1F,
-    isSerif: Boolean = false,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
     isOpened: Boolean = false,
     sampleCodePoint: Int,
     packName: String,
@@ -215,10 +218,14 @@ fun UnicodeCardPack(
                         .padding(bottom = 32.dp),
                     text = UnicodeUtils.charToString(sampleCodePoint),
                     fontSize = 80.sp,
-                    fontFamily = CardDefaultFont.getFontFamilyFor(
-                        codePoint = sampleCodePoint,
-                        isSerif = isSerif,
-                    ),
+                    fontFamily = if (isPlatformFont) {
+                        null
+                    } else {
+                        CardDefaultFont.getFontFamilyFor(
+                            codePoint = sampleCodePoint,
+                            isSerif = isSerif,
+                        )
+                    },
                 )
                 Text(
                     modifier = Modifier
@@ -228,9 +235,13 @@ fun UnicodeCardPack(
                     text = packName,
                     textAlign = TextAlign.Center,
                     fontSize = 14.sp,
-                    fontFamily = CardDefaultFont.getCardNumFontFamily(
-                        isSerif = isSerif,
-                    ),
+                    fontFamily = if (isPlatformFont) {
+                        null
+                    } else {
+                        CardDefaultFont.getCardNumFontFamily(
+                            isSerif = isSerif,
+                        )
+                    },
                 )
                 Text(
                     modifier = Modifier
@@ -238,18 +249,26 @@ fun UnicodeCardPack(
                         .padding(bottom = 11.dp),
                     text = "$cardCount Cards",
                     fontSize = 11.sp,
-                    fontFamily = CardDefaultFont.getCardNumFontFamily(
-                        isSerif = isSerif,
-                    ),
+                    fontFamily = if (isPlatformFont) {
+                        null
+                    } else {
+                        CardDefaultFont.getCardNumFontFamily(
+                            isSerif = isSerif,
+                        )
+                    },
                 )
                 Text(
                     modifier = Modifier
                         .align(Alignment.BottomStart),
                     text = "Per Pack",
                     fontSize = 11.sp,
-                    fontFamily = CardDefaultFont.getCardNumFontFamily(
-                        isSerif = isSerif,
-                    ),
+                    fontFamily = if (isPlatformFont) {
+                        null
+                    } else {
+                        CardDefaultFont.getCardNumFontFamily(
+                            isSerif = isSerif,
+                        )
+                    },
                 )
             }
             HorizontalDivider()
@@ -323,7 +342,8 @@ fun UnicodeCardPackEndPart(
 fun UnicodeCardDeck(
     modifier: Modifier = Modifier,
     codePoint: Int,
-    isSerif: Boolean = false,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
     category: CharCategory? = null,
     valueCover: String? = null,
 ) {
@@ -354,6 +374,7 @@ fun UnicodeCardDeck(
                     .align(Alignment.Center)
                     .rotate(-5F),
                 codePoint = codePoint,
+                isPlatformFont = isPlatformFont,
                 isSerif = isSerif,
                 category = category,
                 valueCover = valueCover,
@@ -466,7 +487,8 @@ private fun CardBorder(
 @Composable
 private fun CardContent(
     codePoint: Int,
-    isSerif: Boolean = false,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
     category: CharCategory? = null,
     valueCover: String? = null,
 ) {
@@ -485,10 +507,14 @@ private fun CardContent(
                 },
                 fontSize = 80.sp,
                 textAlign = TextAlign.Center,
-                fontFamily = CardDefaultFont.getFontFamilyFor(
-                    codePoint = codePoint,
-                    isSerif = isSerif,
-                ),
+                fontFamily = if (isPlatformFont) {
+                    null
+                } else {
+                    CardDefaultFont.getFontFamilyFor(
+                        codePoint = codePoint,
+                        isSerif = isSerif,
+                    )
+                },
             )
         } else {
             Text(
@@ -503,9 +529,13 @@ private fun CardContent(
                     else -> 40.sp
                 },
                 textAlign = TextAlign.Center,
-                fontFamily = CardDefaultFont.getCardNumFontFamily(
-                    isSerif = isSerif,
-                ),
+                fontFamily = if (isPlatformFont) {
+                    null
+                } else {
+                    CardDefaultFont.getCardNumFontFamily(
+                        isSerif = isSerif,
+                    )
+                },
             )
         }
         Text(
@@ -528,9 +558,13 @@ private fun CardContent(
                 },
             text = codePoint.toString(radix = 16).uppercase(),
             fontSize = 16.sp,
-            fontFamily = CardDefaultFont.getCardNumFontFamily(
-                isSerif = isSerif,
-            ),
+            fontFamily = if (isPlatformFont) {
+                null
+            } else {
+                CardDefaultFont.getCardNumFontFamily(
+                    isSerif = isSerif,
+                )
+            },
         )
         Text(
             modifier = Modifier
@@ -553,9 +587,13 @@ private fun CardContent(
                 .rotate(180F),
             text = codePoint.toString(radix = 16).uppercase(),
             fontSize = 16.sp,
-            fontFamily = CardDefaultFont.getCardNumFontFamily(
-                isSerif = isSerif,
-            ),
+            fontFamily = if (isPlatformFont) {
+                null
+            } else {
+                CardDefaultFont.getCardNumFontFamily(
+                    isSerif = isSerif,
+                )
+            },
         )
 //        color?.let {
 //            Surface(

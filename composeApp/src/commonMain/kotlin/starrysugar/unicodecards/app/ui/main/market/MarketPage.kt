@@ -32,6 +32,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,6 +75,8 @@ fun MarketPage(
         factory = appViewModelFactory,
     ),
 ) {
+    val isPlatformFont by viewModel.isPlatformFontFlow.collectAsState(false)
+    val isSerif by viewModel.isSerifFlow.collectAsState(false)
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         columns = GridCells.Adaptive(
@@ -112,7 +115,9 @@ fun MarketPage(
                                 )
                             },
                         )
-                    }
+                    },
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
         }
@@ -148,7 +153,9 @@ fun MarketPage(
                                 },
                             )
                         }
-                    }
+                    },
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
         }
@@ -193,6 +200,8 @@ fun MarketPage(
 private fun MarketItemWelcome(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     val welcomeCardPack = CardPacks.data[1] ?: return
     OutlinedCard(
@@ -217,6 +226,8 @@ private fun MarketItemWelcome(
                     sampleCodePoint = welcomeCardPack.sampleCodePoint,
                     packName = welcomeCardPack.name,
                     cardCount = AppConfigs.WELCOME_PACK_CARDS,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
             Column(
@@ -251,6 +262,8 @@ private fun MarketItemFree(
     freePackFullTime: Long,
     packsAvailable: Int,
     onClick: () -> Unit,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     val freePack = CardPacks.data[0] ?: return
     val packAlpha by animateFloatAsState(
@@ -296,6 +309,8 @@ private fun MarketItemFree(
                     sampleCodePoint = freePack.sampleCodePoint,
                     packName = freePack.name,
                     cardCount = AppConfigs.FREE_PACK_CARDS,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
             Column(

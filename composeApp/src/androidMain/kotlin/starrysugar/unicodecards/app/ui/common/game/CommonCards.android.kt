@@ -35,6 +35,8 @@ private fun UnicodeCardExample1() {
     UnicodeCard(
         codePoint = 0x21,
         category = CharCategory.Po,
+        isPlatformFont = true,
+        isSerif = false,
         count = 2,
     )
 }
@@ -45,6 +47,8 @@ private fun UnicodeCardExample2() {
     UnicodeCard(
         codePoint = 0x10000,
         category = CharCategory.Lo,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -54,6 +58,8 @@ private fun UnicodeCardExample3() {
     UnicodeCard(
         codePoint = 0x1f600,
         category = CharCategory.So,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -64,6 +70,8 @@ private fun UnicodeCardExample4() {
         codePoint = 0xfeff,
         category = CharCategory.Cf,
         valueCover = "ZWNBSP",
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -74,6 +82,8 @@ private fun UnicodeCardExample5() {
         codePoint = 0x200c,
         category = CharCategory.Cf,
         valueCover = "ZWNC",
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -108,6 +118,8 @@ private fun UnicodeCardPackExample1() {
         sampleCodePoint = 0x41,
         packName = "ASCII Pack",
         cardCount = 10,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -118,6 +130,8 @@ private fun UnicodeCardPackExample2() {
         sampleCodePoint = 0x10000,
         packName = "Linear B Syllabary Pack",
         cardCount = 10,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -128,6 +142,8 @@ private fun UnicodeCardPackExample3() {
         sampleCodePoint = 0x1f604,
         packName = "Emoji Pack",
         cardCount = 10,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }
 
@@ -147,5 +163,7 @@ private fun UnicodeCardDeckExample1() {
         ),
         codePoint = 0x21,
         category = CharCategory.Po,
+        isPlatformFont = true,
+        isSerif = false,
     )
 }

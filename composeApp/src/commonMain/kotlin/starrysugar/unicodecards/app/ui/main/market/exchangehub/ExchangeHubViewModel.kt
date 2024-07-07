@@ -14,6 +14,8 @@
  */
 package starrysugar.unicodecards.app.ui.main.market.exchangehub
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -21,11 +23,13 @@ import androidx.paging.cachedIn
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 import starrysugar.unicodecards.appdata.database.table.FakeExchangeRequestsQueries
 import starrysugar.unicodecards.appdata.database.table.UnicodeDataQueries
 import starrysugar.unicodecards.appdata.database.table.UserCardsQueries
+import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
 
 /**
  * @author StarrySugar61
@@ -38,6 +42,14 @@ class ExchangeHubViewModel : BaseViewModel() {
     private val _unicodeDataQueries: UnicodeDataQueries by inject()
 
     private val _userCardsQueries: UserCardsQueries by inject()
+
+    private val _dataStore: DataStore<Preferences> by inject()
+
+    val isPlatformFontFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SYSTEM_FONT] ?: false }
+
+    val isSerifFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SERIF] ?: false }
 
     val requestFlow = Pager(
         config = PagingConfig(

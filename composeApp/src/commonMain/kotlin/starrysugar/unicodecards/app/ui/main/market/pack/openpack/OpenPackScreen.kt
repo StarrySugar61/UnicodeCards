@@ -40,6 +40,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -88,6 +89,8 @@ fun OpenPackScreen(
         }
     )
 ) {
+    val isPlatformFont by viewModel.isPlatformFontFlow.collectAsState(false)
+    val isSerif by viewModel.isSerifFlow.collectAsState(false)
     // Block back button
     BlockBackPressed()
     AppScaffold(
@@ -214,6 +217,8 @@ fun OpenPackScreen(
                     sampleCodePoint = cardPack.sampleCodePoint,
                     packName = cardPack.name,
                     cardCount = count,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
                 UnicodeCardPackEndPart(
                     modifier = Modifier
@@ -238,6 +243,8 @@ fun OpenPackScreen(
                     sampleCodePoint = cardPack.sampleCodePoint,
                     packName = cardPack.name,
                     cardCount = count,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
                 Text(
                     modifier = Modifier
@@ -267,6 +274,8 @@ fun OpenPackScreen(
                     card = currentCard,
                     scaleX = csXScale,
                     cardScale = csCardScale,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
                 Text(
                     modifier = Modifier
@@ -323,6 +332,8 @@ fun OpenPackScreen(
                             height = 450.dp,
                         ),
                     cardPackResult = viewModel.cardPackResult,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
             // Button bar!
@@ -377,6 +388,8 @@ private fun OpenPackCardItem(
     card: QueryDataByIndexWithUserData,
     scaleX: Float,
     cardScale: Float,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     if (scaleX > 0) {
         UnicodeCard(
@@ -393,6 +406,8 @@ private fun OpenPackCardItem(
             } else {
                 0
             },
+            isPlatformFont = isPlatformFont,
+            isSerif = isSerif,
         )
     } else {
         UnicodeCardBack(
@@ -409,6 +424,8 @@ private fun OpenPackCardItem(
 private fun OpenPackResult(
     modifier: Modifier = Modifier,
     cardPackResult: List<QueryDataByIndexWithUserData>,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     Column(
         modifier = modifier,
@@ -446,6 +463,8 @@ private fun OpenPackResult(
                     } else {
                         0
                     },
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
         }

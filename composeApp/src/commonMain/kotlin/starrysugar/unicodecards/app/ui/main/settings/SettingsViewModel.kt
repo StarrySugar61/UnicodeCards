@@ -14,10 +14,17 @@
  */
 package starrysugar.unicodecards.app.ui.main.settings
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
 
 /**
  * @author StarrySugar61
  * @create 2024/6/17
  */
-class SettingsViewModel : BaseViewModel()
+class SettingsViewModel : BaseViewModel() {
+
+    val dataStore: DataStore<Preferences> by inject()
+
+}

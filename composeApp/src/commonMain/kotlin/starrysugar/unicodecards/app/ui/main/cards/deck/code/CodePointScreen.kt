@@ -32,6 +32,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -75,6 +77,8 @@ fun CodePointScreen(
         },
     ),
 ) {
+    val isPlatformFont by viewModel.isPlatformFontFlow.collectAsState(false)
+    val isSerif by viewModel.isSerifFlow.collectAsState(false)
     AppScaffold(
         modifier = Modifier.fillMaxSize(),
         viewModel = viewModel,
@@ -109,6 +113,8 @@ fun CodePointScreen(
                         .fillMaxWidth()
                         .requiredHeight(276.dp),
                     charData = charData,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
             item {
@@ -130,6 +136,8 @@ fun CodePointScreen(
 private fun CodePointUnicodeCardItem(
     modifier: Modifier = Modifier,
     charData: QueryDataByCodeWithUserData,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     Box(
         modifier = modifier,
@@ -144,6 +152,8 @@ private fun CodePointUnicodeCardItem(
             category = charData.category,
             valueCover = charData.cover,
             count = charData.card_count.toInt(),
+            isPlatformFont = isPlatformFont,
+            isSerif = isSerif,
         )
         Text(
             modifier = Modifier

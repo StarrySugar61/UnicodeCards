@@ -36,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -93,6 +94,8 @@ fun ExchangeHubScreen(
     var exchangingItem by remember {
         mutableStateOf<Uc_fake_exchange_requests?>(null)
     }
+    val isPlatformFont by viewModel.isPlatformFontFlow.collectAsState(false)
+    val isSerif by viewModel.isSerifFlow.collectAsState(false)
     exchangingItem?.let {
         ExchangingDialog(
             viewModel = viewModel,
@@ -108,6 +111,8 @@ fun ExchangeHubScreen(
             onDismiss = {
                 exchangingItem = null
             },
+            isPlatformFont = isPlatformFont,
+            isSerif = isSerif,
         )
     }
     LaunchedEffect(
@@ -157,6 +162,8 @@ fun ExchangeHubScreen(
                     onClick = {
                         exchangingItem = item
                     },
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             },
         )
@@ -170,6 +177,8 @@ private fun ExchangingDialog(
     item: Uc_fake_exchange_requests,
     onConfirmed: (selectedCodePoint: Long) -> Unit,
     onDismiss: () -> Unit,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     var selectedCodePoint by remember {
         mutableStateOf(-1L)
@@ -202,7 +211,9 @@ private fun ExchangingDialog(
                         } else {
                             null
                         }
-                    }
+                    },
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
             }
     }
@@ -237,6 +248,8 @@ private fun ExchangingDialog(
                     codePoint = cardWanted.code_point.toInt(),
                     category = cardWanted.category,
                     valueCover = cardWanted.cover,
+                    isPlatformFont = isPlatformFont,
+                    isSerif = isSerif,
                 )
                 if (cardWanted.card_count > 1) {
                     Text(
@@ -325,6 +338,8 @@ private fun ExchangeItem(
     now: Long,
     viewModel: ExchangeHubViewModel,
     onClick: () -> Unit,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     Card(
         modifier = modifier,
@@ -407,6 +422,8 @@ private fun ExchangeItem(
                 codePoint = cardWanted.code_point.toInt(),
                 category = cardWanted.category,
                 valueCover = cardWanted.cover,
+                isPlatformFont = isPlatformFont,
+                isSerif = isSerif,
             )
             Text(
                 modifier = Modifier.width(40.dp),
@@ -434,6 +451,8 @@ private fun ExchangeItem(
                                     end = 4.dp
                                 ),
                             data = it,
+                            isPlatformFont = isPlatformFont,
+                            isSerif = isSerif,
                         )
                     }
                 // card2
@@ -449,6 +468,8 @@ private fun ExchangeItem(
                                     end = 4.dp
                                 ),
                             data = it,
+                            isPlatformFont = isPlatformFont,
+                            isSerif = isSerif,
                         )
                     }
                 // card3
@@ -464,6 +485,8 @@ private fun ExchangeItem(
                                     end = 4.dp
                                 ),
                             data = it,
+                            isPlatformFont = isPlatformFont,
+                            isSerif = isSerif,
                         )
                     }
                 // card4
@@ -479,6 +502,8 @@ private fun ExchangeItem(
                                     end = 4.dp
                                 ),
                             data = it,
+                            isPlatformFont = isPlatformFont,
+                            isSerif = isSerif,
                         )
                     }
                 // card5
@@ -494,6 +519,8 @@ private fun ExchangeItem(
                                     end = 4.dp
                                 ),
                             data = it,
+                            isPlatformFont = isPlatformFont,
+                            isSerif = isSerif,
                         )
                     }
             }
@@ -505,6 +532,8 @@ private fun ExchangeItem(
 private fun ExchangeAvailableCard(
     modifier: Modifier = Modifier,
     data: QueryDataByCodeWithUserData,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     UnicodeCard(
         modifier = modifier
@@ -519,6 +548,8 @@ private fun ExchangeAvailableCard(
         codePoint = data.code_point.toInt(),
         category = data.category,
         valueCover = data.cover,
+        isPlatformFont = isPlatformFont,
+        isSerif = isSerif,
     )
 }
 
@@ -528,6 +559,8 @@ private fun ExchangeAvailableSelectingCard(
     data: QueryDataByCodeWithUserData,
     isSelected: Boolean?,
     onClicked: () -> Unit,
+    isPlatformFont: Boolean,
+    isSerif: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -535,6 +568,8 @@ private fun ExchangeAvailableSelectingCard(
         ExchangeAvailableCard(
             modifier = Modifier.clickable(onClick = onClicked),
             data = data,
+            isPlatformFont = isPlatformFont,
+            isSerif = isSerif,
         )
         isSelected?.let {
             RadioButton(

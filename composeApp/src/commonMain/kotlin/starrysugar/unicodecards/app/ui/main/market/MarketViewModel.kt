@@ -26,6 +26,7 @@ import app.cash.sqldelight.coroutines.mapToOneOrDefault
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 import starrysugar.unicodecards.app.ui.base.BaseViewModel
@@ -43,6 +44,14 @@ class MarketViewModel : BaseViewModel() {
     private val dataStore: DataStore<Preferences> by inject()
 
     private val _userCardsQueries: UserCardsQueries by inject()
+
+    private val _dataStore: DataStore<Preferences> by inject()
+
+    val isPlatformFontFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SYSTEM_FONT] ?: false }
+
+    val isSerifFlow = _dataStore.data
+        .map { it[AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SERIF] ?: false }
 
     var isWelcomePackClaimed by mutableStateOf(true)
 

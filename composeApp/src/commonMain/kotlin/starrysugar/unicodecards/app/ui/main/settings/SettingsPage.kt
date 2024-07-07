@@ -14,14 +14,16 @@
  */
 package starrysugar.unicodecards.app.ui.main.settings
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import org.jetbrains.compose.resources.stringResource
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.appViewModelFactory
-import starrysugar.unicodecards.coming_soon
+import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
+import starrysugar.unicodecards.settings_appearance_serif
+import starrysugar.unicodecards.settings_appearance_system_font
 
 /**
  * @author StarrySugar61
@@ -34,9 +36,17 @@ fun SettingsPage(
         factory = appViewModelFactory,
     ),
 ) {
-    Text(
-        text = stringResource(
-            resource = Res.string.coming_soon,
-        ),
-    )
+    SettingColumn(
+        modifier = Modifier.fillMaxSize(),
+        dataStore = viewModel.dataStore,
+    ) {
+        switcherRow(
+            key = AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SYSTEM_FONT,
+            labelRes = Res.string.settings_appearance_system_font,
+        )
+        switcherRow(
+            key = AppDataStoreKeys.KEY_SETTINGS_APPEARANCE_SERIF,
+            labelRes = Res.string.settings_appearance_serif,
+        )
+    }
 }

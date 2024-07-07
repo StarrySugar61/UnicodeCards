@@ -44,6 +44,9 @@
     <string name="market_unlock_requirement">Collect %1$d different cards to unlock!</string>
     <string name="market_unlock_requirement_gd">Unlock at Glyph Dimensional %1$d!</string>
 
+    <string name="settings_appearance_system_font">Use platform fonts</string>
+    <string name="settings_appearance_serif">Prioritize serif fonts</string>
+
     <string name="currency_code_chip">Code Chip</string>
     <string name="currency_byte_gem">Byte Gem</string>
     <string name="currency_runic_sigil">Runic Sigil</string>

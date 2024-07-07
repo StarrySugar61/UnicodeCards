@@ -160,6 +160,8 @@ private fun LoadingScreen(
                         ),
                     codePoint = 0x27f3,
                     category = CharCategory.Sm,
+                    isPlatformFont = false,
+                    isSerif = false,
                 )
             } else {
                 UnicodeCardBack(
