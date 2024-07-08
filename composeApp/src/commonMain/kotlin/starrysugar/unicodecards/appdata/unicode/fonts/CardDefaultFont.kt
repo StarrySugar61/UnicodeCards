@@ -24,6 +24,7 @@ import starrysugar.unicodecards.AlibabaPuHuiTi_3_55_RegularL3
 import starrysugar.unicodecards.BabelStoneHan
 import starrysugar.unicodecards.NotoColorEmoji_Regular
 import starrysugar.unicodecards.NotoMusic_Regular
+import starrysugar.unicodecards.NotoNaskhArabic_Regular
 import starrysugar.unicodecards.NotoSansCJKtc_Regular
 import starrysugar.unicodecards.NotoSansDuployan_Regular
 import starrysugar.unicodecards.NotoSansPlane0_Regular
@@ -81,6 +82,17 @@ object CardDefaultFont {
         } else {
             Res.font.Roboto_Regular
         }
+
+        in 0x600..0x6ff,
+        in 0x750..0x77f,
+        in 0x870..0x8ff,
+        in 0xfb50..0xfdff,
+        in 0xfe70..0xfefc -> if (isSerif) {
+            Res.font.NotoNaskhArabic_Regular
+        } else {
+            Res.font.NotoSansPlane0_Regular
+        }
+
         // TODO 0x860..0x86f Syriac Supplement
         in 0x1100..0x11ff,
         in 0x2500..0x259f,
