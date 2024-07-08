@@ -499,6 +499,7 @@ private fun CardContent(
             val char = UnicodeUtils.charToString(codePoint)
             Text(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.Center),
                 text = if (category == CharCategory.Mn) {
                     "◌$char"
