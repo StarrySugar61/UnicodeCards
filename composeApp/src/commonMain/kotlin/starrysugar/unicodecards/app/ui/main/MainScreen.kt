@@ -55,18 +55,18 @@ import starrysugar.unicodecards.app.ui.common.game.UnicodeCardBack
 import starrysugar.unicodecards.app.ui.main.cards.CardsPage
 import starrysugar.unicodecards.app.ui.main.home.HomePage
 import starrysugar.unicodecards.app.ui.main.market.MarketPage
-import starrysugar.unicodecards.app.ui.main.settings.SettingsPage
+import starrysugar.unicodecards.app.ui.main.mine.MinePage
 import starrysugar.unicodecards.app_name
 import starrysugar.unicodecards.appdata.unicode.CharCategory
 import starrysugar.unicodecards.arch.utils.toPrecision
+import starrysugar.unicodecards.ic_baseline_account_circle_24
 import starrysugar.unicodecards.ic_baseline_home_24
-import starrysugar.unicodecards.ic_baseline_settings_24
 import starrysugar.unicodecards.ic_baseline_store_mall_directory_24
 import starrysugar.unicodecards.ic_baseline_style_24
 import starrysugar.unicodecards.main_tab_cards
 import starrysugar.unicodecards.main_tab_home
 import starrysugar.unicodecards.main_tab_market
-import starrysugar.unicodecards.main_tab_settings
+import starrysugar.unicodecards.main_tab_mine
 import kotlin.math.sin
 
 /**
@@ -264,7 +264,7 @@ private fun HomeNavHost(
         composable(
             route = mainBottomAppBarItems[3].route,
         ) {
-            SettingsPage(
+            MinePage(
                 navController = mainNavController,
             )
         }
@@ -288,9 +288,9 @@ private val mainBottomAppBarItems = listOf(
         route = "uc_main_market",
     ),
     MainBottomAppBarItem(
-        labelRes = Res.string.main_tab_settings,
-        iconRes = Res.drawable.ic_baseline_settings_24,
-        route = "uc_main_settings",
+        labelRes = Res.string.main_tab_mine,
+        iconRes = Res.drawable.ic_baseline_account_circle_24,
+        route = "uc_main_mine",
     ),
 )
 

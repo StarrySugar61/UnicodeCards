@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. 
  * If not, see <https://www.gnu.org/licenses/>.
  */
-package starrysugar.unicodecards.app.ui.main.settings
+package starrysugar.unicodecards.app.ui.main.mine
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -23,7 +23,7 @@ import starrysugar.unicodecards.app.ui.base.BaseViewModel
  * @author StarrySugar61
  * @create 2024/6/17
  */
-class SettingsViewModel : BaseViewModel() {
+class MineViewModel : BaseViewModel() {
 
     val dataStore: DataStore<Preferences> by inject()
 

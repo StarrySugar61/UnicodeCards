@@ -23,7 +23,7 @@ import starrysugar.unicodecards.app.ui.main.home.HomeViewModel
 import starrysugar.unicodecards.app.ui.main.market.MarketViewModel
 import starrysugar.unicodecards.app.ui.main.market.exchangehub.ExchangeHubViewModel
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackViewModel
-import starrysugar.unicodecards.app.ui.main.settings.SettingsViewModel
+import starrysugar.unicodecards.app.ui.main.mine.MineViewModel
 
 /**
  * @author StarrySugar61
@@ -35,7 +35,7 @@ val appViewModelFactory = viewModelFactory {
     addInitializer(HomeViewModel::class) { HomeViewModel() }
     addInitializer(CardsViewModel::class) { CardsViewModel() }
     addInitializer(MarketViewModel::class) { MarketViewModel() }
-    addInitializer(SettingsViewModel::class) { SettingsViewModel() }
+    addInitializer(MineViewModel::class) { MineViewModel() }
 
     addInitializer(DeckViewModel::class) {
         DeckViewModel(

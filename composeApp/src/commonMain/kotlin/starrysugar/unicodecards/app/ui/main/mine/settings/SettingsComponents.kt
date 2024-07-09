@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. 
  * If not, see <https://www.gnu.org/licenses/>.
  */
-package starrysugar.unicodecards.app.ui.main.settings
+package starrysugar.unicodecards.app.ui.main.mine.settings
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column

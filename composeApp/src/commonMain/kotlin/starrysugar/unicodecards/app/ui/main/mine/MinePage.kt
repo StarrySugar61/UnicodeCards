@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. 
  * If not, see <https://www.gnu.org/licenses/>.
  */
-package starrysugar.unicodecards.app.ui.main.settings
+package starrysugar.unicodecards.app.ui.main.mine
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -21,6 +21,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import starrysugar.unicodecards.Res
 import starrysugar.unicodecards.app.ui.base.appViewModelFactory
+import starrysugar.unicodecards.app.ui.main.mine.settings.SettingColumn
+import starrysugar.unicodecards.app.ui.main.mine.settings.switcherRow
 import starrysugar.unicodecards.appdata.datastore.AppDataStoreKeys
 import starrysugar.unicodecards.settings_appearance_serif
 import starrysugar.unicodecards.settings_appearance_system_font
@@ -30,9 +32,9 @@ import starrysugar.unicodecards.settings_appearance_system_font
  * @create 2024/6/17
  */
 @Composable
-fun SettingsPage(
+fun MinePage(
     navController: NavHostController,
-    viewModel: SettingsViewModel = viewModel(
+    viewModel: MineViewModel = viewModel(
         factory = appViewModelFactory,
     ),
 ) {
