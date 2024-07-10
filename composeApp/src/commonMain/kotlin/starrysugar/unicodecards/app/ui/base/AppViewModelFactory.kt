@@ -24,6 +24,9 @@ import starrysugar.unicodecards.app.ui.main.market.MarketViewModel
 import starrysugar.unicodecards.app.ui.main.market.exchangehub.ExchangeHubViewModel
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackViewModel
 import starrysugar.unicodecards.app.ui.main.mine.MineViewModel
+import starrysugar.unicodecards.app.ui.main.mine.about.AboutViewModel
+import starrysugar.unicodecards.app.ui.main.mine.settings.SettingsViewModel
+import starrysugar.unicodecards.app.ui.main.mine.statistic.StatisticViewModel
 
 /**
  * @author StarrySugar61
@@ -55,4 +58,8 @@ val appViewModelFactory = viewModelFactory {
             count = this[OpenPackViewModel.CountKey]!!,
         )
     }
+
+    addInitializer(StatisticViewModel::class) { StatisticViewModel() }
+    addInitializer(SettingsViewModel::class) { SettingsViewModel() }
+    addInitializer(AboutViewModel::class) { AboutViewModel() }
 }
