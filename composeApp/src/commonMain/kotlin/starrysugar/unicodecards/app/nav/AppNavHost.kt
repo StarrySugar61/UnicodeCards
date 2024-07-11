@@ -29,6 +29,9 @@ import starrysugar.unicodecards.app.ui.main.cards.deck.DeckScreen
 import starrysugar.unicodecards.app.ui.main.cards.deck.code.CodePointScreen
 import starrysugar.unicodecards.app.ui.main.market.exchangehub.ExchangeHubScreen
 import starrysugar.unicodecards.app.ui.main.market.pack.openpack.OpenPackScreen
+import starrysugar.unicodecards.app.ui.main.mine.about.AboutScreen
+import starrysugar.unicodecards.app.ui.main.mine.settings.SettingsScreen
+import starrysugar.unicodecards.app.ui.main.mine.statistic.StatisticScreen
 
 /**
  * App navigation!
@@ -81,6 +84,28 @@ fun AppNavHost(
             OpenPackScreen(
                 packID = it.arguments!!.getInt("packID"),
                 count = it.arguments!!.getInt("count"),
+                navController = navController,
+            )
+        }
+
+        appComposable(
+            screen = Screen.MineAbout,
+        ) {
+            AboutScreen(
+                navController = navController,
+            )
+        }
+        appComposable(
+            screen = Screen.MineSettings,
+        ) {
+            SettingsScreen(
+                navController = navController,
+            )
+        }
+        appComposable(
+            screen = Screen.MineStatistic,
+        ) {
+            StatisticScreen(
                 navController = navController,
             )
         }
@@ -158,6 +183,10 @@ sealed class Screen(
             count: Int,
         ): String = "$route/$packID/$count"
     }
+
+    data object MineAbout : Screen(route = "us_mine_about")
+    data object MineSettings : Screen(route = "us_mine_settings")
+    data object MineStatistic : Screen(route = "us_mine_statistic")
 }
 
 interface Route {

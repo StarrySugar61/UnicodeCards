@@ -14,9 +14,50 @@
  */
 package starrysugar.unicodecards.app.ui.main.mine.about
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import org.jetbrains.compose.resources.stringResource
+import starrysugar.unicodecards.Res
+import starrysugar.unicodecards.app.ui.base.AppNavBackTopBar
+import starrysugar.unicodecards.app.ui.base.AppScaffold
+import starrysugar.unicodecards.app.ui.base.appViewModelFactory
+import starrysugar.unicodecards.mine_about
+
 /**
  *
  *
  * @author StarrySugar61
  * @create 2024/7/10
  */
+@Composable
+fun AboutScreen(
+    navController: NavHostController,
+    viewModel: AboutViewModel = viewModel(
+        factory = appViewModelFactory,
+    ),
+) {
+    AppScaffold(
+        modifier = Modifier.fillMaxSize(),
+        viewModel = viewModel,
+        topBar = {
+            AppNavBackTopBar(
+                title = {
+                    Text(
+                        text = stringResource(
+                            resource = Res.string.mine_about,
+                        ),
+                    )
+                },
+                onBack = {
+                    navController.navigateUp()
+                },
+            )
+        },
+    ) { paddingValues ->
+
+    }
+}

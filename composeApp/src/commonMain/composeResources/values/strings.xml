@@ -44,6 +44,10 @@
     <string name="market_unlock_requirement">Collect %1$d different cards to unlock!</string>
     <string name="market_unlock_requirement_gd">Unlock at Glyph Dimensional %1$d!</string>
 
+    <string name="mine_about">About Unicode Cards</string>
+    <string name="mine_settings">Settings</string>
+    <string name="mine_statistic">Statistic</string>
+
     <string name="settings_appearance_system_font">Use platform fonts</string>
     <string name="settings_appearance_serif">Prioritize serif fonts</string>
 
